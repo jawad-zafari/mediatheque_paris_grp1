@@ -19,11 +19,14 @@
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
                 <?php if (is_logged_in()): ?>
+                    <li><a href="<?php echo url('user/profile'); ?>">Mon profil</a></li>
+                    <?php if (current_user()['role'] === 'admin'): ?>
+                        <li><a href="<?php echo url('admin/dashboard'); ?>">Admin</a></li>
+                    <?php endif; ?>
                     <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
                 <?php else: ?>
                     <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
                     <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
-                    <li><a href="<?php echo url('auth/forgot-password2'); ?>">Mot de passe oublié fatima et morad</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

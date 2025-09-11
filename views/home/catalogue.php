@@ -53,14 +53,16 @@
 <div class="page-header">
     <div class="container">
         <h1><?php e($title); ?></h1>
-    </div>
+    </div>    
 </div>
 
 <section class="content">
     <div class="container">
         <div class="content-grid">
             <div class="content-main">
-                <p><?php e($content); ?></p>
+            <!--<h1><?php// e($message); ?></h1>
+                <h2><?php// e($message); ?> </h2>-->
+<p><?php e($content); ?></p>
 
             </div>
         </div>
@@ -69,7 +71,7 @@
 <section>
     <form method="GET" action="">
         <legend>Filtres</legend>
-        <input type="text" placeholder="Entrez votre recherche">
+        <input type="text" placeholder="Entrez votre recherche">     
         <div class="à remplir">
             <select name="type-filter" id="type-filter">
                 <option value="type-display">
@@ -108,18 +110,67 @@
                 </option>
                 <option value="all">
                     tous
-                </option>
-            </select>
+                </option>                
+            </select>            
         </div>
         <input type="submit" name="submit" value="Rechercher">
+        <!--
+            <select name="style" id="style-select">
+                <option value="">--Filtres--</option>
+                <option value="à remplir">
+                    Par type
+                </option>
+                <option value="à remplir">
+                    Par genre
+                </option>
+                <option value="à remplir">
+                    Par disponibilité
+                </option>                
+            </select>
+        -->
     </form>
 </section>
-
+<!--tests var_dumps-->
+<?php var_dump("Valeur de type :", $type); ?>
+<?php var_dump($_GET)?>
 <!--Grille d'affichage des médias du catalogue-->
+<section>
+    <h2>📚 Livres</h2>
+    <div class="grid">
+        <?php foreach ($data['books'] as $book): ?>
+        <div class="doc">            
+            <?=htmlspecialchars($book['title'])?>
+            <?=htmlspecialchars($book['synopsis'])?>
+            <?=htmlspecialchars($book['gender'])?>                        
+        </div>
+        <?php endforeach; ?>
+    </div>    
+
+    <h2>🎬 Films</h2>  
+    <div class="grid">
+        <?php foreach ($data['movies'] as $movies): ?>
+        <div class="doc">            
+            <?=htmlspecialchars($movies['title'])?>
+            <?=htmlspecialchars($movies['producer'])?>
+            <?=htmlspecialchars($movies['synopsis'])?>                                  
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <h2>🎮 Jeux vidéo</h2>
+    <div class="grid">
+        <?php foreach ($data['video-games'] as $video_games): ?>
+        <div class="doc">            
+            <?=htmlspecialchars($video_games['title'])?>
+            <?=htmlspecialchars($video_games['editor'])?>
+            <?=htmlspecialchars($video_games['description'])?>                                  
+        </div>
+        <?php endforeach; ?>
+</section>
 <h1>======================</h1>
 <section class="catalogue-grid">
     <!--Filtre par type de média-->
-    <?php if (!empty($data['type'])): ?>
+    <?php if(!empty($data['type'])):?>
         <h3><?php echo $data['type-title'] ?></h3>
         <?php foreach ($data['type'] as $doc): ?>
             <p>titre</p>
@@ -131,10 +182,10 @@
         <?php endforeach; ?>
     <?php endif ?>
     <!--Filtre par genre de média-->
-    <?php if (!empty($data['gender-filter'])): ?>
+    <?php if(!empty($data['gender-filter'])): ?>
     <?php endif ?>
     <!--Filtre par disponibilité des médias-->
-    <?php if (!empty($data['stock-filter'])): ?>
+    <?php if(!empty($data['stock-filter'])): ?>
         <?php foreach ($data['stock'] as $doc): ?>
             <p>titre</p>
             <?= htmlspecialchars($doc['title']) ?>
@@ -144,21 +195,21 @@
             <?= htmlspecialchars($doc['gender'] ?? '') ?>
         <?php endforeach; ?>
     <?php endif ?>
-
-
+   
+    <?php //endif ?>    
 </section>
 <h1>======================</h1>
 <section>
     <h2>📚 Catalogue filtré</h2>
     <div class="grid">
-        <?php if (!empty($data['type'])): ?>
+        <?php if(!empty($data['type'])): ?>
             <h3><?php echo $data['type-message'] ?></h3>
             <?php foreach ($data['type'] as $doc): ?>
                 <?= htmlspecialchars($doc['title']) ?>
                 <?= htmlspecialchars($doc['synopsis'] ?? '') ?>
                 <?= htmlspecialchars($doc['gender'] ?? '') ?>
             <?php endforeach ?>
-        <?php endif ?>
+        <?php endif?>
         <?php if (!empty($data['gender-filter'])): ?>
             <?php foreach ($data['gender-filter'] as $doc): ?>
                 <div class="doc">
@@ -167,8 +218,8 @@
                     <?= htmlspecialchars($doc['gender'] ?? '') ?>
                 </div>
             <?php endforeach; ?>
-
-        <?php else: ?>
+            
+        <?php else: ?>        
             <!-- Si pas de filtre, afficher tout -->
             <h3>📚 Livres</h3>
             <div class="grid">
@@ -205,3 +256,6 @@
         <?php endif; ?>
     </div>
 </section>
+
+
+
