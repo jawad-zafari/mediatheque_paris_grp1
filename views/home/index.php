@@ -1,3 +1,4 @@
+
 <div class="hero">
     <div class="hero-content">
         <h1><?php e($message); ?></h1>
@@ -10,7 +11,7 @@
         <?php else: ?>
             <p class="welcome-message">
                 <i class="fas fa-user"></i> 
-                Bienvenue, <?php e($_SESSION['user_name']); ?> !
+                Bienvenue, <?php e($_SESSION['user']['name'] ?? ''); ?> !
             </p>
         <?php endif; ?>
     </div>
@@ -51,4 +52,4 @@
             </div>
         </div>
     </div>
-</section> 
+</section>
