@@ -15,9 +15,9 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="<?php echo url(); ?>">Accueil</a></li>
+                <li><a href="<?php echo url('home/catalogue'); ?>">Catalogue</a></li>
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
-                 <li><a href="<?php echo url('home/profil'); ?>">profil</a></li>
                 <?php if (is_logged_in()): ?>
                     <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
                 <?php else: ?>
@@ -43,5 +43,4 @@
 
     <script src="<?php echo url('assets/js/app.js'); ?>"></script>
 </body>
-"d&&&&"
 </html> 
