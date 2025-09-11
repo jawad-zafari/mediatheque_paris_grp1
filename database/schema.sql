@@ -8,6 +8,7 @@ USE php_mvc_app;
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('user','admin') NOT NULL DEFAULT 'user',
@@ -25,6 +26,45 @@ INSERT INTO users (name, email, password) VALUES
 ('John Doe', 'john@example.com', '$2y$10$/vD8hGtkBJsAae2TiSkbV.jg0bnNDAFv8xBewH14.OKvR0PpeVbq6'),
 ('Jane Smith', 'jane@example.com', '$2y$10$/vD8hGtkBJsAae2TiSkbV.jg0bnNDAFv8xBewH14.OKvR0PpeVbq6'),
 ('Admin User', 'admin@example.com', '$2y$10$/vD8hGtkBJsAae2TiSkbV.jg0bnNDAFv8xBewH14.OKvR0PpeVbq6');
+-- Données test pour les livres
+INSERT INTO `books` (`id`, `title`, `writer`, `ISBN13`, `gender`, `page_number`, `synopsis`, `year`, 
+`image_url`, `available`, `stock`, `upload_date`) VALUES
+(3, 'Chroniques du Monde émergé - Intégrale', 'Licia Troisi', '978-2-266-24473-2', 'Fantaisie', 
+1200, 'Nihal est une jeune fille différente des autres : elle a les oreilles en pointe, les cheveux 
+bleus et de grands yeux violets, ce qui ne l\'empêche pas de mener une vie normale... jusqu\'à ce 
+que Tyran, un despote sanguinaire, envahisse la Terre des Vents et rase son village. Ce jour-là, 
+le destin de Nihal bascule. Dès lors, la jeune fille n\'a plus qu\'une idée en tête : venger les 
+siens et sauver les huit terres du Monde Émergé. Avec l\'aide de sa tante magicienne, du jeune mage 
+Sennar et de l\'épée de cristal noir forgée par son père, elle se lance à corps perdu dans une 
+bataille fantastique qui la conduira à travers les terres émergées, sur les traces d\'un continent 
+oublié, à la recherche de talismans et la poussera aux limites de sa force, de son intelligence et 
+de son courage...', '2006', 'https://images.noosfere.org/couv/p/pocketj-24473-2013.jpg', 1, 1, 
+'2025-09-09');
+-- Données test pour les films
+INSERT INTO `movies` (`id`, `title`, `producer`, `year`, `gender`, `duration`, `synopsis`, 
+`classification`, `image_url`, `available`, `stock`, `upload_date`) VALUES
+(2, 'Retour vers le Futur', 'Robert Zemeckis', '1985', 'Science-fiction', 116, 'L\''intrigue du 
+film relate les aventures de Marty McFly (Michael J. Fox), un adolescent qui voyage dans le passé 
+à bord d\'une machine à voyager dans le temps fabriquée par son ami le docteur Emmett Brown 
+(Christopher Lloyd) à partir d\'une voiture DeLorean DMC-12. Parti de l\'année 1985 et propulsé le 
+5 novembre 1955, Marty, aidé du « Doc » de 1955, doit résoudre les paradoxes temporels provoqués 
+par son passage dans le passé, et doit aussi trouver le moyen de faire fonctionner la machine pour 
+retourner à son époque. Marty sera notamment confronté à ses parents, George (Crispin Glover) et 
+Lorraine McFly (Lea Thompson) qui, à l\'époque, sont encore des adolescents. Enfin, Marty devra 
+lutter contre les stratagèmes d\'un autre adolescent, Biff Tannen (Thomas F. Wilson).', 'Tout public', 
+'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQ1SRzv6ghvKt42eUSFxrRC8xPiGf4fK2nCwp-p-IdZyS6qghetCaAVmLKVaumyjFkevfhQL1wDsCo9CXXvc-1AzsoCOx1XNzeGcL_P05Ledg', 
+1, 1, '2025-09-09');
+-- Données test pour les jeux vidéos
+INSERT INTO `video_games` (`id`, `title`, `editor`, `platform`, `gender`, `year`, `min_age`, 
+`description`, `image_url`, `available`, `stock`, `upload_date`) VALUES
+(2, 'Minecraft', 'Mojang Studios', 'Multi-plateforme', 'Aventure, bac à sable', '2009', 7, 
+'Minecraft plonge le joueur dans un monde créé de manière procédurale, composé de voxels 
+représentant différents matériaux (terre, pierre, eau, fer, charbon, etc.). Le monde est formé de 
+diverses structures (arbres, cavernes, montagnes, villages, etc.) et est peuplé par des animaux 
+(vaches, moutons, etc.) ainsi que des monstres (zombies, araignées, squelettes, etc.). Le joueur 
+peut modifier son monde à volonté, soit dans le but de survivre, soit pour créer.', 
+'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Minecraft_Alex_and_fauna.png/375px-Minecraft_Alex_and_fauna.png', 
+1, 1, '2025-09-09');
 
 -- Table de messages de contact (exemple d'extension)
 CREATE TABLE contact_messages (
@@ -42,11 +82,15 @@ CREATE TABLE `video_games` (
   `id` int AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(255) NOT NULL,
   `editor` varchar(255) NOT NULL,
-  `plateform` varchar(255) NOT NULL,
+  `platform` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `gender` varchar(255) NOT NULL,
-  `minimal_age` int NOT NULL,
-  `description` TEXT(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `stock` int NOT NULL
+  `year` year NOT NULL,
+  `min_age` int NOT NULL,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `image_url` varchar(500) NOT NULL,
+  `available` int NOT NULL,
+  `stock` int NOT NULL,
+  `upload_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- Table pour les films
@@ -54,12 +98,15 @@ CREATE TABLE `movies` (
   `id` int AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(255) NOT NULL,
   `producer` varchar(255) NOT NULL,
-  `year` int NOT NULL,
+  `year` year NOT NULL,
   `gender` varchar(255) NOT NULL,
-  `duration(m)` int NOT NULL,
-  `synopsis` TEXT(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `duration` int NOT NULL,
+  `synopsis` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `classification` varchar(255) NOT NULL,
-  `stock` int NOT NULL
+  `image_url` varchar(500) NOT NULL,
+  `available` int NOT NULL,
+  `stock` int NOT NULL,
+  `upload_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- Table pour les livres
@@ -67,12 +114,15 @@ CREATE TABLE `books` (
   `id` int AUTO_INCREMENT PRIMARY KEY,
   `title` varchar(255) NOT NULL,
   `writer` varchar(255) NOT NULL,
-  `ISBN_13` int NOT NULL,
+  `ISBN13` varchar(100) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `page_number` int NOT NULL,
-  `synopsis` TEXT(1000) NOT NULL,
-  `date_of_publication` date NOT NULL,
-  `stock` int NOT NULL
+  `synopsis` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `year` year NOT NULL,
+  `image_url` varchar(500) NOT NULL,
+  `available` int NOT NULL,
+  `stock` int NOT NULL,
+  `upload_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 
