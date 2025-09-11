@@ -97,7 +97,7 @@ $edit = isset($_GET['edit']) && $_GET['edit'] === '1';
 </head>
 <body>
 
-<!-- Message de succès -->
+<!-- un Message de succès -->
 <?php if (!empty($success)): ?>
     <div class="success-message">
         Profil mis à jour avec succès !
