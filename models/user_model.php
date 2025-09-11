@@ -20,31 +20,29 @@ function get_user_by_id($id) {
 /**
  * Crée un nouvel utilisateur
  */
-function create_user($prenom, $nom, $email, $password) {
-    $hashed_password = hash_password($password);
-    $query = "INSERT INTO users (prenom, nom, email, password, created_at) VALUES (?, ?, ?, ?, NOW())";
+function create_user($name, $last_name, $email, $password, $role = 'user') {
+    $hashed_password = hash_password($password); // hash sécurisé
+    $query = "INSERT INTO users (name, last_name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
     
-    if (db_execute($query, [$prenom, $nom, $email, $hashed_password])) {
+    if (db_execute($query, [$name, $last_name, $email, $hashed_password, $role])) {
         return db_last_insert_id();
     }
-    
     return false;
 }
-
 
 /**
  * Met à jour un utilisateur
  */
-function update_user($id, $prenom, $nom, $email) {
-    $query = "UPDATE users SET prenom = ?, nom = ?, email = ?, updated_at = NOW() WHERE id = ?";
-    return db_execute($query, [$prenom, $nom, $email, $id]);
+function update_user($id, $name, $last_name, $email, $role = 'user') {
+    $query = "UPDATE users SET name = ?, last_name = ?, email = ?, role = ?, updated_at = NOW() WHERE id = ?";
+    return db_execute($query, [$name, $last_name, $email, $role, $id]);
 }
 
 /**
  * Met à jour le mot de passe d'un utilisateur
  */
 function update_user_password($id, $password) {
-    $hashed_password = hash_password($password);
+    $hashed_password = hash_password($password); // hash sécurisé
     $query = "UPDATE users SET password = ?, updated_at = NOW() WHERE id = ?";
     return db_execute($query, [$hashed_password, $id]);
 }
@@ -61,8 +59,7 @@ function delete_user($id) {
  * Récupère tous les utilisateurs
  */
 function get_all_users($limit = null, $offset = 0) {
-    $query = "SELECT id, prenom, nom, email, created_at FROM users ORDER BY created_at DESC";
-
+    $query = "SELECT id, name, last_name, email, role, created_at FROM users ORDER BY created_at DESC";
     
     if ($limit !== null) {
         $query .= " LIMIT $offset, $limit";
@@ -95,3 +92,10 @@ function email_exists($email, $exclude_id = null) {
     $result = db_select_one($query, $params);
     return $result['count'] > 0;
 } 
+
+/**
+ * Retourne le nombre total d'utilisateurs (fonction alias)
+ */
+function get_users_count() {
+    return count_users();
+}
