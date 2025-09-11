@@ -112,8 +112,11 @@
         </div>
         <input type="submit" name="submit" value="Rechercher">
 
+
+
     </form>
 </section>
+
 
 <h1>======================</h1>
 <section class="catalogue-grid">
