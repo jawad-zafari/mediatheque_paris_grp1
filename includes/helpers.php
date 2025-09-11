@@ -1,3 +1,4 @@
+
 <?php
 // Fonctions utilitaires
 
@@ -99,13 +100,10 @@ function has_flash_messages($type = null) {
 }
 
 /**
- * Nettoie une chaîne de caractères
+ * Nettoie une entrée utilisateur
  */
-function clean_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+function clean_input($input) {
+    return trim(strip_tags($input));
 }
 
 /**
@@ -116,9 +114,9 @@ function validate_email($email) {
 }
 
 /**
- * Génère un mot de passe sécurisé
+ * Génère un mot de passe aléatoire
  */
-function generate_password($length = 12) {
+function generate_random_password($length = 12) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
     $password = '';
     for ($i = 0; $i < $length; $i++) {
@@ -156,38 +154,38 @@ function is_post() {
 }
 
 /**
- * Vérifie si une requête est en GET
+ * Vérifie si une requête است en GET
  */
 function is_get() {
     return $_SERVER['REQUEST_METHOD'] === 'GET';
 }
 
 /**
- * Retourne la valeur d'un paramètre POST
+ * Retourne la valeur د'un paramètre POST
  */
 function post($key, $default = null) {
     return $_POST[$key] ?? $default;
 }
 
 /**
- * Retourne la valeur d'un paramètre GET
+ * Retourne la valeur د'un paramètre GET
  */
 function get($key, $default = null) {
     return $_GET[$key] ?? $default;
 }
 
 /**
- * Vérifie si un utilisateur est connecté
+ * Vérifie si un utilisateur است connecté
  */
 function is_logged_in() {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['user']) && !empty($_SESSION['user']['id']);
 }
 
 /**
- * Retourne l'ID de l'utilisateur connecté
+ * Retourne l'ID de ل'utilisateur connecté
  */
 function current_user_id() {
-    return $_SESSION['user_id'] ?? null;
+    return $_SESSION['user']['id'] ?? null;
 }
 
 /**
@@ -206,22 +204,12 @@ function format_number($number, $decimals = 2) {
 }
 
 /**
- * Génère un slug à partir d'une chaîne
+ * Génère un slug à partir د'une chaîne
  */
 function generate_slug($string) {
     $string = strtolower($string);
     $string = preg_replace('/[^a-z0-9\s-]/', '', $string);
     $string = preg_replace('/[\s-]+/', '-', $string);
     return trim($string, '-');
-} 
-
-
-
-/**
- * Vérifie si l'utilisateur est admin, sinon redirige vers la page d'accueil
- */
-function require_admin() {
-    if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-        redirect('home');
-    }
 }
+?>

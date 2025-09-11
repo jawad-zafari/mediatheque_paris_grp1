@@ -1,3 +1,4 @@
+
 <?php
 // Contrôleur d'authentification
 
@@ -5,7 +6,6 @@
  * Page de connexion
  */
 function auth_login() {
-
     // Rediriger si déjà connecté
     if (is_logged_in()) {
         redirect('home');
@@ -24,14 +24,17 @@ function auth_login() {
         } else {
             // Rechercher l'utilisateur
             $user = get_user_by_email($email);
-   
             
             if ($user && verify_password($password, $user['password'])) {
                 // Connexion réussie
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_email'] = $user['email'];
-                
+                $_SESSION['user'] = [
+                    'id' => $user['id'],
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'role' => $user['role']
+                ];
+                $_SESSION['user_id'] = $user['id']; // افزودن user_id برای هماهنگی با is_logged_in
+                session_write_close(); // ذخیره سشن قبل از ریدایرکت
                 set_flash('success', 'Connexion réussie !');
                 redirect('home');
             } else {
@@ -57,8 +60,7 @@ function auth_register() {
     ];
     
     if (is_post()) {
-        $nom = clean_input(post('name'));     
-        $prenom = clean_input(post('prenom')); 
+        $name = clean_input(post('name'));
         $email = clean_input(post('email'));
         $password = post('password');
         $confirm_password = post('confirm_password');
@@ -68,19 +70,15 @@ function auth_register() {
             set_flash('error', 'Tous les champs sont obligatoires.');
         } elseif (!validate_email($email)) {
             set_flash('error', 'Adresse email invalide.');
-        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
-            set_flash('error', 'Le mot de passe doit contenir au minimum 8 caractères, 
-            avec au moins 1 majuscule, 1 minuscule et 1 chiffre.');
+        } elseif (strlen($password) < 6) {
+            set_flash('error', 'Le mot de passe doit contenir au moins 6 caractères.');
         } elseif ($password !== $confirm_password) {
             set_flash('error', 'Les mots de passe ne correspondent pas.');
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
-            // Hashage sécurisé du mot de passe
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Créer l'utilisateur 
-            $user_id = create_user($nom, $prenom, $email, $hashed_password);
+            // Créer l'utilisateur
+            $user_id = create_user($name, $email, $password);
             
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
@@ -99,4 +97,5 @@ function auth_register() {
  */
 function auth_logout() {
     logout();
-} 
+}
+?>
