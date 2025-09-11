@@ -37,6 +37,45 @@ CREATE TABLE contact_messages (
 );
 
 
+-- Table pour les jeux vidéos
+CREATE TABLE `video_games` (
+  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `editor` varchar(255) NOT NULL,
+  `plateform` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `minimal_age` int NOT NULL,
+  `description` TEXT(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `stock` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Table pour les films
+CREATE TABLE `movies` (
+  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `producer` varchar(255) NOT NULL,
+  `year` int NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `duration(m)` int NOT NULL,
+  `synopsis` TEXT(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `classification` varchar(255) NOT NULL,
+  `stock` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Table pour les livres
+CREATE TABLE `books` (
+  `id` int AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `writer` varchar(255) NOT NULL,
+  `ISBN_13` int NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `page_number` int NOT NULL,
+  `synopsis` TEXT(1000) NOT NULL,
+  `date_of_publication` date NOT NULL,
+  `stock` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
 -- Table de paramètres de configuration
 CREATE TABLE settings (
     id INT AUTO_INCREMENT PRIMARY KEY,

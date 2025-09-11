@@ -20,14 +20,18 @@
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
                 <?php if (is_logged_in()): ?>
+
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                         <li><a href="<?php echo url('admin/dashboard'); ?>">Administration</a></li>
+
                     <?php endif; ?>
                     <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
                 <?php else: ?>
                     <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
                     <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
+
                     <li><a href="<?php echo url('auth/forgot-password2'); ?>">Se déconnecter</a></li>
+
                 <?php endif; ?>
             </ul>
         </nav>

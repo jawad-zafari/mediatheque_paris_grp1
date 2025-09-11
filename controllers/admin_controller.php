@@ -4,6 +4,7 @@
 require_once MODEL_PATH . '/user_model.php';
 require_once MODEL_PATH . '/media_model.php';
 require_once MODEL_PATH . '/rental_model.php';
+require_once MODEL_PATH . '/loan_model.php';
 
 // ----------------- TABLEAU DE BORD -----------------
 function get_total_media_count() {
@@ -32,6 +33,7 @@ function admin_dashboard() {
 
 // ----------------- GESTION DES MÉDIAS -----------------
 function admin_media_list() {
+
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les médias
@@ -175,10 +177,12 @@ function admin_user_detail($id) {
     $user = get_user_by_id($id);
     // Affiche la vue des détails de ل'utilisateur
     load_view_with_layout('admin/user_detail', ['user' => $user]);
+
 }
 
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list() {
+
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les emprunts
@@ -211,5 +215,6 @@ function admin_loan_create($user_id, $media_id, $media_type) {
     }
     // Redirection vers la liste des emprunts
     redirect('/admin/loans');
+
 }
 ?>

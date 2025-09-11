@@ -14,7 +14,8 @@ function home_index() {
             'Templating HTML/CSS',
             'Gestion de base de données',
             'Sécurité intégrée'
-        ]
+        ],
+        'user_name' => $_SESSION['name'] ?? 'Invité'
     ];
     
     load_view_with_layout('home/index', $data);
@@ -45,13 +46,15 @@ function home_contact() {
         $email = clean_input(post('email'));
         $message = clean_input(post('message'));
         
+
         // Validation simple
+
+
         if (empty($name) || empty($email) || empty($message)) {
             set_flash('error', 'Tous les champs sont obligatoires.');
         } elseif (!validate_email($email)) {
             set_flash('error', 'Adresse email invalide.');
         } else {
-            // Ici vous pourriez envoyer l'email ou sauvegarder en base
             set_flash('success', 'Votre message a été envoyé avec succès !');
             redirect('home/contact');
         }
@@ -68,7 +71,8 @@ function home_profile() {
     $data = [
         'title' => 'Profile',
         'message' => 'Bienvenue sur votre profil',
-        'content' => 'Cette application est un starter kit PHP MVC développé avec une approche procédurale.'
+        'content' => 'Cette application est un starter kit PHP MVC développé avec une approche procédurale.',
+        'user_name' => $_SESSION['name'] ?? 'Invité'
     ];
     
     load_view_with_layout('home/profile', $data);
@@ -84,4 +88,5 @@ function home_test() {
     ];
     
     load_view_with_layout('home/test', $data);
+
 } 

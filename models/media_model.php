@@ -1,6 +1,7 @@
 
 <?php
-/* media_model.php - adapté à la nouvelle base de données */
+/* media_model.php - adapté à la nouvelle BD */
+
 
 /**
  * Récupère tous les médias
@@ -11,10 +12,12 @@ function get_all_media($limit = null, $offset = 0) {
         UNION ALL
         SELECT id, title, 'movie' AS type, gender AS genre, stock FROM movies
         UNION ALL
-        SELECT id, title, 'game' AS type, gender AS genre, stock FROM video_games
-        ORDER BY title ASC
-    ";
+
     // Ajoute une limite et un décalage si spécifiés
+
+        SELECT id, title, 'video_game' AS type, gender AS genre, stock FROM video_games
+        ORDER BY title ASC";
+
     if ($limit !== null) {
         $query .= " LIMIT $offset, $limit";
     }
@@ -28,6 +31,7 @@ function get_media_by_id($id, $type) {
     $db = db_connect();
     switch($type) {
         case 'book':
+
             // Prépare la requête pour les livres
             $stmt = $db->prepare("SELECT * FROM books WHERE id = ?");
             break;
@@ -35,8 +39,10 @@ function get_media_by_id($id, $type) {
             // Prépare la requête pour les films
             $stmt = $db->prepare("SELECT * FROM movies WHERE id = ?");
             break;
-        case 'game':
+        
             // Prépare la requête pour les jeux vidéo
+        case 'video_game':
+
             $stmt = $db->prepare("SELECT * FROM video_games WHERE id = ?");
             break;
         default:
@@ -51,7 +57,9 @@ function get_media_by_id($id, $type) {
  */
 function get_media_count() {
     $db = db_connect();
+
     // Calcule le total des médias dans toutes les tables
+
     return $db->query("
         SELECT 
             (SELECT COUNT(*) FROM books) +
@@ -67,6 +75,7 @@ function create_media($type, $data) {
     $db = db_connect();
     switch($type) {
         case 'book':
+
             // Insère un nouveau livre
             $stmt = $db->prepare("INSERT INTO books (title, writer, ISBN13, gender, page_number, synopsis, year, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
@@ -86,7 +95,7 @@ function create_media($type, $data) {
                 $data['image_url'] ?? '', // URL de l'image par défaut vide
                 date('Y-m-d') // Date de téléchargement définie à la date actuelle
             ]);
-        case 'game':
+        case 'video_game':
             // Insère un nouveau jeu vidéo
             $stmt = $db->prepare("INSERT INTO video_games (title, editor, plateform, gender, min_age, synopsis, year, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
@@ -95,6 +104,7 @@ function create_media($type, $data) {
                 1, // Disponibilité par défaut à 1
                 $data['image_url'] ?? '', // URL de l'image par défaut vide
                 date('Y-m-d') // Date de téléchargement définie à la date actuelle
+
             ]);
         default:
             return false;
@@ -108,6 +118,7 @@ function update_media($id, $type, $data) {
     $db = db_connect();
     switch($type) {
         case 'book':
+
             // Met à jour un livre
             $stmt = $db->prepare("UPDATE books SET title = ?, writer = ?, ISBN13 = ?, gender = ?, page_number = ?, synopsis = ?, year = ?, stock = ? WHERE id = ?");
             return $stmt->execute([
@@ -121,12 +132,13 @@ function update_media($id, $type, $data) {
                 $data['title'], $data['producer'], $data['year'], $data['genre'],
                 $data['duration(m)'], $data['synopsis'], $data['classification'], $data['stock'], $id
             ]);
-        case 'game':
+        case 'video_game':
             // Met à jour un jeu vidéo
             $stmt = $db->prepare("UPDATE video_games SET title = ?, editor = ?, plateform = ?, gender = ?, min_age = ?, synopsis = ?, year = ?, stock = ? WHERE id = ?");
             return $stmt->execute([
                 $data['title'], $data['editor'], $data['plateform'], $data['genre'],
                 $data['min_age'], $data['synopsis'], $data['year'], $data['stock'], $id
+
             ]);
         default:
             return false;
@@ -140,6 +152,7 @@ function delete_media($id, $type) {
     $db = db_connect();
     switch($type) {
         case 'book':
+
             // Supprime un livre
             $stmt = $db->prepare("DELETE FROM books WHERE id = ?");
             break;
@@ -147,8 +160,9 @@ function delete_media($id, $type) {
             // Supprime un film
             $stmt = $db->prepare("DELETE FROM movies WHERE id = ?");
             break;
-        case 'game':
+        case 'video_game':
             // Supprime un jeu vidéo
+
             $stmt = $db->prepare("DELETE FROM video_games WHERE id = ?");
             break;
         default:
@@ -182,14 +196,17 @@ function upload_cover_image($file) {
     if (!move_uploaded_file($file['tmp_name'], $destination)) return false;
 
     // Obtient les dimensions de l'image
+
     list($width, $height) = getimagesize($destination);
     $max_width = 300;
     $max_height = 400;
+
 
     // Calcule le ratio pour le redimensionnement
     $ratio = min($max_width/$width, $max_height/$height, 1);
     $new_width = (int)($width * $ratio);
     $new_height = (int)($height * $ratio);
+
 
     // Crée une image source selon le type
     $src = null;
@@ -198,6 +215,7 @@ function upload_cover_image($file) {
         case 'image/png': $src = imagecreatefrompng($destination); break;
         case 'image/gif': $src = imagecreatefromgif($destination); break;
     }
+
 
     // Redimensionne l'image si source valide
     if ($src) {
@@ -212,7 +230,9 @@ function upload_cover_image($file) {
         imagedestroy($dst);
     }
 
+
     // Retourne le nom du fichier
     return $new_name;
 }
 ?>
+

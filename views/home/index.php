@@ -11,7 +11,9 @@
         <?php else: ?>
             <p class="welcome-message">
                 <i class="fas fa-user"></i> 
-                Bienvenue, <?php e($_SESSION['user']['name'] ?? ''); ?> !
+
+                Bienvenue, <?php e(current_user_name()); ?> !
+
             </p>
         <?php endif; ?>
     </div>
