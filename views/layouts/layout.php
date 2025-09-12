@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +6,31 @@
     <title><?php echo isset($title) ? esc($title) . ' - ' . APP_NAME : APP_NAME; ?></title>
     <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Style pour le dropdown admin (sans JS) */
+        .nav-menu { position: relative; }
+        .dropdown { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            right: 0; 
+            background: #f8f9fa; 
+            min-width: 200px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+            z-index: 1000; 
+            border-radius: 5px; 
+        }
+        .dropdown li { margin: 0; }
+        .dropdown a { 
+            display: block; 
+            padding: 10px 15px; 
+            color: #333; 
+            text-decoration: none; 
+        }
+        .dropdown a:hover { background: #e9ecef; }
+        /* Affichage du dropdown au survol */
+        .dropdown-container:hover .dropdown { display: block; }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -20,18 +44,22 @@
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
                 <?php if (is_logged_in()): ?>
-
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                        <li><a href="<?php echo url('admin/dashboard'); ?>">Administration</a></li>
-
+                        <li class="dropdown-container">
+                            <a href="<?php echo url('admin/dashboard'); ?>">Administration <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown">
+                                <li><a href="<?php echo url('admin/media'); ?>">Gestion des médias</a></li>
+                                <li><a href="<?php echo url('admin/users'); ?>">Gestion des utilisateurs</a></li>
+                                <li><a href="<?php echo url('admin/loans'); ?>">Gestion des emprunts</a></li>
+                                <li><a href="<?php echo url('admin/dashboard'); ?>">Tableau de bord</a></li>
+                            </ul>
+                        </li>
                     <?php endif; ?>
                     <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
                 <?php else: ?>
                     <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
                     <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
-
                     <li><a href="<?php echo url('auth/forgot-password2'); ?>">Se déconnecter</a></li>
-
                 <?php endif; ?>
             </ul>
         </nav>

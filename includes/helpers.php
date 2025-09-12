@@ -1,4 +1,3 @@
-
 <?php
 // Fonctions utilitaires
 
@@ -6,7 +5,7 @@
  * Sécurise l'affichage d'une chaîne de caractères (protection XSS)
  */
 function escape($string) {
-    return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
 
 /**
@@ -147,7 +146,7 @@ function format_date($date, $format = 'd/m/Y H:i') {
 }
 
 /**
- * Vérifie si une requête est en POST
+ * Vérifie si une requête است en POST
  */
 function is_post() {
     return $_SERVER['REQUEST_METHOD'] === 'POST';
@@ -187,38 +186,6 @@ function is_logged_in() {
 function current_user_id() {
     return $_SESSION['user']['id'] ?? null;
 }
-
-/**
- * Retourne les infos complètes de l'utilisateur connecté
- */
-function current_user() {
-    if (!is_logged_in()) {
-        return null;
-    }
-
-    require_once MODEL_PATH . '/user_model.php';
-    return get_user_by_id(current_user_id());
-}
-
-/**
- * Retourne le prénom de l'utilisateur connecté
- */
-function current_user_name() {
-    return $_SESSION['user_name'] ?? 'Invité';
-}
-
-/**
- * Vérifie si l'utilisateur est admin, sinon redirige vers la page d'accueil
- */
-function require_admin() {
-    $user = current_user();
-    if (!$user || $user['role'] !== 'admin') {
-        set_flash('error', "Accès refusé : vous devez être administrateur.");
-        redirect('/'); // ou "home" selon ton routeur
-        exit;
-    }
-}
-
 
 /**
  * Déconnecte l'utilisateur

@@ -5,30 +5,15 @@
             <p>Créez votre compte</p>
         </div>
         
-        <form method="POST" class="auth-form" action="<?php echo url('auth/register'); ?>">
+        <form method="POST" class="auth-form">
             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             
             <div class="form-group">
-
-                <label for="name">Prenom </label>
+                <label for="name">Nom complet</label>
                 <input type="text" id="name" name="name" required 
                        value="<?php echo escape(post('name', '')); ?>"
-                       placeholder="Votre prenom "
-                       pattern="[A-Za-zÀ-ÿ\s\-]{2,50}"
-                       title="2 à 50 lettres, espaces et tirets uniquement">
-
+                       placeholder="Votre nom complet">
             </div>
-
-            <div class="form-group">
-                <label for="last_name">Nom</label>
-                <input type="text" id="last_name" name="last_name" required 
-                    value="<?php echo escape(post('last_name', '')); ?>"
-                    placeholder="Votre nom"
-                    pattern="[A-Za-zÀ-ÿ\s\-]{2,50}"
-                    title="2 à 50 lettres, espaces et tirets uniquement">
-            </div>
-
-
             
             <div class="form-group">
                 <label for="email">Adresse email</label>

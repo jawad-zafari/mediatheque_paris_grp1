@@ -1,10 +1,8 @@
-
 <?php
 
 require_once MODEL_PATH . '/user_model.php';
 require_once MODEL_PATH . '/media_model.php';
 require_once MODEL_PATH . '/rental_model.php';
-require_once MODEL_PATH . '/loan_model.php';
 
 // ----------------- TABLEAU DE BORD -----------------
 function get_total_media_count() {
@@ -26,6 +24,11 @@ function admin_dashboard() {
         'users_count' => count_users(),
         'media_count' => get_total_media_count(),
         'loans_count' => get_rentals_count(),
+        'media_stats' => [
+            'books' => db_select_one("SELECT COUNT(*) as total FROM books")['total'] ?? 0,
+            'movies' => db_select_one("SELECT COUNT(*) as total FROM movies")['total'] ?? 0,
+            'video_games' => db_select_one("SELECT COUNT(*) as total FROM video_games")['total'] ?? 0,
+        ],
     ];
     // Affiche la vue du tableau de bord
     load_view_with_layout('admin/dashboard', ['stats' => $stats]);
@@ -33,7 +36,6 @@ function admin_dashboard() {
 
 // ----------------- GESTION DES MÉDIAS -----------------
 function admin_media_list() {
-
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les médias
@@ -53,110 +55,95 @@ function admin_media_edit($id = null) {
         if (count($parts) === 2) {
             $type = $parts[0];
             $media_id = $parts[1];
-            // Récupère le média par ID و type
             $media = get_media_by_id($media_id, $type);
+            if ($media) {
+                $media['media_type'] = $type;
+            }
         }
     }
-    // Affiche la vue د'édition du média
-    load_view_with_layout('admin/media_edit', ['media' => $media]);
+    // Affiche le formulaire d'édition ou de création
+    load_view_with_layout('admin/media_edit', ['media' => $media, 'title' => $id ? 'Éditer média' : 'Ajouter média']);
 }
 
+/**
+ * Enregistre un média (création ou mise à jour)
+ */
 function admin_media_save($id = null) {
-    // Vérifie les droits د'administrateur
     require_admin();
-
-    // Récupère et nettoie les données du formulaire
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        set_flash('error', 'Token CSRF invalide');
+        redirect($id ? "/admin/media/edit/$id" : "/admin/media/add");
+        return;
+    }
     $title = trim($_POST['title'] ?? '');
-    $type  = $_POST['type'] ?? '';
+    $type = $_POST['type'] ?? '';
     $genre = trim($_POST['genre'] ?? '');
     $stock = intval($_POST['stock'] ?? 1);
-
-    // Mapping type français → anglais
-    $type_map = ['livre'=>'book', 'film'=>'movie', 'jeu'=>'game'];
-    $type_db = $type_map[$type] ?? null;
-
-    // Vérifie si le type است valide
-    if (!$type_db) {
+    $type_map = ['livre' => 'book', 'film' => 'movie', 'jeu' => 'video_game'];
+    $type_db = $type_map[$type] ?? $type;
+    if (!in_array($type_db, ['book', 'movie', 'video_game'])) {
         set_flash('error', 'Type de média invalide');
         redirect($id ? "/admin/media/edit/$id" : "/admin/media/add");
         return;
     }
-
-    // Champs spécifiques pour chaque type de média
-    $extra_fields = [];
-    $extra_fields['title'] = $title;
-    $extra_fields['genre'] = $genre;
-    $extra_fields['stock'] = $stock;
+    $extra_fields = ['title' => $title, 'genre' => $genre, 'stock' => $stock];
     if ($type_db === 'book') {
-        // Champs spécifiques pour les livres
         $extra_fields['writer'] = trim($_POST['writer'] ?? '');
         $extra_fields['ISBN13'] = trim($_POST['ISBN13'] ?? '');
         $extra_fields['page_number'] = intval($_POST['page_number'] ?? 0);
-        $extra_fields['year'] = intval($_POST['year'] ?? 0);
         $extra_fields['synopsis'] = trim($_POST['synopsis'] ?? '');
+        $extra_fields['year'] = intval($_POST['year'] ?? 0);
     } elseif ($type_db === 'movie') {
-        // Champs spécifiques برای les films
         $extra_fields['producer'] = trim($_POST['producer'] ?? '');
-        $extra_fields['year'] = intval($_POST['year'] ?? 0);
-        $extra_fields['duration(m)'] = intval($_POST['duration'] ?? 0);
-        $extra_fields['classification'] = trim($_POST['classification'] ?? '');
+        $extra_fields['duration_m'] = intval($_POST['duration_m'] ?? 0);
         $extra_fields['synopsis'] = trim($_POST['synopsis'] ?? '');
-    } elseif ($type_db === 'game') {
-        // Champs spécifiques برای les jeux vidéo
+        $extra_fields['classification'] = trim($_POST['classification'] ?? '');
+        $extra_fields['year'] = intval($_POST['year'] ?? 0);
+    } elseif ($type_db === 'video_game') {
         $extra_fields['editor'] = trim($_POST['editor'] ?? '');
-        $extra_fields['plateform'] = trim($_POST['plateform'] ?? '');
+        $extra_fields['platform'] = trim($_POST['platform'] ?? '');
         $extra_fields['min_age'] = intval($_POST['min_age'] ?? 0);
         $extra_fields['synopsis'] = trim($_POST['synopsis'] ?? '');
         $extra_fields['year'] = intval($_POST['year'] ?? 0);
     }
-
-    // Validation des données
-    $errors = [];
-    if ($title === '' || strlen($title) > 255) $errors[] = "Titre invalide";
-    if ($genre === '') $errors[] = "Genre obligatoire";
-    if ($stock < 1) $errors[] = "Stock invalide";
-
-    // Gestion des erreurs
-    if (!empty($errors)) {
-        set_flash('error', implode(', ', $errors));
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image_name = upload_cover_image($_FILES['image']);
+        if ($image_name) {
+            $extra_fields['image_url'] = $image_name;
+        }
+    }
+    if (empty($title) || empty($genre) || $stock < 0) {
+        set_flash('error', 'Champs obligatoires manquants ou invalides.');
         redirect($id ? "/admin/media/edit/$id" : "/admin/media/add");
         return;
     }
-
-    // Persistance des données
     if ($id) {
-        // Mise à jour د'un média existant
         $parts = explode('_', $id);
         if (count($parts) === 2) {
             $type_db = $parts[0];
             $media_id = $parts[1];
             update_media($media_id, $type_db, $extra_fields);
-            set_flash('success', 'Média mis à jour با succès.');
+            set_flash('success', 'Média mis à jour avec succès.');
         }
     } else {
-        // Création د'un nouveau média
         create_media($type_db, $extra_fields);
-        set_flash('success', 'Média créé با succès.');
+        set_flash('success', 'Média créé avec succès.');
     }
-
-    // Redirection vers la liste des médias
     redirect('/admin/media');
 }
 
+/**
+ * Supprime un média
+ */
 function admin_media_delete($id, $type) {
-    // Vérifie les droits د'administrateur
     require_admin();
-    // Mapping type français → anglais
-    $type_map = ['livre'=>'book', 'film'=>'movie', 'jeu'=>'game'];
-    $type_db = $type_map[$type] ?? null;
-
-    // Supprime le média si le type است valide
-    if ($type_db && delete_media($id, $type_db)) {
-        set_flash('success', 'Média supprimé با succès.');
+    $type_map = ['livre' => 'book', 'film' => 'movie', 'jeu' => 'video_game'];
+    $type_db = $type_map[$type] ?? $type;
+    if (in_array($type_db, ['book', 'movie', 'video_game']) && delete_media($id, $type_db)) {
+        set_flash('success', 'Média supprimé avec succès.');
     } else {
         set_flash('error', 'Impossible de supprimer ce média.');
     }
-    // Redirection vers la liste des médias
     redirect('/admin/media');
 }
 
@@ -177,12 +164,10 @@ function admin_user_detail($id) {
     $user = get_user_by_id($id);
     // Affiche la vue des détails de ل'utilisateur
     load_view_with_layout('admin/user_detail', ['user' => $user]);
-
 }
 
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list() {
-
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les emprunts
@@ -215,6 +200,5 @@ function admin_loan_create($user_id, $media_id, $media_type) {
     }
     // Redirection vers la liste des emprunts
     redirect('/admin/loans');
-
 }
 ?>
