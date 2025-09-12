@@ -1,6 +1,8 @@
-
 <?php
 // Contrôleur d'authentification
+
+// Charger le modèle utilisateur
+require_once MODEL_PATH . '/user_model.php';
 
 /**
  * Page de connexion
@@ -27,14 +29,12 @@ function auth_login() {
             
             if ($user && password_verify($password, $user['password'])) {
                 // Connexion réussie
-
-                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user'] = $user;
+                $_SESSION['user_id'] = $user['id']; // اضافه کردن user_id به جلسه
                 $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_lastname']  = $user['last_name'];
-                $_SESSION['user_email']     = $user['email'];
-
+                $_SESSION['user_lastname'] = $user['last_name'];
+                $_SESSION['user_email'] = $user['email'];
                 
->
                 set_flash('success', 'Connexion réussie !');
                 redirect('home');
             } else {
@@ -60,7 +60,6 @@ function auth_register() {
     ];
     
     if (is_post()) {
-
         // Nettoyer et mettre la première lettre en majuscule
         $name = mb_convert_case(clean_input(post('name')), MB_CASE_TITLE, 'UTF-8');     
         $last_name = mb_convert_case(clean_input(post('last_name')), MB_CASE_TITLE, 'UTF-8'); 
@@ -81,14 +80,8 @@ function auth_register() {
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
-
-            // Hashage sécurisé du mot de passe
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
             // Créer l'utilisateur 
             $user_id = create_user($name, $last_name, $email, $password);
-
-
             
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');

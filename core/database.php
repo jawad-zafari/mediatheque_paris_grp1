@@ -29,9 +29,14 @@ function db_connect() {
  */
 function db_select($query, $params = []) {
     $pdo = db_connect();
-    $stmt = $pdo->prepare($query);
-    $stmt->execute($params);
-    return $stmt->fetchAll();
+    try {
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log("Erreur SQL SELECT: " . $e->getMessage());
+        return [];
+    }
 }
 
 /**
@@ -39,9 +44,14 @@ function db_select($query, $params = []) {
  */
 function db_select_one($query, $params = []) {
     $pdo = db_connect();
-    $stmt = $pdo->prepare($query);
-    $stmt->execute($params);
-    return $stmt->fetch();
+    try {
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetch();
+    } catch (PDOException $e) {
+        error_log("Erreur SQL SELECT ONE: " . $e->getMessage());
+        return null;
+    }
 }
 
 /**
@@ -49,8 +59,13 @@ function db_select_one($query, $params = []) {
  */
 function db_execute($query, $params = []) {
     $pdo = db_connect();
-    $stmt = $pdo->prepare($query);
-    return $stmt->execute($params);
+    try {
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute($params);
+    } catch (PDOException $e) {
+        error_log("Erreur SQL EXECUTE: " . $e->getMessage());
+        return false;
+    }
 }
 
 /**
@@ -66,7 +81,12 @@ function db_last_insert_id() {
  */
 function db_begin_transaction() {
     $pdo = db_connect();
-    return $pdo->beginTransaction();
+    try {
+        return $pdo->beginTransaction();
+    } catch (PDOException $e) {
+        error_log("Erreur transaction begin: " . $e->getMessage());
+        return false;
+    }
 }
 
 /**
@@ -74,7 +94,12 @@ function db_begin_transaction() {
  */
 function db_commit() {
     $pdo = db_connect();
-    return $pdo->commit();
+    try {
+        return $pdo->commit();
+    } catch (PDOException $e) {
+        error_log("Erreur transaction commit: " . $e->getMessage());
+        return false;
+    }
 }
 
 /**
@@ -82,5 +107,11 @@ function db_commit() {
  */
 function db_rollback() {
     $pdo = db_connect();
-    return $pdo->rollBack();
-} 
+    try {
+        return $pdo->rollBack();
+    } catch (PDOException $e) {
+        error_log("Erreur transaction rollback: " . $e->getMessage());
+        return false;
+    }
+}
+?>

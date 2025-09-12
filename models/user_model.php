@@ -1,4 +1,3 @@
-
 <?php
 // Modèle pour les utilisateurs
 
@@ -21,13 +20,11 @@ function get_user_by_id($id) {
 /**
  * Crée un nouvel utilisateur
  */
-
 function create_user($name, $last_name, $email, $password, $role = 'user') {
     $hashed_password = hash_password($password); // hash sécurisé
     $query = "INSERT INTO users (name, last_name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
     
     if (db_execute($query, [$name, $last_name, $email, $hashed_password, $role])) {
-
         return db_last_insert_id();
     }
     return false;
@@ -36,11 +33,9 @@ function create_user($name, $last_name, $email, $password, $role = 'user') {
 /**
  * Met à jour un utilisateur
  */
-
 function update_user($id, $name, $last_name, $email, $role = 'user') {
     $query = "UPDATE users SET name = ?, last_name = ?, email = ?, role = ?, updated_at = NOW() WHERE id = ?";
     return db_execute($query, [$name, $last_name, $email, $role, $id]);
-
 }
 
 /**
@@ -64,9 +59,7 @@ function delete_user($id) {
  * Récupère tous les utilisateurs
  */
 function get_all_users($limit = null, $offset = 0) {
-
     $query = "SELECT id, name, last_name, email, role, created_at FROM users ORDER BY created_at DESC";
-
     
     if ($limit !== null) {
         $query .= " LIMIT $offset, $limit";
@@ -98,22 +91,7 @@ function email_exists($email, $exclude_id = null) {
     
     $result = db_select_one($query, $params);
     return $result['count'] > 0;
-
 }
-
-/**
- * Vérifie si l'utilisateur est administrateur
- */
-function require_admin() {
-    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-        set_flash('error', 'Accès non autorisé. Vous devez être administrateur.');
-        redirect('/auth/login');
-        exit;
-    }
-}
-?>
-
-} 
 
 /**
  * Retourne le nombre total d'utilisateurs (fonction alias)
@@ -121,4 +99,4 @@ function require_admin() {
 function get_users_count() {
     return count_users();
 }
-
+?>

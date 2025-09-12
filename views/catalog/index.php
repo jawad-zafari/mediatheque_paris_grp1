@@ -97,7 +97,8 @@
                         <p>Année: <?php echo htmlspecialchars($item['year'] ?? 'N/A'); ?></p>
                         <div class="carousel-actions">
                             <?php if ($item['available']): ?>
-                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                                <!-- Ouvre la page d'emprunt dans un onglet nommé "rental_tab" pour réutiliser le même onglet -->
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                             <?php endif; ?>
                             <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
                         </div>
@@ -128,7 +129,8 @@
                         <p>Année: <?php echo htmlspecialchars($item['year'] ?? 'N/A'); ?></p>
                         <div class="carousel-actions">
                             <?php if ($item['available']): ?>
-                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                                <!-- Ouvre la page d'emprunt dans un onglet nommé "rental_tab" pour réutiliser le même onglet -->
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                             <?php endif; ?>
                             <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
                         </div>
@@ -159,7 +161,8 @@
                         <p>Année: <?php echo htmlspecialchars($item['year'] ?? 'N/A'); ?></p>
                         <div class="carousel-actions">
                             <?php if ($item['available']): ?>
-                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                                <!-- Ouvre la page d'emprunt dans un onglet nommé "rental_tab" pour réutiliser le même onglet -->
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                             <?php endif; ?>
                             <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
                         </div>
@@ -199,7 +202,8 @@
                     <p>Statut: <?php echo $item['available'] ? 'Disponible' : 'Emprunté'; ?></p>
                     <div>
                         <?php if ($item['available']): ?>
-                            <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                            <!-- Ouvre la page d'emprunt dans un onglet nommé "rental_tab" pour réutiliser le même onglet -->
+                            <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                         <?php endif; ?>
                         <a href="#close-modal" class="btn btn-back">Fermer</a>
                     </div>
@@ -221,6 +225,5 @@
         <!-- Élément caché pour éviter le saut de page -->
         <div id="close-modal" style="display: none;"></div>
     </section>
-
 </body>
 </html>

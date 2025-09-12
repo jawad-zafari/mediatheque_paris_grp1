@@ -1,8 +1,8 @@
 <?php
-// سیستم روتینگ ساده
+// Système de routage simple
 
 /**
- * تجزیه URL و بازگشت کنترلر، اکشن و پارامترها
+ * Analyse l'URL de la requête et retourne le contrôleur, l'action et les paramètres
  */
 function parse_request_url() {
     $url = $_GET['url'] ?? '';
@@ -18,7 +18,7 @@ function parse_request_url() {
     $action = $url_parts[1] ?? 'index';
     $params = array_slice($url_parts, 2);
     
-    // ریدایرکت /catalog/detail به /catalog/index
+    // Redirection /catalog/detail vers /catalog/index
     if ($controller === 'catalog' && $action === 'detail') {
         header('Location: ' . BASE_URL . '/catalog/index');
         exit;
@@ -32,7 +32,7 @@ function parse_request_url() {
 }
 
 /**
- * بارگذاری و اجرای کنترلر مناسب
+ * Chargement et exécution du contrôleur approprié
  */
 function dispatch() {
     $route = parse_request_url();
@@ -41,28 +41,34 @@ function dispatch() {
     $action_name = $route['action'];
     $params = $route['params'];
     
-    // نام فایل کنترلر
+    // Nom du fichier contrôleur
     $controller_file = CONTROLLER_PATH . '/' . $controller_name . '_controller.php';
     
-    // چک کردن وجود کنترلر
+    // Vérification de l'existence du contrôleur
     if (!file_exists($controller_file)) {
-        load_404();
-        return;
+        // Fallback pour les contrôleurs existants si le fichier n'existe pas
+        $fallback_file = CONTROLLER_PATH . '/' . $controller_name . 'Controller.php';
+        if (file_exists($fallback_file)) {
+            $controller_file = $fallback_file;
+        } else {
+            load_404();
+            return;
+        }
     }
     
-    // لود کردن کنترلر
+    // Chargement du contrôleur
     require_once $controller_file;
     
-    // نام تابع اکشن
+    // Nom de la fonction d'action
     $action_function = $controller_name . '_' . $action_name;
     
-    // چک کردن وجود اکشن
+    // Vérification de l'existence de l'action
     if (!function_exists($action_function)) {
         load_404();
         return;
     }
     
-    // مدیریت پارامترهای جستجو
+    // Gestion des paramètres de recherche
     if ($controller_name === 'catalog' && $action_name === 'index') {
         $search_term = $_GET['search_term'] ?? '';
         $search_type = $_GET['type'] ?? 'all';
@@ -71,12 +77,12 @@ function dispatch() {
         $params = array_merge($params, ['search_term' => $search_term, 'search_type' => $search_type, 'search_genre' => $search_genre, 'search_availability' => $search_availability]);
     }
     
-    // اجرای تابع با پارامترها
+    // Exécution de la fonction avec les paramètres
     call_user_func_array($action_function, $params);
 }
 
 /**
- * بارگذاری صفحه 404
+ * Chargement de la page 404
  */
 function load_404() {
     http_response_code(404);
