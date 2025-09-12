@@ -5,7 +5,7 @@
  * Sécurise l'affichage d'une chaîne de caractères (protection XSS)
  */
 function escape($string) {
-    return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
 
 /**
@@ -146,78 +146,46 @@ function format_date($date, $format = 'd/m/Y H:i') {
 }
 
 /**
- * Vérifie si une requête est en POST
+ * Vérifie si une requête است en POST
  */
 function is_post() {
     return $_SERVER['REQUEST_METHOD'] === 'POST';
 }
 
 /**
- * Vérifie si une requête est en GET
+ * Vérifie si une requête است en GET
  */
 function is_get() {
     return $_SERVER['REQUEST_METHOD'] === 'GET';
 }
 
 /**
- * Retourne la valeur d'un paramètre POST
+ * Retourne la valeur د'un paramètre POST
  */
 function post($key, $default = null) {
     return $_POST[$key] ?? $default;
 }
 
 /**
- * Retourne la valeur d'un paramètre GET
+ * Retourne la valeur د'un paramètre GET
  */
 function get($key, $default = null) {
     return $_GET[$key] ?? $default;
 }
 
 /**
- * Vérifie si un utilisateur est connecté
+ * Vérifie si un utilisateur است connecté
  */
 function is_logged_in() {
     return isset($_SESSION['user']) && !empty($_SESSION['user']['id']);
 }
 
 /**
- * Retourne l'ID de l'utilisateur connecté
+ * Retourne l'ID de ل'utilisateur connecté
  */
 function current_user_id() {
     return $_SESSION['user']['id'] ?? null;
 }
-
-/**
- * Retourne les infos complètes de l'utilisateur connecté
- */
-function current_user() {
-    if (!is_logged_in()) {
-        return null;
-    }
-
-    require_once MODEL_PATH . '/user_model.php';
-    return get_user_by_id(current_user_id());
-}
-
-/**
- * Retourne le prénom de l'utilisateur connecté
- */
-function current_user_name() {
-    return $_SESSION['user_name'] ?? 'Invité';
-}
-
-/**
- * Vérifie si l'utilisateur est admin, sinon redirige vers la page d'accueil
- */
-function require_admin() {
-    $user = $_SESSION['user'] ?? null;
-    if (!$user || $user['role'] !== 'admin') {
-        set_flash('error', "Accès refusé : vous devez être administrateur.");
-        redirect('/'); // ou "home" selon ton routeur
-        exit;
-    }
-}
-
 
 /**
  * Déconnecte l'utilisateur
@@ -235,7 +203,7 @@ function format_number($number, $decimals = 2) {
 }
 
 /**
- * Génère un slug à partir d'une chaîne
+ * Génère un slug à partir د'une chaîne
  */
 function generate_slug($string) {
     $string = strtolower($string);

@@ -8,13 +8,25 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Définir le chemin racine du projet
-define('ROOT_PATH', __DIR__);
+// Charger la configuration avant tout (pour les constantes DB)
+require_once __DIR__ . '/config/database.php';
 
-// Charger la configuration
-require_once ROOT_PATH . '/config/database.php';
+// Définir le chemin racine du projet (seulement si pas déjà défini)
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', __DIR__);
+}
 
-// Charger les fichiers core
+// Définir les chemins des dossiers (protégé contre redefinition)
+if (!defined('CORE_PATH')) define('CORE_PATH', ROOT_PATH . '/core');
+if (!defined('CONTROLLER_PATH')) define('CONTROLLER_PATH', ROOT_PATH . '/controllers');
+if (!defined('MODEL_PATH')) define('MODEL_PATH', ROOT_PATH . '/models');
+if (!defined('VIEW_PATH')) define('VIEW_PATH', ROOT_PATH . '/views');
+if (!defined('INCLUDE_PATH')) define('INCLUDE_PATH', ROOT_PATH . '/includes');
+if (!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . '/config');
+if (!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . '/public');
+if (!defined('DATABASE_PATH')) define('DATABASE_PATH', ROOT_PATH . '/database');
+
+// Charger les fichiers core (après définition des chemins)
 require_once CORE_PATH . '/database.php';
 require_once CORE_PATH . '/router.php';
 require_once CORE_PATH . '/view.php';
@@ -22,14 +34,18 @@ require_once CORE_PATH . '/view.php';
 // Charger les fichiers utilitaires
 require_once INCLUDE_PATH . '/helpers.php';
 
-// Charger tous les modèles
+// Charger tous les modèles (avec check pour éviter erreurs)
 foreach (glob(MODEL_PATH . '/*.php') as $model_file) {
-    require_once $model_file;
+    if (file_exists($model_file)) {
+        require_once $model_file;
+    }
 }
 
-// Charger tous les contrôleurs
+// Charger tous les contrôleurs (avec check)
 foreach (glob(CONTROLLER_PATH . '/*.php') as $controller_file) {
-    require_once $controller_file;
+    if (file_exists($controller_file)) {
+        require_once $controller_file;
+    }
 }
 
 // Configuration pour les tests
@@ -68,7 +84,7 @@ function setup_test_database() {
         $pdo->exec("USE " . DB_NAME);
         
         // Créer les tables
-        $schema = file_get_contents(ROOT_PATH . '/database/schema.sql');
+        $schema = file_get_contents(DATABASE_PATH . '/schema.sql');
         $statements = explode(';', $schema);
         
         foreach ($statements as $statement) {
@@ -128,4 +144,5 @@ function login_test_user($user_id, $name = 'Test User', $email = 'test@example.c
     $_SESSION['user_id'] = $user_id;
     $_SESSION['user_name'] = $name;
     $_SESSION['user_email'] = $email;
-} 
+}
+?>

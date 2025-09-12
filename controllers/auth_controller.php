@@ -1,9 +1,6 @@
 <?php
 // Contrôleur d'authentification
 
-// Charger le modèle utilisateur
-require_once MODEL_PATH . '/user_model.php';
-
 /**
  * Page de connexion
  */
@@ -27,14 +24,16 @@ function auth_login() {
             // Rechercher l'utilisateur
             $user = get_user_by_email($email);
             
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && verify_password($password, $user['password'])) {
                 // Connexion réussie
-                $_SESSION['user'] = $user;
-                $_SESSION['user_id'] = $user['id']; // اضافه کردن user_id به جلسه
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_lastname'] = $user['last_name'];
-                $_SESSION['user_email'] = $user['email'];
-                
+                $_SESSION['user'] = [
+                    'id' => $user['id'],
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'role' => $user['role']
+                ];
+                $_SESSION['user_id'] = $user['id']; // افزودن user_id برای هماهنگی با is_logged_in
+                session_write_close(); // ذخیره سشن قبل از ریدایرکت
                 set_flash('success', 'Connexion réussie !');
                 redirect('home');
             } else {
@@ -60,16 +59,13 @@ function auth_register() {
     ];
     
     if (is_post()) {
-        // Nettoyer et mettre la première lettre en majuscule
-        $name = mb_convert_case(clean_input(post('name')), MB_CASE_TITLE, 'UTF-8');     
-        $last_name = mb_convert_case(clean_input(post('last_name')), MB_CASE_TITLE, 'UTF-8'); 
-
+        $name = clean_input(post('name'));
         $email = clean_input(post('email'));
         $password = post('password');
         $confirm_password = post('confirm_password');
         
         // Validation
-        if (empty($name) || empty($last_name)||  empty($email) || empty($password)) {
+        if (empty($name) || empty($email) || empty($password)) {
             set_flash('error', 'Tous les champs sont obligatoires.');
         } elseif (!validate_email($email)) {
             set_flash('error', 'Adresse email invalide.');
@@ -80,8 +76,8 @@ function auth_register() {
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
-            // Créer l'utilisateur 
-            $user_id = create_user($name, $last_name, $email, $password);
+            // Créer l'utilisateur
+            $user_id = create_user($name, '', $email, $password); // last_name خالی تنظیم شد
             
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');

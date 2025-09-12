@@ -7,7 +7,7 @@ function get_all_items() {
     $query = "
         SELECT CONCAT('book_', id) AS id, title, writer AS author_director_publisher, ISBN13 AS isbn_rating_platform, gender AS genre, page_number AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'book' AS type FROM books
         UNION
-        SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, `duration(m)` AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type FROM movies
+        SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, duration AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type FROM movies
         UNION
         SELECT CONCAT('game_', id) AS id, title, editor AS author_director_publisher, plateform AS isbn_rating_platform, gender AS genre, min_age AS pages_duration_min_age, description, year, available, stock, image_url, 'game' AS type FROM video_games
         ORDER BY year DESC";
@@ -48,7 +48,7 @@ function get_items_by_type($type, $search_term = '', $search_genre = 'all', $sea
                   ORDER BY year DESC 
                   LIMIT ? OFFSET ?";
     } elseif ($type == 'film') {
-        $query = "SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, `duration(m)` AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type 
+        $query = "SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, duration AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type 
                   FROM movies" . $condition_str . "
                   ORDER BY year DESC 
                   LIMIT ? OFFSET ?";
@@ -99,40 +99,32 @@ function get_total_items_by_type($type, $search_term = '', $search_genre = 'all'
 
     $condition_str = !empty($conditions) ? " WHERE " . implode(" AND ", $conditions) : "";
 
-    // Sélection selon le type
     if ($type == 'book') {
-        $query = "SELECT COUNT(*) FROM books" . $condition_str;
+        $query = "SELECT COUNT(*) as total FROM books" . $condition_str;
     } elseif ($type == 'film') {
-        $query = "SELECT COUNT(*) FROM movies" . $condition_str;
+        $query = "SELECT COUNT(*) as total FROM movies" . $condition_str;
     } elseif ($type == 'game') {
-        $query = "SELECT COUNT(*) FROM video_games" . $condition_str;
+        $query = "SELECT COUNT(*) as total FROM video_games" . $condition_str;
     } else {
         return 0;
     }
 
-    $stmt = $pdo->prepare($query);
-    foreach ($params as $index => $value) {
-        $stmt->bindValue($index + 1, $value);
-    }
-    $stmt->execute();
-    return (int)$stmt->fetchColumn();
+    $result = db_select_one($query, $params);
+    return $result['total'] ?? 0;
 }
 
-// Sélectionner un item par ID combiné
+// Sélectionner un item par ID
 // Correction : Utilisation de producer au lieu de director pour la table movies
 function get_item_by_id($item_id) {
     $parts = explode('_', $item_id);
     if (count($parts) !== 2) return false;
     [$type, $id] = $parts;
 
-    $pdo = db_connect();
-
-    // Sélection selon le type
     if ($type == 'book') {
         $query = "SELECT CONCAT('book_', id) AS id, title, writer AS author_director_publisher, ISBN13 AS isbn_rating_platform, gender AS genre, page_number AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'book' AS type 
                   FROM books WHERE id = ?";
     } elseif ($type == 'film') {
-        $query = "SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, `duration(m)` AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type 
+        $query = "SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, duration AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type 
                   FROM movies WHERE id = ?";
     } elseif ($type == 'game') {
         $query = "SELECT CONCAT('game_', id) AS id, title, editor AS author_director_publisher, plateform AS isbn_rating_platform, gender AS genre, min_age AS pages_duration_min_age, description, year, available, stock, image_url, 'game' AS type 
@@ -201,7 +193,7 @@ function search_items($search_term = '', $search_type = 'all', $search_genre = '
             WHERE 1=1 $condition_str";
     } elseif ($search_type == 'film') {
         $query = "
-            SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, `duration(m)` AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type
+            SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, duration AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type
             FROM movies
             WHERE 1=1 $condition_str";
     } elseif ($search_type == 'game') {
@@ -215,7 +207,7 @@ function search_items($search_term = '', $search_type = 'all', $search_genre = '
             FROM books
             WHERE 1=1 $condition_str
             UNION ALL
-            SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, `duration(m)` AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type
+            SELECT CONCAT('film_', id) AS id, title, producer AS author_director_publisher, classification AS isbn_rating_platform, gender AS genre, duration AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'film' AS type
             FROM movies
             WHERE 1=1 $condition_str
             UNION ALL

@@ -68,19 +68,13 @@ function flash_messages() {
         foreach ($_SESSION['flash_messages'] as $type => $messages) {
             if (is_array($messages)) {
                 foreach ($messages as $message) {
-                    echo "<div class='alert alert-$type'>$message</div>";
+                    echo "<div class='alert alert-$type'>" . htmlspecialchars($message) . "</div>";
                 }
             } else {
-                echo "<div class='alert alert-$type'>$messages</div>";
+                echo "<div class='alert alert-$type'>" . htmlspecialchars($messages) . "</div>";
             }
         }
         unset($_SESSION['flash_messages']);
     }
-} 
-
-/**
- * Alias pour load_view_with_layout
- */
-function render($view, $data = [], $layout = 'layout') {
-    load_view_with_layout($view, $data, $layout);
 }
+?>
