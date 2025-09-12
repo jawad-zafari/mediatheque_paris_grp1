@@ -7,7 +7,7 @@ if (!defined('DB_PASS')) define('DB_PASS', '');
 if (!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8');
 
 // Configuration générale de l'application
-if (!defined('BASE_URL')) define('BASE_URL', 'http://localhost/ME/8/mediatheque_paris_grp1/public');
+if (!defined('BASE_URL')) define('BASE_URL', 'http://localhost/mediatheque_paris_grp1_pierre/public');
 if (!defined('APP_NAME')) define('APP_NAME', 'PHP MVC Starter');
 if (!defined('APP_VERSION')) define('APP_VERSION', '1.0.0');
 
