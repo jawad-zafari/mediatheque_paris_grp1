@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Point d'entrée principal de l'application PHP MVC
  * 
@@ -11,6 +12,7 @@ session_start();
 // Charger la configuration
 require_once '../config/database.php';
 
+<<<<<<< HEAD
 // Vérifier et définir les constantes pour les chemins si non définies (pour éviter les redéfinitions)
 if (!defined('CORE_PATH')) {
     define('CORE_PATH', __DIR__ . '/../core/');
@@ -30,6 +32,16 @@ if (!defined('VIEW_PATH')) {
 if (!defined('BASE_URL')) {
     define('BASE_URL', '/');
 }
+=======
+require_once CONTROLLER_PATH . '/controllers/media_controller.php';
+
+// Créer une instance du contrôleur
+$controller = new media_controller();
+
+// Appeler la méthode pour afficher le formulaire et traiter l'upload
+$controller->showForm();
+
+>>>>>>> 7c1ca8b7f5f56a9601f68a76ce9cbd5cc2e2831a
 
 // Charger les fichiers core
 require_once CORE_PATH . '/database.php';
@@ -46,4 +58,7 @@ ini_set('display_errors', 1);
 
 // Lancer le système de routing
 dispatch();
+<<<<<<< HEAD
 ?>
+=======
+>>>>>>> 7c1ca8b7f5f56a9601f68a76ce9cbd5cc2e2831a

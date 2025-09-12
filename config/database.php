@@ -7,7 +7,7 @@ define('DB_PASS', '');
 define('DB_CHARSET', 'utf8');
 
 // Configuration générale de l'application
-define('BASE_URL', 'http://localhost/ME/8/mediatheque_paris_grp1/public');
+define('BASE_URL', 'http://localhost/mediatheque_paris_grp1_pierre/public');
 define('APP_NAME', 'PHP MVC Starter');
 define('APP_VERSION', '1.0.0');
 
@@ -19,4 +19,4 @@ define('MODEL_PATH', ROOT_PATH . '/models');
 define('VIEW_PATH', ROOT_PATH . '/views');
 define('INCLUDE_PATH', ROOT_PATH . '/includes');
 define('CORE_PATH', ROOT_PATH . '/core');
-define('PUBLIC_PATH', ROOT_PATH . '/public'); 
+define('PUBLIC_PATH', ROOT_PATH . '/public');
