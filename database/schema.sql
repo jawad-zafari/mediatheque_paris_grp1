@@ -6,6 +6,8 @@
 -- Generation Time: Sep 12, 2025 at 08:01 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
+CREATE DATABASE IF NOT EXISTS php_mvc_app CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE php_mvc_app;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -226,6 +228,7 @@ CREATE TABLE `media_stats` (
 ,`games_count` bigint
 ,`movies_count` bigint
 ,`total_media` bigint
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -252,7 +255,7 @@ CREATE TABLE `movies` (
 -- Dumping data for table `movies`
 --
 
-INSERT INTO `movies` (`id`, `title`, `producer`, `year`, `gender`, `duration(m)`, `synopsis`, `classification`, `image_url`, `available`, `stock`, `upload_date`) VALUES
+INSERT INTO `movies` (`id`, `title`, `producer`, `year`, `gender`, `duration`, `synopsis`, `classification`, `image_url`, `available`, `stock`, `upload_date`) VALUES
 (96, 'The Shawshank Redemption', 'Frank Darabont', 1994, 'Drame', 142, 'Two imprisoned men bond over years, finding solace and eventual redemption.', 'R', 'https://resizing.flixster.com/tdMXmsVnR-vIj4Q5IACpEZ7O1ak=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15987_v_h8_au.jpg', 1, 5, '2025-09-03'),
 (97, 'The Godfather', 'Francis Ford Coppola', 1972, 'Crime', 175, 'The aging patriarch of an organized crime dynasty transfers control to his son.', 'R', 'https://images.mubicdn.net/images/film/488/cache-47680-1745490954/image-w1280.jpg', 1, 5, '2025-09-03'),
 (98, 'The Dark Knight', 'Christopher Nolan', 2008, 'Action', 152, 'Batman faces the Joker in a battle for Gotham\'s soul.', 'PG-13', 'https://musicart.xboxlive.com/7/176b5100-0000-0000-0000-000000000002/504/image.jpg\r\n', 1, 5, '2025-09-03'),
