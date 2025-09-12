@@ -1,8 +1,10 @@
 <?php
-require_once __DIR__ . '/../models/Media.php';
+require_once MODEL_PATH . '/../models/Media.php';
 
-class MediaController {
-    public function showForm() {
+class media_controller
+{
+    public function showForm()
+    {
         $type = $_POST['type'] ?? '';
         $errors = [];
         $success = "";

@@ -155,6 +155,7 @@ INSERT INTO `books` (`id`, `title`, `writer`, `ISBN13`, `gender`, `page_number`,
 CREATE TABLE `contact_messages` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
   `email` varchar(150) NOT NULL,
   `message` text NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -215,6 +216,7 @@ INSERT INTO `loans` (`id`, `user_id`, `media_id`, `media_type`, `loan_date`, `re
 
 -- --------------------------------------------------------
 
+
 --
 -- Stand-in structure for view `media_stats`
 -- (See below for the actual view)
@@ -224,21 +226,20 @@ CREATE TABLE `media_stats` (
 ,`games_count` bigint
 ,`movies_count` bigint
 ,`total_media` bigint
-);
 
 -- --------------------------------------------------------
+
 
 --
 -- Table structure for table `movies`
 --
-
 CREATE TABLE `movies` (
   `id` int NOT NULL,
   `title` varchar(255) NOT NULL,
   `producer` varchar(255) NOT NULL,
-  `year` int NOT NULL,
+  `year` year NOT NULL,
   `gender` varchar(255) NOT NULL,
-  `duration(m)` int NOT NULL,
+  `duration` int NOT NULL,
   `synopsis` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `classification` varchar(255) NOT NULL,
   `image_url` varchar(500) NOT NULL,

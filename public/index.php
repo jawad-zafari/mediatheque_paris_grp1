@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Point d'entrée principal de l'application PHP MVC
  * 
@@ -11,10 +12,10 @@ session_start();
 // Charger la configuration
 require_once '../config/database.php';
 
-require_once __DIR__ . '/controllers/MediaController.php';
+require_once CONTROLLER_PATH . '/controllers/media_controller.php';
 
 // Créer une instance du contrôleur
-$controller = new MediaController();
+$controller = new media_controller();
 
 // Appeler la méthode pour afficher le formulaire et traiter l'upload
 $controller->showForm();
@@ -37,4 +38,4 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Lancer le système de routing
-dispatch(); 
+dispatch();
