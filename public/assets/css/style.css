@@ -89,7 +89,10 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    background-color: var(--primary-color);
+    background-image: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
+    background-size: cover;
+    background-position: center;
     color: var(--white);
     padding: 4rem 0;
     text-align: center;

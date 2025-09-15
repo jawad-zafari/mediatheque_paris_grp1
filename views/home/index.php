@@ -2,7 +2,7 @@
 <div class="hero">
     <div class="hero-content">
         <h1><?php e($message); ?></h1>
-        <p class="hero-subtitle">Un starter kit PHP avec architecture MVC procédurale</p>
+        <p class="hero-subtitle">Votre centre multimédia complet, où culture et divertissement se rencontrent.<br> Accès facile à des milliers de livres, films et jeux vidéo.</p>
         <?php if (!is_logged_in()): ?>
             <div class="hero-buttons">
                 <a href="<?php echo url('auth/register'); ?>" class="btn btn-primary">Commencer</a>
