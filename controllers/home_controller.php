@@ -4,10 +4,11 @@
 /**
  * Page d'accueil
  */
-function home_index() {
+function home_index()
+{
     $data = [
         'title' => 'Accueil',
-        'message' => 'Bienvenue sur votre application PHP MVC !',
+        'message' => 'Bienvenue sur notre médiathèque en ligne !',
         'features' => [
             'Architecture MVC claire',
             'Système de routing simple',
@@ -16,35 +17,37 @@ function home_index() {
             'Sécurité intégrée'
         ]
     ];
-    
+
     load_view_with_layout('home/index', $data);
 }
 
 /**
  * Page à propos
  */
-function home_about() {
+function home_about()
+{
     $data = [
         'title' => 'À propos',
         'content' => 'Cette application est un starter kit PHP MVC développé avec une approche procédurale.'
     ];
-    
+
     load_view_with_layout('home/about', $data);
 }
 
 /**
  * Page contact
  */
-function home_contact() {
+function home_contact()
+{
     $data = [
         'title' => 'Contact'
     ];
-    
+
     if (is_post()) {
         $name = clean_input(post('name'));
         $email = clean_input(post('email'));
         $message = clean_input(post('message'));
-        
+
         // Validation simple
         if (empty($name) || empty($email) || empty($message)) {
             set_flash('error', 'Tous les champs sont obligatoires.');
@@ -56,32 +59,34 @@ function home_contact() {
             redirect('home/contact');
         }
     }
-    
+
     load_view_with_layout('home/contact', $data);
-} 
+}
 
 
 /**
  * Page profile
  */
-function home_profile() {
+function home_profile()
+{
     $data = [
         'title' => 'Profile',
         'message' => 'Bienvenue sur votre profil',
         'content' => 'Cette application est un starter kit PHP MVC développé avec une approche procédurale.'
     ];
-    
+
     load_view_with_layout('home/profile', $data);
-} 
+}
 
 /**
  * Page test
  */
-function home_test() {
+function home_test()
+{
     $data = [
         'title' => 'Page test',
         'message' => 'Bienvenue sur votre page test',
     ];
-    
+
     load_view_with_layout('home/test', $data);
-} 
+}

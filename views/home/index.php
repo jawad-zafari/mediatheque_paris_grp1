@@ -1,8 +1,7 @@
-
 <div class="hero">
     <div class="hero-content">
         <h1><?php e($message); ?></h1>
-        <p class="hero-subtitle">Un starter kit PHP avec architecture MVC procédurale</p>
+        <p class="hero-subtitle">Cultivons notre culture !</p>
         <?php if (!is_logged_in()): ?>
             <div class="hero-buttons">
                 <a href="<?php echo url('auth/register'); ?>" class="btn btn-primary">Commencer</a>
@@ -10,7 +9,7 @@
             </div>
         <?php else: ?>
             <p class="welcome-message">
-                <i class="fas fa-user"></i> 
+                <i class="fas fa-user"></i>
                 Bienvenue, <?php e($_SESSION['user']['name'] ?? ''); ?> !
             </p>
         <?php endif; ?>
