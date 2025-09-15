@@ -17,7 +17,7 @@ function get_total_media_count() {
 }
 
 function admin_dashboard() {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
     // Prépare les statistiques pour le tableau de bord
     $stats = [
@@ -36,7 +36,7 @@ function admin_dashboard() {
 
 // ----------------- GESTION DES MÉDIAS -----------------
 function admin_media_list() {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
     // Récupère tous les médias
     $medias = get_all_media();
@@ -45,12 +45,12 @@ function admin_media_list() {
 }
 
 function admin_media_edit($id = null) {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
     // Initialisation de la variable média
     $media = null;
     if ($id) {
-        // Sépare l'ID en type و identifiant
+        // Sépare l'ID en type et identifiant
         $parts = explode('_', $id);
         if (count($parts) === 2) {
             $type = $parts[0];
@@ -149,7 +149,7 @@ function admin_media_delete($id, $type) {
 
 // ----------------- GESTION DES UTILISATEURS -----------------
 function admin_users_list() {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
     // Récupère tous les utilisateurs
     $users = get_all_users();
@@ -158,17 +158,17 @@ function admin_users_list() {
 }
 
 function admin_user_detail($id) {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
-    // Récupère les détails de ل'utilisateur
+    // Récupère les détails de l'utilisateur
     $user = get_user_by_id($id);
-    // Affiche la vue des détails de ل'utilisateur
+    // Affiche la vue des détails de l'utilisateur
     load_view_with_layout('admin/user_detail', ['user' => $user]);
 }
 
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list() {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
     // Récupère tous les emprunts
     $loans = get_all_loans();
@@ -177,9 +177,9 @@ function admin_loans_list() {
 }
 
 function admin_loan_return($loan_id) {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
-    // Marque ل'emprunt comme rendu
+    // Marque l'emprunt comme rendu
     if (return_loan($loan_id)) {
         set_flash('success', 'Emprunt marqué comme rendu.');
     } else {
@@ -190,11 +190,11 @@ function admin_loan_return($loan_id) {
 }
 
 function admin_loan_create($user_id, $media_id, $media_type) {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
     // Crée un nouvel emprunt
     if (create_loan($user_id, $media_id, $media_type)) {
-        set_flash('success', 'Emprunt enregistré با succès.');
+        set_flash('success', 'Emprunt enregistré avec succès.');
     } else {
         set_flash('error', 'Impossible de créer cet emprunt (limite atteinte ou média indisponible).');
     }
