@@ -122,6 +122,19 @@ function admin_media_save($id = null) {
         if (count($parts) === 2) {
             $type_db = $parts[0];
             $media_id = $parts[1];
+            $media = get_media_by_id($media_id, $type_db);
+
+            // Si une nouvelle image est uploadée, supprimer l'ancienne
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                if ($media && !empty($media['image_url'])) {
+                    $file_path = PUBLIC_PATH . '/assets/images/' . $media['image_url'];
+                    if (file_exists($file_path)) unlink($file_path);
+                }
+                $image_name = upload_cover_image($_FILES['image']);
+                if ($image_name) {
+                    $extra_fields['image_url'] = $image_name;
+                }
+            }
             update_media($media_id, $type_db, $extra_fields);
             set_flash('success', 'Média mis à jour avec succès.');
         }
@@ -139,6 +152,26 @@ function admin_media_delete($id, $type) {
     require_admin();
     $type_map = ['livre' => 'book', 'film' => 'movie', 'jeu' => 'video_game'];
     $type_db = $type_map[$type] ?? $type;
+
+    // Vérifier s'il y a des emprunts en cours
+    $active_loans = db_select_one(
+        "SELECT COUNT(*) as total FROM loans WHERE media_id = ? AND media_type = ? AND returned_at IS NULL",
+        [$id, $type_db]
+    );
+    if (($active_loans['total'] ?? 0) > 0) {
+        set_flash('error', 'Impossible de supprimer ce média : emprunts en cours.');
+        redirect('/admin/media');
+        return;
+    }
+
+    // Suppression physique de l'image
+    $media = get_media_by_id($id, $type_db);
+    if ($media && !empty($media['image_url'])) {
+        $file_path = PUBLIC_PATH . '/assets/images/' . $media['image_url'];
+        if (file_exists($file_path)) unlink($file_path);
+    }
+
+    // Suppression en base
     if (in_array($type_db, ['book', 'movie', 'video_game']) && delete_media($id, $type_db)) {
         set_flash('success', 'Média supprimé avec succès.');
     } else {
@@ -160,8 +193,14 @@ function admin_users_list() {
 function admin_user_detail($id) {
     // Vérifie les droits د'administrateur
     require_admin();
-    // Récupère les détails de ل'utilisateur
     $user = get_user_by_id($id);
+    $user['loans'] = get_user_loans($id);
+
+    // Statistiques demandées
+    $user['total_loans'] = count($user['loans']);
+    $user['active_loans'] = count(array_filter($user['loans'], fn($l) => !$l['returned_at']));
+    $user['overdue_loans'] = array_filter($user['loans'], fn($l) => !$l['returned_at'] && strtotime($l['return_date']) < time());
+
     // Affiche la vue des détails de ل'utilisateur
     load_view_with_layout('admin/user_detail', ['user' => $user]);
 }

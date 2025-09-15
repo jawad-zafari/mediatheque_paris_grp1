@@ -20,3 +20,5 @@ if (!defined('VIEW_PATH')) define('VIEW_PATH', ROOT_PATH . '/views');
 if (!defined('INCLUDE_PATH')) define('INCLUDE_PATH', ROOT_PATH . '/includes');
 if (!defined('CORE_PATH')) define('CORE_PATH', ROOT_PATH . '/core');
 if (!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . '/public');
+
+
