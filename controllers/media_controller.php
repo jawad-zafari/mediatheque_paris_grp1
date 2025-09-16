@@ -7,7 +7,7 @@ class media_controller
         extract($data);
         require __DIR__ . '/../views/' . $view . '.php';
     }
-
+//bankaiiiiiiiiiiiiiiiiii
     public function showForm()
     {
         $type = $_POST['type'] ?? '';
