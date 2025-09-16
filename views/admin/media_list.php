@@ -28,6 +28,7 @@ a:hover { text-decoration: underline; }
             <th>Type</th>
             <th>Genre</th>
             <th>Stock</th>
+            <th>Image</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -47,6 +48,11 @@ a:hover { text-decoration: underline; }
             </td>
             <td><?php echo htmlspecialchars($media['genre'] ?? ''); ?></td>
             <td><?php echo ($media['stock'] ?? 0) > 0 ? $media['stock'] : 'Indisponible'; ?></td>
+            <td>
+                <img src="/uploads/covers/<?php echo htmlspecialchars($media['image_url'] ?? 'default_cover.jpg'); ?>"
+                     alt="Couverture"
+                     style="width:150px;height:200px;object-fit:cover;">
+            </td>
             <td>
                 <a href="/admin/media/edit/<?php echo $media['media_type'] . '_' . $media['id']; ?>">Modifier</a> |
                 <a href="/admin/media/delete/<?php echo $media['id']; ?>/<?php echo $media['media_type']; ?>" 

@@ -28,9 +28,9 @@ a:hover { text-decoration: underline; }
     
     <h2>Statistiques d'utilisation</h2>
     <ul>
-        <li>Emprunts totaux: <?php echo $user['total_loans']; ?></li>
-        <li>Emprunts actifs: <?php echo $user['active_loans']; ?></li>
-        <li>Emprunts en retard: <?php echo count($user['overdue_loans']); ?></li>
+        <li>Emprunts totaux : <strong><?php echo $user['total_loans']; ?></strong></li>
+        <li>Emprunts actifs : <strong><?php echo $user['active_loans']; ?></strong></li>
+        <li>Emprunts en retard : <strong><?php echo count($user['overdue_loans']); ?></strong></li>
     </ul>
     
     <h2>Emprunts actuels</h2>

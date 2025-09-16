@@ -155,50 +155,53 @@ function delete_media($id, $type) {
  * Télécharge et traite une image de couverture
  */
 function upload_cover_image($file) {
-    $upload_dir = PUBLIC_PATH . '/assets/images/covers/';
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0755, true);
-    }
-    
-    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-    $max_size = 2 * 1024 * 1024;
-
-    if ($file['error'] !== UPLOAD_ERR_OK) return false;
-    if (!in_array($file['type'], $allowed_types)) return false;
-    if ($file['size'] > $max_size) return false;
-
-    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $new_name = uniqid() . '.' . $ext;
-    $destination = $upload_dir . $new_name;
-
-    if (!move_uploaded_file($file['tmp_name'], $destination)) return false;
-
-    list($width, $height) = getimagesize($destination);
+    $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
+    $max_size = 2097152; // 2 Mo
+    $min_width = 100;
+    $min_height = 100;
     $max_width = 300;
     $max_height = 400;
+    $upload_dir = PUBLIC_PATH . '/uploads/covers/';
+
+    // Vérification extension
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowed_ext)) return false;
+
+    // Vérification type MIME
+    $mime = mime_content_type($file['tmp_name']);
+    if (!in_array($mime, ['image/jpeg', 'image/png', 'image/gif'])) return false;
+
+    // Vérification taille
+    if ($file['size'] > $max_size) return false;
+
+    // Vérification dimensions
+    list($width, $height) = getimagesize($file['tmp_name']);
+    if ($width < $min_width || $height < $min_height) return false;
+
+    // Redimensionnement
+    $img = null;
+    if ($mime == 'image/jpeg') $img = imagecreatefromjpeg($file['tmp_name']);
+    elseif ($mime == 'image/png') $img = imagecreatefrompng($file['tmp_name']);
+    elseif ($mime == 'image/gif') $img = imagecreatefromgif($file['tmp_name']);
 
     $ratio = min($max_width/$width, $max_height/$height, 1);
     $new_width = (int)($width * $ratio);
     $new_height = (int)($height * $ratio);
 
-    $src = null;
-    switch ($file['type']) {
-        case 'image/jpeg': $src = imagecreatefromjpeg($destination); break;
-        case 'image/png': $src = imagecreatefrompng($destination); break;
-        case 'image/gif': $src = imagecreatefromgif($destination); break;
-    }
+    $dst = imagecreatetruecolor($new_width, $new_height);
+    imagecopyresampled($dst, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
-    if ($src) {
-        $dst = imagecreatetruecolor($new_width, $new_height);
-        imagecopyresampled($dst, $src, 0,0,0,0, $new_width, $new_height, $width, $height);
-        switch ($file['type']) {
-            case 'image/jpeg': imagejpeg($dst, $destination); break;
-            case 'image/png': imagepng($dst, $destination); break;
-            case 'image/gif': imagegif($dst, $destination); break;
-        }
-        imagedestroy($src);
-        imagedestroy($dst);
-    }
+    // Nom unique
+    $new_name = uniqid('cover_') . '.' . $ext;
+    $save_path = $upload_dir . $new_name;
+
+    // Sauvegarde
+    if ($mime == 'image/jpeg') imagejpeg($dst, $save_path);
+    elseif ($mime == 'image/png') imagepng($dst, $save_path);
+    elseif ($mime == 'image/gif') imagegif($dst, $save_path);
+
+    imagedestroy($img);
+    imagedestroy($dst);
 
     return $new_name;
 }

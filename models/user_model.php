@@ -96,14 +96,15 @@ function email_exists($email, $exclude_id = null) {
     $query = "SELECT COUNT(*) as count FROM users WHERE email = ?";
     $params = [$email];
     
-    if ($exclude_id) {
+    if ($exclude_id !== null) {
         $query .= " AND id != ?";
         $params[] = $exclude_id;
     }
     
     $result = db_select_one($query, $params);
     return $result['count'] > 0;
-} 
+}
+
 
 /**
  * Alias pour le nombre total d'utilisateurs
