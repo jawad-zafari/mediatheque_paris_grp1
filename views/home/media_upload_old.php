@@ -1,5 +1,5 @@
 <?php
-$type = $_POST['type'] ?? ''; 
+/*$type = $_POST['type'] ?? ''; 
 $errors = [];   // tableau pour stocker les erreurs
 $success = "";  // message si tout fonctionne
 
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $type) {
             }
         }
     }
-}
+}*/
 ?> 
 
 <!-- Formulaire -->
