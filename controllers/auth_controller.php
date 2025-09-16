@@ -1,5 +1,5 @@
 <?php
-// Contrôleur d'authentification
+// Contrôleur d'authentification corrigé selon cahier des charges
 
 /**
  * Page de connexion
@@ -9,31 +9,34 @@ function auth_login() {
     if (is_logged_in()) {
         redirect('home');
     }
-    
-    $data = [
-        'title' => 'Connexion'
-    ];
-    
+
+    $data = ['title' => 'Connexion'];
+
     if (is_post()) {
         $email = clean_input(post('email'));
         $password = post('password');
-        
+
         if (empty($email) || empty($password)) {
             set_flash('error', 'Email et mot de passe obligatoires.');
         } else {
-            // Rechercher l'utilisateur
             $user = get_user_by_email($email);
-            
-            if ($user && verify_password($password, $user['password'])) {
+          
+
+
+            if ($user && password_verify($password, $user['password'])) {
                 // Connexion réussie
+                session_regenerate_id(true); // ⚡ sécuriser contre fixation
+
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'name' => $user['name'],
+                    'last_name' => $user['last_name'],
                     'email' => $user['email'],
-                    'role' => $user['role']
+                    'role' => $user['role'],
+                    'last_activity' => time() // ⚡ suivi expiration
                 ];
-                $_SESSION['user_id'] = $user['id']; // افزودن user_id برای هماهنگی با is_logged_in
-                session_write_close(); // ذخیره سشن قبل از ریدایرکت
+                session_write_close();
+
                 set_flash('success', 'Connexion réussie !');
                 redirect('home');
             } else {
@@ -41,7 +44,7 @@ function auth_login() {
             }
         }
     }
-    
+
     load_view_with_layout('auth/login', $data);
 }
 
@@ -49,36 +52,41 @@ function auth_login() {
  * Page d'inscription
  */
 function auth_register() {
-    // Rediriger si déjà connecté
     if (is_logged_in()) {
         redirect('home');
     }
-    
-    $data = [
-        'title' => 'Inscription'
-    ];
-    
+
+    $data = ['title' => 'Inscription'];
+
     if (is_post()) {
-        $name = clean_input(post('name'));
+        $name = mb_convert_case(clean_input(post('name')), MB_CASE_TITLE, 'UTF-8');
+        $last_name = mb_convert_case(clean_input(post('last_name')), MB_CASE_TITLE, 'UTF-8');
         $email = clean_input(post('email'));
         $password = post('password');
         $confirm_password = post('confirm_password');
-        
-        // Validation
-        if (empty($name) || empty($email) || empty($password)) {
+
+        // Validation stricte
+        if (empty($name) || empty($last_name) || empty($email) || empty($password)) {
             set_flash('error', 'Tous les champs sont obligatoires.');
-        } elseif (!validate_email($email)) {
-            set_flash('error', 'Adresse email invalide.');
-        } elseif (strlen($password) < 6) {
-            set_flash('error', 'Le mot de passe doit contenir au moins 6 caractères.');
+        } elseif (!preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{2,50}$/u', $name)) {
+            set_flash('error', 'Le prénom doit contenir uniquement des lettres (2-50 caractères).');
+        } elseif (!preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{2,50}$/u', $last_name)) {
+            set_flash('error', 'Le nom doit contenir uniquement des lettres (2-50 caractères).');
+        } elseif (!validate_email($email) || strlen($email) > 255) {
+            set_flash('error', 'Adresse email invalide ou trop longue (max 255 caractères).');
+        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password)) {
+            set_flash('error', 'Le mot de passe doit contenir au moins 8 caractères avec 1 majuscule, 1 minuscule et 1 chiffre.');
         } elseif ($password !== $confirm_password) {
             set_flash('error', 'Les mots de passe ne correspondent pas.');
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
-            // Créer l'utilisateur
-            $user_id = create_user($name, '', $email, $password); // last_name خالی تنظیم شد
-            
+            // Hashage sécurisé
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Création utilisateur
+           $user_id = create_user($name, $last_name, $email, $password);
+
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
                 redirect('auth/login');
@@ -87,7 +95,7 @@ function auth_register() {
             }
         }
     }
-    
+
     load_view_with_layout('auth/register', $data);
 }
 
@@ -97,4 +105,12 @@ function auth_register() {
 function auth_logout() {
     logout();
 }
-?>
+
+function check_session_timeout() {
+    $timeout = 7200; // 2 heures
+    if (isset($_SESSION['user']['last_activity']) && (time() - $_SESSION['user']['last_activity']) > $timeout) {
+        logout();
+    } else {
+        $_SESSION['user']['last_activity'] = time();
+    }
+}
