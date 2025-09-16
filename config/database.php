@@ -22,3 +22,10 @@ if (!defined('CORE_PATH')) define('CORE_PATH', ROOT_PATH . '/core');
 if (!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . '/public');
 
 
+// Dossiers uploads
+define('UPLOADS_PATH', __DIR__ . '/../uploads');
+define('COVERS_PATH', UPLOADS_PATH . '/covers');
+define('COVERS_THUMBS_PATH', COVERS_PATH . '/thumbs');
+define('DEFAULT_COVER', 'default.jpg'); // à placer dans /uploads/covers/
+
+

@@ -49,7 +49,7 @@ a:hover { text-decoration: underline; }
             <td><?php echo htmlspecialchars($media['genre'] ?? ''); ?></td>
             <td><?php echo ($media['stock'] ?? 0) > 0 ? $media['stock'] : 'Indisponible'; ?></td>
             <td>
-                <img src="/uploads/covers/<?php echo htmlspecialchars($media['image_url'] ?? 'default_cover.jpg'); ?>"
+                <img src="/uploads/covers/<?php echo htmlspecialchars($media['image_url'] ?? 'default.jpg'); ?>"
                      alt="Couverture"
                      style="width:150px;height:200px;object-fit:cover;">
             </td>

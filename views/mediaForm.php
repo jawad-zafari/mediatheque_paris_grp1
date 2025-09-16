@@ -62,14 +62,10 @@ $errors = $errors ?? [];
 </form>
 
 <?php
-// Affichage des erreurs
 if (!empty($errors)) {
     echo "<ul style='color:red;'>";
     foreach ($errors as $e) echo "<li>".htmlspecialchars($e)."</li>";
     echo "</ul>";
 }
-
-// Affichage du succès
-if ($success) echo "<p style='color:green;'>Image uploadée : ".htmlspecialchars($success)."</p>";
+if ($success) echo "<p style='color:green;'>$success</p>";
 ?>
- 

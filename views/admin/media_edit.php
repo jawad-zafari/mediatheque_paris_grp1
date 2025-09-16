@@ -71,8 +71,8 @@ $type = $media['media_type'] ?? ($_POST['type'] ?? '');
     
     <label>Image de couverture (optionnel):</label>
     <input type="file" name="image" accept="image/*">
-    <?php if ($media['image_url'] ?? ''): ?>
-        <img src="/assets/images/<?php echo htmlspecialchars($media['image_url']); ?>" alt="Couverture" width="100"> <!-- Fix: chemin public -->
+    <?php if (!empty($media['image_url'])): ?>
+        <img src="/uploads/covers/<?php echo htmlspecialchars($media['image_url']); ?>" style="max-width:150px;max-height:200px;">
     <?php endif; ?>
     
     <button type="submit">Enregistrer</button>
