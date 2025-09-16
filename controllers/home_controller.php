@@ -10,11 +10,11 @@ function home_index()
         'title' => 'Accueil',
         'message' => 'Bienvenue sur notre médiathèque en ligne !',
         'features' => [
-            'Architecture MVC claire',
-            'Système de routing simple',
-            'Templating HTML/CSS',
-            'Gestion de base de données',
-            'Sécurité intégrée'
+            'Un catalogue complet avec un système de filtrage fonctionnel',
+            'La possibilité de créer, gérer et modifier votre profil',
+            'Un design moderne, simple et épuré',
+            'Un système d\'emprunt et de retour pour les documents du catalogue',
+            'Une sécurité au point, et une protection efficace de vos données'
         ]
     ];
 
