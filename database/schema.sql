@@ -175,184 +175,46 @@ CREATE TABLE `loans` (
   `user_id` int NOT NULL,
   `media_id` int NOT NULL,
   `media_type` enum('book','movie','video_game') NOT NULL,
-  `loan_date` date NOT NULL,
-  `return_date` date NOT NULL,
-  `returned_at` timestamp NULL DEFAULT NULL
+  `loan_date` datetime NOT NULL COMMENT 'Date et heure précise de l''emprunt',
+  `return_date` datetime NOT NULL COMMENT 'Date et heure précise de retour prévue',
+  `returned_at` datetime DEFAULT NULL COMMENT 'Date et heure réelle de retour'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `loans`
 --
-
-INSERT INTO `loans` (`id`, `user_id`, `media_id`, `media_type`, `loan_date`, `return_date`, `returned_at`) VALUES
-(1, 7, 128, 'video_game', '2025-09-11', '2025-09-25', '2025-09-11 21:47:05'),
-(2, 7, 130, 'video_game', '2025-09-11', '2025-09-25', '2025-09-11 21:47:30'),
-(3, 7, 150, 'video_game', '2025-09-11', '2025-09-25', '2025-09-11 21:47:33'),
-(4, 7, 129, 'movie', '2025-09-11', '2025-09-25', '2025-09-11 21:47:35'),
-(5, 7, 107, 'movie', '2025-09-11', '2025-09-25', '2025-09-11 21:51:16'),
-(6, 7, 106, 'movie', '2025-09-11', '2025-09-25', '2025-09-11 22:10:19'),
-(7, 7, 161, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:10:22'),
-(8, 7, 106, 'movie', '2025-09-11', '2025-09-25', '2025-09-11 22:32:29'),
-(9, 7, 149, 'movie', '2025-09-11', '2025-09-25', '2025-09-11 22:32:31'),
-(10, 7, 136, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:32:42'),
-(11, 7, 114, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:32:34'),
-(12, 7, 112, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:32:43'),
-(13, 7, 153, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:32:44'),
-(14, 7, 105, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:32:40'),
-(15, 7, 150, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:32:45'),
-(16, 7, 187, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:36:34'),
-(17, 7, 119, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:36:35'),
-(18, 7, 160, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:36:36'),
-(19, 7, 110, 'book', '2025-09-11', '2025-09-25', '2025-09-11 22:36:36'),
-(20, 7, 130, 'book', '2025-09-11', '2025-09-25', '2025-09-12 07:52:12'),
-(21, 7, 136, 'video_game', '2025-09-12', '2025-09-26', '2025-09-12 07:52:09'),
-(22, 7, 148, 'movie', '2025-09-12', '2025-09-26', '2025-09-12 07:52:10'),
-(23, 7, 143, 'movie', '2025-09-12', '2025-09-26', '2025-09-12 07:52:11'),
-(24, 7, 171, 'book', '2025-09-12', '2025-09-26', NULL),
-(25, 7, 125, 'book', '2025-09-12', '2025-09-26', NULL),
-(26, 7, 195, 'book', '2025-09-12', '2025-09-26', NULL),
-(27, 7, 142, 'movie', '2025-09-12', '2025-09-26', NULL),
-(28, 7, 124, 'video_game', '2025-09-12', '2025-09-26', NULL),
-(29, 7, 122, 'book', '2025-09-12', '2025-09-26', NULL),
-(30, 7, 169, 'book', '2025-09-12', '2025-09-26', NULL);
-
--- --------------------------------------------------------
-
-
 --
--- Stand-in structure for view `media_stats`
--- (See below for the actual view)
---
-CREATE TABLE `media_stats` (
-`books_count` bigint
-,`games_count` bigint
-,`movies_count` bigint
-,`total_media` bigint
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
-
-
---
--- Table structure for table `movies`
---
-CREATE TABLE `movies` (
-  `id` int NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `producer` varchar(255) NOT NULL,
-  `year` year NOT NULL,
-  `gender` varchar(255) NOT NULL,
-  `duration` int NOT NULL,
-  `synopsis` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `classification` varchar(255) NOT NULL,
-  `image_url` varchar(500) NOT NULL,
-  `available` int NOT NULL,
-  `stock` int NOT NULL,
-  `upload_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
---
--- Dumping data for table `movies`
+-- Indexes for dumped tables
 --
 
-INSERT INTO `movies` (`id`, `title`, `producer`, `year`, `gender`, `duration`, `synopsis`, `classification`, `image_url`, `available`, `stock`, `upload_date`) VALUES
-(96, 'The Shawshank Redemption', 'Frank Darabont', 1994, 'Drame', 142, 'Two imprisoned men bond over years, finding solace and eventual redemption.', 'R', 'https://resizing.flixster.com/tdMXmsVnR-vIj4Q5IACpEZ7O1ak=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15987_v_h8_au.jpg', 1, 5, '2025-09-03'),
-(97, 'The Godfather', 'Francis Ford Coppola', 1972, 'Crime', 175, 'The aging patriarch of an organized crime dynasty transfers control to his son.', 'R', 'https://images.mubicdn.net/images/film/488/cache-47680-1745490954/image-w1280.jpg', 1, 5, '2025-09-03'),
-(98, 'The Dark Knight', 'Christopher Nolan', 2008, 'Action', 152, 'Batman faces the Joker in a battle for Gotham\'s soul.', 'PG-13', 'https://musicart.xboxlive.com/7/176b5100-0000-0000-0000-000000000002/504/image.jpg\r\n', 1, 5, '2025-09-03'),
-(99, 'The Godfather Part II', 'Francis Ford Coppola', 1974, 'Crime', 202, 'The early life and career of Vito Corleone in 1920s New York.', 'R', 'https://m.media-amazon.com/images/S/pv-target-images/111135eb34a021b419d09f2f149f3221e593a31e8d4bc27eec679fb9dd4768ee.jpg', 1, 5, '2025-09-03'),
-(100, '12 Angry Men', 'Sidney Lumet', 1957, 'Drame', 96, 'A jury holdout attempts to prevent a miscarriage of justice.', 'Approved', 'https://m.media-amazon.com/images/S/pv-target-images/b92d2865829416e35e7102a3934a2ee745f3b903a95678710442d4299d86f39c.jpg', 1, 5, '2025-09-03'),
-(101, 'Schindler\'s List', 'Steven Spielberg', 1993, 'Drame', 195, 'A German businessman saves Jews during the Holocaust.', 'R', 'https://ds.static.rtbf.be/article/image/1920x1080/9/1/b/b0df46967b8ef41b029914b28affcbd6-1549961359.jpg', 1, 5, '2025-09-03'),
-(102, 'The Lord of the Rings: The Return of the King', 'Peter Jackson', 2003, 'Fantaisie', 201, 'Gandalf and Aragorn lead the World of Men against Sauron\'s army.', 'PG-13', 'https://m.media-amazon.com/images/S/pv-target-images/367c0542c4a8ce887a6d10229bfa06de1d90b1f52b33301ea426c52f06ae0432.jpg', 1, 5, '2025-09-03'),
-(103, 'Pulp Fiction', 'Quentin Tarantino', 1994, 'Crime', 154, 'The lives of two mob hitmen, a boxer, and others intertwine.', 'R', 'https://m.media-amazon.com/images/I/71rpGtseYcL._UF1000,1000_QL80_.jpg', 1, 5, '2025-09-03'),
-(104, 'Forrest Gump', 'Robert Zemeckis', 1994, 'Drame', 142, 'The life of a man with low IQ who achieves great things.', 'PG-13', 'https://static.fnac-static.com/multimedia/Images/FR/NR/69/5b/09/613225/1507-1/tsp20180829112024/Forrest-gump.jpg', 1, 5, '2025-09-03'),
-(105, 'Inception', 'Christopher Nolan', 2010, 'Science-Fiction', 148, 'A thief enters the subconscious of his targets to steal information.', 'PG-13', ' https://shunrize.com/blog/wp-content/uploads/2010/07/Inception.jpg', 1, 5, '2025-09-03'),
-(106, 'La La Land', 'Damien Chazelle', 2016, 'Romance', 128, 'Une histoire d\'amour entre un musicien et une actrice.', '8.0', 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg', 0, 4, '2025-09-05'),
-(107, 'Blade Runner 2049', 'Denis Villeneuve', 2017, 'Science-Fiction', 163, 'Une suite futuriste explorant l\'humanité.', '8.0', 'https://m.media-amazon.com/images/M/MV5BMTczNDc3MDMxOV5BMl5BanBnXkFtZTgwOTM0OTg3MjE@._V1_FMjpg_UX1000_.jpg', 0, 6, '2025-09-05'),
-(108, 'Parasite', 'Bong Joon-ho', 2019, 'Drame', 132, 'Une satire sur les inégalités sociales.', '8.6', 'https://m.media-amazon.com/images/M/MV5BYjJiZjMzYzktNjU0NS00OTkxLWEwYzItYzdhYWJjN2QzMTRlL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(109, 'Fight Club', 'David Fincher', 1999, 'Drame', 139, 'Un homme crée un club de combat underground.', '8.8', 'https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTcwNTA4MDQyMw@@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(110, 'The Matrix', 'Wachowski Sisters', 1999, 'Science-Fiction', 136, 'Un hacker découvre une réalité simulée.', '8.7', 'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(111, 'Titanic', 'James Cameron', 1997, 'Romance', 194, 'Une histoire d\'amour tragique sur le Titanic.', '7.8', 'https://m.media-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(112, 'Gladiator', 'Ridley Scott', 2000, 'Action', 155, 'Un général romain cherche vengeance.', '8.5', 'https://m.media-amazon.com/images/M/MV5BMTQ5NjQ0NDI3NF5BMl5BanBnXkFtZTcwNDI0MjQ2MQ@@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(113, 'The Lord of the Rings: The Fellowship of the Ring', 'Peter Jackson', 2001, 'Fantaisie', 178, 'Une quête épique pour détruire un anneau.', '8.8', 'https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTgzMWMxZTllXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(114, 'Interstellar', 'Christopher Nolan', 2014, 'Science-Fiction', 169, 'Un voyage spatial pour sauver l\'humanité.', '8.6', 'https://m.media-amazon.com/images/M/MV5BODU4MjU4NjIwNl5BMl5BanBnXkFtZTgwMDU2MjEyMDE@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(115, 'The Empire Strikes Back', 'Irvin Kershner', 1980, 'Science-Fiction', 124, 'La suite épique de Star Wars.', '8.7', 'https://m.media-amazon.com/images/M/MV5BNDg4NjM1NDMtNTl5OS00MjE3LWE2MzctYTQ4ZGRjNjU2YTBjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(116, 'Saving Private Ryan', 'Steven Spielberg', 1998, 'Drame', 169, 'Une mission pour sauver un soldat pendant la WWII.', '8.6', 'https://m.media-amazon.com/images/M/MV5BYjQ5NjM0Y2YtNjZkNC00ZDhkLWJjMWItN2QyNzFkMDE3ZjAxXkEyXkFqcGdeQXVyODIxMzk5NjA@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(117, 'The Silence of the Lambs', 'Jonathan Demme', 1991, 'Crime', 118, 'Une agent du FBI traque un tueur en série.', '8.6', 'https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(118, 'Good Will Hunting', 'Gus Van Sant', 1997, 'Drame', 126, 'Un jeune génie trouve son chemin avec l\'aide d\'un thérapeute.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTc3NjI2MjU0Nl5BMl5BanBnXkFtZTgwNDQzMDU3MzI@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(119, 'The Green Mile', 'Frank Darabont', 1999, 'Drame', 189, 'Un gardien de prison découvre un prisonnier spécial.', '8.6', 'https://m.media-amazon.com/images/M/MV5BMTU0NTkyNzYwMF5BMl5BanBnXkFtZTgwMDU0NDY5MTI@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(120, 'Se7en', 'David Fincher', 1995, 'Crime', 127, 'Deux détectives traquent un tueur en série.', '8.6', 'https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MDdhLTgxZDYtNDFkNmE5MDEyMmMxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(121, 'The Usual Suspects', 'Bryan Singer', 1995, 'Crime', 106, 'Un interrogatoire révèle une conspiration criminelle.', '8.5', 'https://m.media-amazon.com/images/M/MV5BMTI1MTY2OTIxNV5BMl5BanBnXkFtZTYwNjQ4NjY3._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(122, 'Memento', 'Christopher Nolan', 2000, 'Crime', 113, 'Un homme amnésique enquête sur un meurtre.', '8.4', 'https://m.media-amazon.com/images/M/MV5BMTcxOWYzNDYtYmM4YS00N2NkLTk0NTAtMDc1ODczMDU0NDEzXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(123, 'Braveheart', 'Mel Gibson', 1995, 'Drame', 178, 'L\'histoire de William Wallace et sa révolte.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTI1Nzk1MzQwMV5BMl5BanBnXkFtZTYwODkxOTA5._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(124, 'Django Unchained', 'Quentin Tarantino', 2012, 'Drame', 165, 'Un esclave libéré cherche à sauver sa femme.', '8.4', 'https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTgwNTA4MDQyNzE@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(125, 'The Departed', 'Martin Scorsese', 2006, 'Crime', 151, 'Un flic infiltré et une taupe dans la police.', '8.5', 'https://m.media-amazon.com/images/M/MV5BM2FhYjEyYmYtMDI1Yy00YTdlLWI2NWQtYmEzNzAxOGY1NjEzXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(126, 'Whiplash', 'Damien Chazelle', 2014, 'Drame', 107, 'Un jeune batteur poussé à ses limites.', '8.5', 'https://m.media-amazon.com/images/M/MV5BMjE4MjA1NTAyMV5BMl5BanBnXkFtZTcwNzM1NDQyMQ@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(127, 'Mad Max: Fury Road', 'George Miller', 2015, 'Action', 120, 'Une poursuite post-apocalyptique.', '8.1', 'https://m.media-amazon.com/images/M/MV5BMjE4NzgzNzEwMl5BMl5BanBnXkFtZTgwMTMzMDE0NjE@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(128, 'The Grand Budapest Hotel', 'Wes Anderson', 2014, 'Comédie', 99, 'Les aventures dans un hôtel européen.', '8.1', 'https://m.media-amazon.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(129, 'Moonlight', 'Barry Jenkins', 2016, 'Drame', 111, 'L\'histoire d\'un jeune homme noir à Miami.', '7.4', 'https://m.media-amazon.com/images/M/MV5BMTYwMTA4MzgyNF5BMl5BanBnXkFtZTgwMjEyMjE0MDE@._V1_FMjpg_UX1000_.jpg', 0, 6, '2025-09-05'),
-(130, 'Arrival', 'Denis Villeneuve', 2016, 'Science-Fiction', 116, 'Une linguiste communique avec des extraterrestres.', '7.9', 'https://m.media-amazon.com/images/M/MV5BMTU5OTAzMTcxMV5BMl5BanBnXkFtZTgwMjg1MDY4ODE@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(131, 'The Big Lebowski', 'Coen Brothers', 1998, 'Comédie', 117, 'Un mec paresseux impliqué dans un crime.', '8.1', 'https://via.placeholder.com/300?text=Big+Lebowski', 1, 5, '2025-09-05'),
-(132, 'No Country for Old Men', 'Coen Brothers', 2007, 'Crime', 122, 'Un chasseur trouve une valise pleine d\'argent.', '8.1', 'https://via.placeholder.com/300?text=No+Country', 0, 0, '2025-09-05'),
-(133, 'A Clockwork Orange', 'Stanley Kubrick', 1971, 'Science-Fiction', 136, 'Un jeune criminel subit une thérapie expérimentale.', '8.3', 'https://via.placeholder.com/300?text=Clockwork+Orange', 1, 5, '2025-09-05'),
-(134, 'The Shining', 'Stanley Kubrick', 1980, 'Fantaisie', 144, 'Un écrivain devient fou dans un hôtel isolé.', '8.4', 'https://via.placeholder.com/300?text=Shining', 1, 5, '2025-09-05'),
-(135, 'Amélie', 'Jean-Pierre Jeunet', 2001, 'Romance', 122, 'Une jeune femme aide les autres à Paris.', '8.3', 'https://via.placeholder.com/300?text=Amélie', 0, 0, '2025-09-05'),
-(136, 'Eternal Sunshine of the Spotless Mind', 'Michel Gondry', 2004, 'Romance', 108, 'Un couple efface ses souvenirs amoureux.', '8.3', 'https://via.placeholder.com/300?text=Eternal+Sunshine', 1, 5, '2025-09-05'),
-(137, 'Spirited Away', 'Hayao Miyazaki', 2001, 'Fantaisie', 125, 'Une fille explore un monde magique.', '8.6', 'https://via.placeholder.com/300?text=Spirited+Away', 1, 5, '2025-09-05'),
-(138, 'The Pianist', 'Roman Polanski', 2002, 'Drame', 150, 'Un musicien juif survit à l\'Holocauste.', '8.5', 'https://via.placeholder.com/300?text=Pianist', 0, 0, '2025-09-05'),
-(139, 'Oldboy', 'Park Chan-wook', 2003, 'Crime', 120, 'Un homme cherche vengeance après 15 ans de captivité.', '8.4', 'https://via.placeholder.com/300?text=Oldboy', 1, 5, '2025-09-05'),
-(140, 'There Will Be Blood', 'Paul Thomas Anderson', 2007, 'Drame', 158, 'Un magnat du pétrole dans l\'Amérique du début du XXe siècle.', '8.2', 'https://via.placeholder.com/300?text=There+Will+Be+Blood', 1, 5, '2025-09-05'),
-(141, 'Inglourious Basterds', 'Quentin Tarantino', 2009, 'Action', 153, 'Un groupe de soldats chasse des nazis.', '8.3', 'https://via.placeholder.com/300?text=Inglourious', 0, 0, '2025-09-05'),
-(142, 'Her', 'Spike Jonze', 2013, 'Romance', 126, 'Un homme tombe amoureux d\'une intelligence artificielle.', '8.0', 'https://via.placeholder.com/300?text=Her', 0, 5, '2025-09-05'),
-(143, 'Drive', 'Nicolas Winding Refn', 2011, 'Crime', 100, 'Un cascadeur mène une double vie.', '7.8', 'https://via.placeholder.com/300?text=Drive', 0, 5, '2025-09-05'),
-(144, 'The Wolf of Wall Street', 'Martin Scorsese', 2013, 'Drame', 180, 'L\'ascension et la chute d\'un courtier.', '8.2', 'https://m.media-amazon.com/images/M/MV5BMjIyOTM5OTIzNV5BMl5BanBnXkFtZTgwMDkzODE2NjE@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(145, 'Joker', 'Todd Phillips', 2019, 'Drame', 122, 'L\'origine d\'un méchant iconique.', '8.4', 'https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTk2MDE@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(146, 'The Social Network', 'David Fincher', 2010, 'Drame', 120, 'L\'histoire de la création de Facebook.', '7.7', 'https://m.media-amazon.com/images/M/MV5BMTAxMGRmOGUtMjkxZC00ZmMxLWFmMGEtM2UxNGYxNjA0MGZmXkEyXkFqcGdeQXVyMjAwNzczNTU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(147, 'Gravity', 'Alfonso Cuarón', 2013, 'Science-Fiction', 91, 'Une astronaute lutte pour survivre dans l\'espace.', '7.7', 'https://m.media-amazon.com/images/M/MV5BMTM2ODk0NDAwMF5BMl5BanBnXkFtZTcwNTM1MDc2Mw@@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(148, 'The Revenant', 'Alejandro G. Iñárritu', 2015, 'Drame', 156, 'Un trappeur cherche vengeance dans la nature.', '8.0', 'https://m.media-amazon.com/images/M/MV5BNGZiMzBkZjUtNjE0U15BMl5BanBnXkFtZTgwNDc4OTk0NTE@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(149, 'Room', 'Lenny Abrahamson', 2015, 'Drame', 118, 'Une mère et son fils vivent en captivité.', '8.1', 'https://m.media-amazon.com/images/M/MV5BMzVlYzgxYi00YzhhLWEzODQtMGMxN2E1ZGQ2YjU3XkEyXkFqcGdeQXVyMzAzNTY3MDM@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(150, 'The Shape of Water', 'Guillermo del Toro', 2017, 'Fantaisie', 123, 'Une histoire d\'amour entre une femme et une créature.', '7.3', 'https://m.media-amazon.com/images/M/MV5BMjAwMDU5MTE3N15BMl5BanBnXkFtZTgwOTc1MDA4OTE@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(151, 'Get Out', 'Jordan Peele', 2017, 'Drame', 104, 'Un thriller sur le racisme caché.', '7.7', 'https://m.media-amazon.com/images/M/MV5BMzg2Mzg4YmUtNDdkNy00NWY1LWE3NmEtZWMzNGZhMjkzYjdjXkEyXkFqcGdeQXVyNTIxMDMyMTk@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(152, 'Knives Out', 'Rian Johnson', 2019, 'Crime', 130, 'Un mystère autour d\'un meurtre familial.', '7.9', 'https://m.media-amazon.com/images/M/MV5BMjQ3MDc1Mzc5Ml5BMl5BanBnXkFtZTgwODQzMDU3MzI@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(153, '1917', 'Sam Mendes', 2019, 'Drame', 119, 'Une mission dans les tranchées de la WWI.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMGUyM2ZiZmUtMWY0OC00NTVkLTgyYmMtYjBhODYzODFhMTU0XkEyXkFqcGdeQXVyMTAyMjQ3NzQ1._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(154, 'Jojo Rabbit', 'Taika Waititi', 2019, 'Comédie', 108, 'Un garçon et son ami imaginaire Hitler.', '7.9', 'https://m.media-amazon.com/images/M/MV5BMTgxOTYxMTg3OF5BMl5BanBnXkFtZTgwMDgyMzA2ODI@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(155, 'The Irishman', 'Martin Scorsese', 2019, 'Crime', 209, 'Une saga sur la mafia et la loyauté.', '7.8', 'https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_FMjpg_UX1000_.jpg', 0, 5, '2025-09-05'),
-(156, 'Once Upon a Time in Hollywood', 'Quentin Tarantino', 2019, 'Drame', 161, 'Une ode au Hollywood des années 60.', '7.6', 'https://m.media-amazon.com/images/M/MV5BY2NkZjEzMDgtN2RjYy00YzM1LWI4ZmQtMjIwYjFjNmNlOGVkXkEyXkFqcGdeQXVyNTAzNzgwNTg@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(157, 'A Beautiful Mind', 'Ron Howard', 2001, 'Drame', 135, 'L\'histoire d\'un mathématicien brillant.', '8.2', 'https://m.media-amazon.com/images/M/MV5BMjE1MzEzMjcyM15BMl5BanBnXkFtZTcwNDM4ODY3Nw@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(158, 'The Prestige', 'Christopher Nolan', 2006, 'Drame', 130, 'Deux magiciens rivaux dans un duel mortel.', '8.5', 'https://m.media-amazon.com/images/M/MV5BMjA4NDI0MTIxNF5BMl5BanBnXkFtZTYwNTM0MzY2._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(159, 'American Beauty', 'Sam Mendes', 1999, 'Drame', 122, 'Une crise de la quarantaine dans une banlieue.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTI1MTY2OTIxNV5BMl5BanBnXkFtZTYwNjQ4NjY3._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(160, 'Requiem for a Dream', 'Darren Aronofsky', 2000, 'Drame', 102, 'Les ravages de l\'addiction.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTM0MjUzNjkwMl5BMl5BanBnXkFtZTcwNjY0OTk1MQ@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(161, 'City of God', 'Fernando Meirelles', 2002, 'Crime', 130, 'La vie dans une favela brésilienne.', '8.6', 'https://m.media-amazon.com/images/M/MV5BMTY5MzYzNjc5NV5BMl5BanBnXkFtZTYwNTUyNTc2._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(162, 'Apocalypse Now', 'Francis Ford Coppola', 1979, 'Drame', 147, 'Un voyage dans la guerre du Vietnam.', '8.4', 'https://m.media-amazon.com/images/M/MV5BMGU5OWEwZDItNmNkMC00NzZmLTk1YTctNzVhZTJjM2NlZTVmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(163, 'Amadeus', 'Milos Forman', 1984, 'Drame', 160, 'La rivalité entre Mozart et Salieri.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTM0MjUzNjkwMl5BMl5BanBnXkFtZTcwNjY0OTk1MQ@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(164, 'Full Metal Jacket', 'Stanley Kubrick', 1987, 'Drame', 116, 'L\'entraînement des marines pendant le Vietnam.', '8.3', 'https://m.media-amazon.com/images/M/MV5BY2NkZjEzMDgtN2RjYy00YzM1LWI4ZmQtMjIwYjFjNmNlOGVkXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(165, 'The Truman Show', 'Peter Weir', 1998, 'Drame', 103, 'Un homme découvre que sa vie est une émission.', '8.1', 'https://m.media-amazon.com/images/M/MV5BY2IzZGY2YmEtOWIzOC00NmIyLTk4N2EtZGJjOTYzN2JjZjgzXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(166, 'L.A. Confidential', 'Curtis Hanson', 1997, 'Crime', 138, 'Corruption et crime dans le Los Angeles des années 50.', '8.2', 'https://m.media-amazon.com/images/M/MV5BMTc5NjgyMzk4NF5BMl5BanBnXkFtZTYwNDc2MDc4._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(167, 'Reservoir Dogs', 'Quentin Tarantino', 1992, 'Crime', 99, 'Un braquage qui tourne mal.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTI3NTQyMzU5M15BMl5BanBnXkFtZTcwMTM2MjgyMQ@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(168, 'The Sting', 'George Roy Hill', 1973, 'Crime', 129, 'Deux escrocs planifient une arnaque.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTg1OTgyMzE2NV5BMl5BanBnXkFtZTgwNTgxNjQ4NjE@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(169, 'Jaws', 'Steven Spielberg', 1975, 'Drame', 124, 'Un requin terrorise une ville côtière.', '8.0', 'https://m.media-amazon.com/images/M/MV5BMDE5OWVhNDItZjczNi00ZjYyLTkyNy00ZGQ3LWI4MzEtNDEyOWMxMjYzZmZlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(170, 'Alien', 'Ridley Scott', 1979, 'Science-Fiction', 117, 'Un équipage affronte une créature extraterrestre.', '8.4', 'https://m.media-amazon.com/images/M/MV5BMjIxNjogMTctNmUxNi00ZjliLWI3ZTYtOTA3Zjg3Y2MwMGE4XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(171, 'Back to the Future', 'Robert Zemeckis', 1985, 'Science-Fiction', 116, 'Un adolescent voyage dans le temps.', '8.5', 'https://m.media-amazon.com/images/M/MV5BOGUzYjM3YzItNTEyMS00ZDRhLWE3ZTQtYzI5ZTMzMWQ1NjZhXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(172, 'Raiders of the Lost Ark', 'Steven Spielberg', 1981, 'Aventure', 115, 'Indiana Jones cherche l\'Arche d\'Alliance.', '8.4', 'https://m.media-amazon.com/images/M/MV5BNWJlMmE3NDQtOWQyNC00ZWRjLTllOWMtN2MxM2I0MWZmNGEwXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(173, 'Die Hard', 'John McTiernan', 1988, 'Action', 132, 'Un flic affronte des terroristes.', '8.2', 'https://m.media-amazon.com/images/M/MV5BMjE0ODk2NjczOV5BMl5BanBnXkFtZTYwNDQ0MDg4._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(174, 'The Breakfast Club', 'John Hughes', 1985, 'Drame', 97, 'Cinq adolescents en retenue se découvrent.', '7.8', 'https://m.media-amazon.com/images/M/MV5BNjJlYmNkZGItM2NhYy00MjlmLTk5NmItZTIwN2ZkYjA1MGQ2XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(175, 'Scarface', 'Brian De Palma', 1983, 'Crime', 170, 'L\'ascension d\'un baron de la drogue.', '8.3', 'https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTgwNTA4MDQyNzE@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(176, 'Goodfellas', 'Martin Scorsese', 1990, 'Crime', 145, 'La vie d\'un gangster dans la mafia.', '8.7', 'https://m.media-amazon.com/images/M/MV5BMGU2NzRmZjUtOGUxYS00ZjdjLWEwZWItY2NlM2JhNjkxNTFmXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(177, 'The Terminator', 'James Cameron', 1984, 'Science-Fiction', 107, 'Un cyborg traque une femme clé pour l\'avenir.', '8.0', 'https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(178, 'Seven Samurai', 'Akira Kurosawa', 1954, 'Action', 207, 'Des samouraïs défendent un village.', '8.6', 'https://m.media-amazon.com/images/M/MV5BY2Q0ODg4ZmItNDdiOC00MDZgLTgyZTAtYTUzNzIzZjBaNjNmXkEyXkFqcGdeQXVyNDAyODU1Njc@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(179, 'Psycho', 'Alfred Hitchcock', 1960, 'Drame', 109, 'Un thriller psychologique sur un motel.', '8.5', 'https://m.media-amazon.com/images/M/MV5BOWE4ZDdhNmMtMWFmZi00ZGQ3LWI4MzEtNDEyOWMxMjYzZmZlXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(180, 'Rear Window', 'Alfred Hitchcock', 1954, 'Drame', 112, 'Un photographe espionne ses voisins.', '8.5', 'https://m.media-amazon.com/images/M/MV5BYjhmMGMxZDYtMTkyNy00YWVmLTgyYmUtYTU3ZjcwNTBjN2I3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(181, 'Citizen Kane', 'Orson Welles', 1941, 'Drame', 119, 'L\'histoire d\'un magnat des médias.', '8.3', 'https://m.media-amazon.com/images/M/MV5BYTQ4MjA4NmYtYjRhNi00MTEwLTg0NjgtNjk3ODJlZGU4NjRkXkEyXkFqcGdeQXVyNjUwMzI2NzU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(182, 'Casablanca', 'Michael Curtiz', 1942, 'Romance', 102, 'Une histoire d\'amour pendant la WWII.', '8.5', 'https://m.media-amazon.com/images/M/MV5BMTQ2Mjc1MDQwMl5BMl5BanBnXkFtZTcwNzUyOTUyMg@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(183, 'Gone with the Wind', 'Victor Fleming', 1939, 'Romance', 238, 'Une épopée romantique pendant la guerre civile.', '8.1', 'https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ1LTg0MjEtYXVjYWFmODFmMDg4XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(184, 'One Flew Over the Cuckoo\'s Nest', 'Milos Forman', 1975, 'Drame', 133, 'Un homme défie un hôpital psychiatrique.', '8.7', 'https://m.media-amazon.com/images/M/MV5BMjJkMDZhYzItZTFhMi00ZGI4LThlNTAtZDNlZTA5YzRhOGM0XkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(185, 'Chinatown', 'Roman Polanski', 1974, 'Crime', 130, 'Un détective enquête sur une conspiration.', '8.1', 'https://m.media-amazon.com/images/M/MV5BM2M1MmVhNDgtNmUyMS00YjQxLTgyYzUtYmM4YzNmYWNkZDY0XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(186, 'The Graduate', 'Mike Nichols', 1967, 'Drame', 106, 'Un jeune diplômé séduit par une femme plus âgée.', '8.0', 'https://m.media-amazon.com/images/M/MV5BMTY2MTAzMDcwN15BMl5BanBnXkFtZTgwMjA1MDc1MjE@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(187, 'Annie Hall', 'Woody Allen', 1977, 'Romance', 93, 'Une comédie romantique sur l\'amour.', '8.0', 'https://m.media-amazon.com/images/M/MV5BMzcyYWEwYjEtMDE0Zi00ZTq4LTgyZTAtYTUzNzIzZjBaNjNmXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(188, 'Taxi Driver', 'Martin Scorsese', 1976, 'Drame', 114, 'Un vétéran du Vietnam devient justicier.', '8.2', 'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 0, 0, '2025-09-05'),
-(189, 'Raging Bull', 'Martin Scorsese', 1980, 'Drame', 129, 'La vie d\'un boxeur autodestructeur.', '8.2', 'https://m.media-amazon.com/images/M/MV5BYjBiOTYxZWItMzdiZi00NjlkLWIzZTYtYmFhZjhiMTljOTdkXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05'),
-(190, 'Blade Runner', 'Ridley Scott', 1982, 'Science-Fiction', 117, 'Un chasseur de réplicants dans un futur dystopique.', '8.1', 'https://m.media-amazon.com/images/M/MV5BYjRmODkzNDItMTNhNi00YWYzLTg2YmUtNWY0ZjAyZjg5YmI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_FMjpg_UX1000_.jpg', 1, 5, '2025-09-05');
+--
+-- Indexes for table `loans`
+--
+ALTER TABLE `loans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
--- --------------------------------------------------------
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `loans`
+--
+ALTER TABLE `loans`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `loans`
+--
+ALTER TABLE `loans`
+  ADD CONSTRAINT `loans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+COMMIT;
+
 
 --
 -- Table structure for table `settings`
