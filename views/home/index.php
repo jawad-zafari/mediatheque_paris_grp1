@@ -32,7 +32,7 @@
 
 <section class="getting-started">
     <div class="container">
-        <h2>Commencer rapidement</h2>
+        <h2>Commencer rapidement grâce au CEPRR</h2>
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
@@ -52,6 +52,21 @@
                 <p>
                     Une fois que vous avez trouvé ce que vous cherchiez, empruntez jusqu'à 3
                     articles et profitez de vos nouvelles aquisitions temporaires pendant 2 semaines
+                </p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Rendez</h3>
+                <p>
+                    Retournez vos emprunts très simplement via votre profil
+                </p>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Recommencez</h3>
+                <p>
+                    Feuilletez à nouveau le catalogue, empruntez de nouveau articles, et profitez-en.
+                    Recommencez autant que vous le souhaiterez !
                 </p>
             </div>
         </div>
