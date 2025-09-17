@@ -6,6 +6,8 @@
 -- Generation Time: Sep 17, 2025 at 12:15 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
+CREATE DATABASE IF NOT EXISTS php_mvc_app CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE php_mvc_app;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
