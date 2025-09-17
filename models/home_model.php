@@ -151,55 +151,51 @@ function delete_media($id, $type) {
     return $stmt->execute([$id]);
 }
 
-/**
- * Télécharge et traite une image de couverture
- */
-function upload_cover_image($file) {
-    $upload_dir = PUBLIC_PATH . '/assets/images/covers/';
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0755, true);
-    }
-    
-    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-    $max_size = 2 * 1024 * 1024;
 
-    if ($file['error'] !== UPLOAD_ERR_OK) return false;
-    if (!in_array($file['type'], $allowed_types)) return false;
-    if ($file['size'] > $max_size) return false;
+function media_upload_image($type, $data, $image) {
+    $errors = [];
+    $success = "";
 
-    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $new_name = uniqid() . '.' . $ext;
-    $destination = $upload_dir . $new_name;
-
-    if (!move_uploaded_file($file['tmp_name'], $destination)) return false;
-
-    list($width, $height) = getimagesize($destination);
-    $max_width = 300;
-    $max_height = 400;
-
-    $ratio = min($max_width/$width, $max_height/$height, 1);
-    $new_width = (int)($width * $ratio);
-    $new_height = (int)($height * $ratio);
-
-    $src = null;
-    switch ($file['type']) {
-        case 'image/jpeg': $src = imagecreatefromjpeg($destination); break;
-        case 'image/png': $src = imagecreatefrompng($destination); break;
-        case 'image/gif': $src = imagecreatefromgif($destination); break;
+    if (!$image || $image['error'] === UPLOAD_ERR_NO_FILE) {
+        return ["errors" => $errors, "success" => $success];
     }
 
-    if ($src) {
-        $dst = imagecreatetruecolor($new_width, $new_height);
-        imagecopyresampled($dst, $src, 0,0,0,0, $new_width, $new_height, $width, $height);
-        switch ($file['type']) {
-            case 'image/jpeg': imagejpeg($dst, $destination); break;
-            case 'image/png': imagepng($dst, $destination); break;
-            case 'image/gif': imagegif($dst, $destination); break;
+    if ($image['error'] !== UPLOAD_ERR_OK) {
+        $errors[] = "Erreur lors de l'upload de l'image.";
+    }
+
+    if ($image['size'] > 2097152) {
+        $errors[] = "Le fichier est trop volumineux (max 2 Mo).";
+    }
+
+    $allowedExt = ['jpg','jpeg','png','gif'];
+    $fileExt = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
+    $dim = getimagesize($image['tmp_name']);
+    if ($dim === false) {
+        $errors[] = "Le fichier n'est pas une image valide.";
+    } else {
+        if ($dim[0] < 100 || $dim[1] < 100) {
+            $errors[] = "L'image doit avoir au minimum 100x100 pixels.";
         }
-        imagedestroy($src);
-        imagedestroy($dst);
+        $mime = image_type_to_mime_type($dim[2]);
+        if (!in_array($fileExt, $allowedExt) || !in_array($mime, ['image/jpeg','image/png','image/gif'])) {
+            $errors[] = "Format non supporté. Formats acceptés : JPG, PNG, GIF.";
+        }
     }
 
-    return $new_name;
+    if (empty($errors)) {
+        $newName = uniqid("media_", true).".".$fileExt;
+        $uploadDir = __DIR__ . "/../uploads/";
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        if (move_uploaded_file($image['tmp_name'], $uploadDir.$newName)) {
+            $success = $newName;
+        } else {
+            $errors[] = "Impossible d'enregistrer l'image.";
+        }
+    }
+
+    return ["errors" => $errors, "success" => $success];
 }
-?>

@@ -1,8 +1,5 @@
 <?php
 
-require_once MODEL_PATH . '/user_model.php';
-require_once MODEL_PATH . '/media_model.php';
-require_once MODEL_PATH . '/rental_model.php';
 
 // ----------------- TABLEAU DE BORD -----------------
 function get_total_media_count() {

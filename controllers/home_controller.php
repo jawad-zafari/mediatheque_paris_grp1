@@ -85,3 +85,33 @@ function home_test() {
     
     load_view_with_layout('home/test', $data);
 } 
+
+/** 
+ * Page Upload
+ */
+
+function home_upload() {
+    $type = $_POST['type'] ?? '';
+    $errors = [];
+    $success = "";
+    $image = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type) {
+        $data = $_POST;
+        $image = $_FILES['image'] ?? null;
+
+        $result = media_upload_image($type, $data, $image);
+
+        $errors = $result['errors'];
+        $success = $result['success'];
+    }
+
+    $data = [
+        'type'    => $type,
+        'errors'  => $errors,
+        'success' => $success,
+        'image'   => $image
+    ];
+
+    load_view_with_layout('home/upload', $data);
+}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Style pour le dropdown admin (sans JS) */
+        /* Style */
         .nav-menu { position: relative; }
         .dropdown { 
             display: none; 
@@ -43,6 +43,7 @@
                 <li><a href="<?php echo url('catalog/index'); ?>">Catalogue</a></li>
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
+                <li><a href="<?php echo url('home/upload'); ?>">Upload</a></li>
                 <?php if (is_logged_in()): ?>
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                         <li class="dropdown-container">

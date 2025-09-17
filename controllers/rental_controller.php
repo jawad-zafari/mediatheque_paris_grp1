@@ -4,7 +4,6 @@ require_once INCLUDE_PATH . '/helpers.php';
 
 /**
  * Gère la location d'un média par un utilisateur
- * @param string $item_id Identifiant du média à emprunter
  */
 function rental_rent($item_id) {
     // Vérifie si l'utilisateur est connecté
@@ -45,7 +44,6 @@ function rental_my_rentals() {
 
 /**
  * Gère le retour d'un média emprunté
- * @param int $rental_id Identifiant de la location à retourner
  */
 function rental_return($rental_id) {
     // Vérifie si l'utilisateur است connecté
