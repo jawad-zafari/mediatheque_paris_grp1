@@ -17,7 +17,7 @@ function get_total_media_count() {
 }
 
 function admin_dashboard() {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
     // Prépare les statistiques pour le tableau de bord
     $stats = [
@@ -36,7 +36,7 @@ function admin_dashboard() {
 
 // ----------------- GESTION DES MÉDIAS -----------------
 function admin_media_list() {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les médias
     $medias = get_all_media();
@@ -45,12 +45,12 @@ function admin_media_list() {
 }
 
 function admin_media_edit($id = null) {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
     // Initialisation de la variable média
     $media = null;
     if ($id) {
-        // Sépare l'ID en type et identifiant
+        // Sépare l'ID en type و identifiant
         $parts = explode('_', $id);
         if (count($parts) === 2) {
             $type = $parts[0];
@@ -122,6 +122,19 @@ function admin_media_save($id = null) {
         if (count($parts) === 2) {
             $type_db = $parts[0];
             $media_id = $parts[1];
+            $media = get_media_by_id($media_id, $type_db);
+
+            // Si une nouvelle image est uploadée, supprimer l'ancienne
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                if ($media && !empty($media['image_url'])) {
+                    $file_path = PUBLIC_PATH . '/assets/images/' . $media['image_url'];
+                    if (file_exists($file_path)) unlink($file_path);
+                }
+                $image_name = upload_cover_image($_FILES['image']);
+                if ($image_name) {
+                    $extra_fields['image_url'] = $image_name;
+                }
+            }
             update_media($media_id, $type_db, $extra_fields);
             set_flash('success', 'Média mis à jour avec succès.');
         }
@@ -139,6 +152,26 @@ function admin_media_delete($id, $type) {
     require_admin();
     $type_map = ['livre' => 'book', 'film' => 'movie', 'jeu' => 'video_game'];
     $type_db = $type_map[$type] ?? $type;
+
+    // Vérifier s'il y a des emprunts en cours
+    $active_loans = db_select_one(
+        "SELECT COUNT(*) as total FROM loans WHERE media_id = ? AND media_type = ? AND returned_at IS NULL",
+        [$id, $type_db]
+    );
+    if (($active_loans['total'] ?? 0) > 0) {
+        set_flash('error', 'Impossible de supprimer ce média : emprunts en cours.');
+        redirect('/admin/media');
+        return;
+    }
+
+    // Suppression physique de l'image
+    $media = get_media_by_id($id, $type_db);
+    if ($media && !empty($media['image_url'])) {
+        $file_path = PUBLIC_PATH . '/assets/images/' . $media['image_url'];
+        if (file_exists($file_path)) unlink($file_path);
+    }
+
+    // Suppression en base
     if (in_array($type_db, ['book', 'movie', 'video_game']) && delete_media($id, $type_db)) {
         set_flash('success', 'Média supprimé avec succès.');
     } else {
@@ -149,7 +182,7 @@ function admin_media_delete($id, $type) {
 
 // ----------------- GESTION DES UTILISATEURS -----------------
 function admin_users_list() {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les utilisateurs
     $users = get_all_users();
@@ -158,17 +191,23 @@ function admin_users_list() {
 }
 
 function admin_user_detail($id) {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
-    // Récupère les détails de l'utilisateur
     $user = get_user_by_id($id);
-    // Affiche la vue des détails de l'utilisateur
+    $user['loans'] = get_user_loans($id);
+
+    // Statistiques demandées
+    $user['total_loans'] = count($user['loans']);
+    $user['active_loans'] = count(array_filter($user['loans'], fn($l) => !$l['returned_at']));
+    $user['overdue_loans'] = array_filter($user['loans'], fn($l) => !$l['returned_at'] && strtotime($l['return_date']) < time());
+
+    // Affiche la vue des détails de ل'utilisateur
     load_view_with_layout('admin/user_detail', ['user' => $user]);
 }
 
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list() {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les emprunts
     $loans = get_all_loans();
@@ -177,9 +216,9 @@ function admin_loans_list() {
 }
 
 function admin_loan_return($loan_id) {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
-    // Marque l'emprunt comme rendu
+    // Marque ل'emprunt comme rendu
     if (return_loan($loan_id)) {
         set_flash('success', 'Emprunt marqué comme rendu.');
     } else {
@@ -190,11 +229,11 @@ function admin_loan_return($loan_id) {
 }
 
 function admin_loan_create($user_id, $media_id, $media_type) {
-    // Vérifie les droits d'administrateur
+    // Vérifie les droits د'administrateur
     require_admin();
     // Crée un nouvel emprunt
     if (create_loan($user_id, $media_id, $media_type)) {
-        set_flash('success', 'Emprunt enregistré avec succès.');
+        set_flash('success', 'Emprunt enregistré با succès.');
     } else {
         set_flash('error', 'Impossible de créer cet emprunt (limite atteinte ou média indisponible).');
     }
