@@ -33,6 +33,7 @@
     </style>
 </head>
 <body>
+    <?php if (!isset($hide_nav)): ?>  <!-- Masquer le header si $hide_nav est défini -->
     <header class="header">
         <nav class="navbar">
             <div class="nav-brand">
@@ -64,6 +65,7 @@
             </ul>
         </nav>
     </header>
+    <?php endif; ?>
 
     <main class="main-content">
         <?php flash_messages(); ?>
