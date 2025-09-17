@@ -7,7 +7,7 @@ require_once CORE_PATH . '/view.php';
 /**
  * Routeur principal
  */
-function route() {
+function dispatch() {
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     // Supprimer le préfixe 'public/' si présent pour corriger le parsing quand document root n'est pas public
     $uri = trim(str_replace(rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'), '', $uri), '/');
