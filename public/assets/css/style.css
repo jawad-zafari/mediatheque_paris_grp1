@@ -24,7 +24,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: 
+    rgb(255, 255, 255);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -101,8 +102,8 @@ body {
   position: absolute;
   inset: 0;
   background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
-  filter: blur(4px);   /* تاری برای جلوه بهتر */
-  transform: scale(1.1); /* کمی بزرگ‌تر تا لبه‌ها واضح نباشد */
+  filter: blur(4px);  /* Flou pour un meilleur effet */
+  transform: scale(1.1); /* Un peu plus grand pour que les bords ne soient pas nets */
   z-index: -1;
 }
 
@@ -518,10 +519,6 @@ code {
     min-width: 100%;
 }
 
-.carousel {
-   
-}
-
 /* Cartes d'objets - Améliorées */
 .carousel-item {
     flex: 0 0 320px;
@@ -537,7 +534,7 @@ code {
 }
 
 .carousel-item img {
-    width: 100%;
+    width: 300px;
     height: 200px;
     object-fit: cover;
     border-radius: 0.5rem;
@@ -781,7 +778,9 @@ code {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: transparent;
+    backdrop-filter: blur(5px);
+    /* background: rgba(0, 0, 0, 0.5); */
     z-index: 1000;
     overflow-y: auto;
 }
@@ -899,8 +898,9 @@ code {
 
 /* Grid for items */
 .grid-container {
+    font-size: smaller;
     display: grid;
-grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grille avec une largeur minimale de 250px */
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grille avec une largeur minimale de 250px */
     margin: 20px 0;
 }
 
@@ -910,18 +910,18 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grill
     display: flex;
     flex-direction: column; /* Layout vertical pour le contenu */
     justify-content: space-between; /* Distribution de l'espace pour aligner les boutons en bas */
-    height: 600px; /* Hauteur fixe de 600px pour tous les cadres */
+    height: 450px; /* Hauteur fixe de 600px pour tous les cadres */
     border: 1px solid var(--border-color); /* Bordure du cadre */
     border-radius: 8px; /* Coins arrondis */
     padding: 10px; /* Espacement interne */
-    background: var(--white); /* Fond blanc */
+    background: rgba(255, 255, 255, 0.678); /* Fond blanc */
     box-shadow: var(--shadow); /* Ombre légère */
     transition: transform 0.3s ease; /* Animation pour le hover */
 }
 
 .item img {
-    max-width: 100%;
-    height: auto;
+    max-width: 300px;
+    height: 150px;
     border-radius: 8px;
     margin-bottom: 10px;
 }
@@ -986,7 +986,7 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grill
     background-color: #2e2d2d; /* Vert plus foncé pour le hover */
     transition: 0.3s;
 }
-/* صفحه‌بندی */
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -1005,10 +1005,10 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grill
     display: inline-block;
     padding: 8px 12px;
     background-color: var(--white);
-    border: 1px solid var(--border-color);
+    border: 1px solid grey;
     border-radius: 5px;
     text-decoration: none;
-    color: var(--text-color);
+    color: black;
     font-weight: 500;
 }
 
@@ -1020,10 +1020,10 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grill
 .page-number.active {
     background-color: black;
     color: var(--white);
-    border-color: var(--primary-color);
+    border-color: rgb(255, 0, 0);
 }
 
-/* دکمه صفحه قبل */
+/* Bouton de page précédente */
 .btn-prev-page {
     display: inline-block;
     margin: 20px 10px;
@@ -1093,7 +1093,8 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grill
 }
 
 .modal-content {
-    background: rgb(255, 255, 255);
+    background: white;
+    backdrop-filter: blur(5px);
     max-width: 400px;
     margin: 2rem auto;
     padding: 1rem;
@@ -1224,6 +1225,7 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Layout en grill
     }
     
     .carousel-item img {
+        max-width: 300px;
         height: 150px;
     }
     

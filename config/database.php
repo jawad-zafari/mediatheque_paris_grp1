@@ -7,8 +7,8 @@ if (!defined('DB_PASS')) define('DB_PASS', '');
 if (!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8');
 
 // Configuration générale de l'application
-if (!defined('BASE_URL')) define('BASE_URL', 'http://localhost/ME/8/mediatheque_paris_grp1/public');
-if (!defined('APP_NAME')) define('APP_NAME', 'PHP MVC Starter');
+if (!defined('BASE_URL')) define('BASE_URL', 'http://localhost/ME/Test-02/mediatheque_paris_grp1_pierre/public');
+if (!defined('APP_NAME')) define('APP_NAME', 'Paris en culture');
 if (!defined('APP_VERSION')) define('APP_VERSION', '1.0.0');
 
 // Configuration des chemins
@@ -20,4 +20,12 @@ if (!defined('VIEW_PATH')) define('VIEW_PATH', ROOT_PATH . '/views');
 if (!defined('INCLUDE_PATH')) define('INCLUDE_PATH', ROOT_PATH . '/includes');
 if (!defined('CORE_PATH')) define('CORE_PATH', ROOT_PATH . '/core');
 if (!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . '/public');
-?>
+
+
+// Dossiers uploads
+define('UPLOADS_PATH', __DIR__ . '/../uploads');
+define('COVERS_PATH', UPLOADS_PATH . '/covers');
+define('COVERS_THUMBS_PATH', COVERS_PATH . '/thumbs');
+define('DEFAULT_COVER', 'default.jpg'); // à placer dans /uploads/covers/
+
+

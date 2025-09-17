@@ -9,7 +9,11 @@ require_once CORE_PATH . '/view.php';
  */
 function route() {
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    // Supprimer le préfixe 'public/' si présent pour corriger le parsing quand document root n'est pas public
     $uri = trim(str_replace(rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'), '', $uri), '/');
+    if (substr($uri, 0, 7) === 'public/') {
+        $uri = substr($uri, 7);
+    }
     $segments = explode('/', $uri);
 
     $controller = !empty($segments[0]) ? $segments[0] : 'home';
@@ -44,4 +48,3 @@ function route() {
         load_view_with_layout('errors/404');
     }
 }
-?>

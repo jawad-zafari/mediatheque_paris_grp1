@@ -139,10 +139,49 @@ function verify_password($password, $hash) {
 }
 
 /**
- * Formate une date
+ * Récupère le fuseau horaire de l'utilisateur à partir de son IP (stocké en session pour éviter les appels répétés)
  */
-function format_date($date, $format = 'd/m/Y H:i') {
-    return date($format, strtotime($date));
+function get_user_timezone() {
+    if (isset($_SESSION['user_timezone'])) {
+        return $_SESSION['user_timezone'];
+    }
+
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    // Éviter les appels API pour les adresses locales
+    if ($ip === '127.0.0.1' || $ip === '::1') {
+        $_SESSION['user_timezone'] = 'Europe/Paris';
+        return 'Europe/Paris';
+    }
+
+    $url = "http://ip-api.com/json/{$ip}?fields=status,message,timezone";
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+    
+    if (isset($data['status']) && $data['status'] === 'success' && isset($data['timezone'])) {
+        $_SESSION['user_timezone'] = $data['timezone'];
+        return $data['timezone'];
+    }
+
+    // Fallback à Europe/Paris si l'API échoue
+    $_SESSION['user_timezone'] = 'Europe/Paris';
+    return 'Europe/Paris';
+}
+
+/**
+ * Formate une date selon le fuseau horaire local de l'utilisateur
+ */
+function format_date($date, $format = 'd/m/Y H:i:s') {
+    $user_timezone = get_user_timezone();
+    $dt = new DateTime($date, new DateTimeZone('UTC')); // Supposer que la date stockée est en UTC
+    $dt->setTimezone(new DateTimeZone($user_timezone));
+    return $dt->format($format);
 }
 
 /**
@@ -153,7 +192,7 @@ function is_post() {
 }
 
 /**
- * Vérifie si une requête است en GET
+ * Vérifie سی une requête است en GET
  */
 function is_get() {
     return $_SERVER['REQUEST_METHOD'] === 'GET';
@@ -174,7 +213,7 @@ function get($key, $default = null) {
 }
 
 /**
- * Vérifie si un utilisateur است connecté
+ * Vérifie سی un utilisateur است connecté
  */
 function is_logged_in() {
     return isset($_SESSION['user']) && !empty($_SESSION['user']['id']);
@@ -211,4 +250,48 @@ function generate_slug($string) {
     $string = preg_replace('/[\s-]+/', '-', $string);
     return trim($string, '-');
 }
+
+/**
+ * Calcule le nombre de jours de retard pour un emprunt
+ */
+function calculate_days_late($return_date, $returned_at) {
+    $return_date_timestamp = strtotime($return_date);
+    if ($returned_at === null) {
+        $now = time();
+        return ($now > $return_date_timestamp) ? floor(($now - $return_date_timestamp) / 86400) : 0;
+    }
+    $returned_timestamp = strtotime($returned_at);
+    return ($returned_timestamp > $return_date_timestamp) ? floor(($returned_timestamp - $return_date_timestamp) / 86400) : 0;
+}
+
+/**
+ * Envoi un email de confirmation pour une location (optionnel, commenté par défaut)
+ */
+/*
+function send_confirmation_email($user_id, $media_id, $media_type, $loan_date, $return_date) {
+    $user = get_user_by_id($user_id);
+    $media_title = '';
+    switch ($media_type) {
+        case 'book':
+            $book = db_select_one("SELECT title FROM books WHERE id = ?", [$media_id]);
+            $media_title = $book['title'];
+            break;
+        case 'movie':
+            $movie = db_select_one("SELECT title FROM movies WHERE id = ?", [$media_id]);
+            $media_title = $movie['title'];
+            break;
+        case 'video_game':
+            $game = db_select_one("SELECT title FROM video_games WHERE id = ?", [$media_id]);
+            $media_title = $game['title'];
+            break;
+    }
+    if ($user && $media_title) {
+        $to = $user['email'];
+        $subject = 'Confirmation de votre emprunt';
+        $message = "Bonjour {$user['name']},\n\nVous avez emprunté '{$media_title}' le {$loan_date}. La date de retour prévue est le {$return_date}.\n\nMerci!";
+        $headers = 'From: no-reply@mediatheque.com';
+        mail($to, $subject, $message, $headers);
+    }
+}
+*/
 ?>

@@ -85,7 +85,7 @@
                        <div class="item-buttons"> 
                         <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
                         <?php if ($item['available']): ?>
-                            <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                         <?php endif; ?>
                     </div>
                     </div>
@@ -153,7 +153,7 @@
                         <p>Statut : <?php echo $item['available'] ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                         <div>
                             <?php if ($item['available']): ?>
-                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                             <?php endif; ?>
                             <a href="#close-modal" class="btn btn-back">Fermer</a>
                         </div>
