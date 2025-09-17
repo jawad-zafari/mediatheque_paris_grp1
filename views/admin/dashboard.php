@@ -34,6 +34,29 @@
         </div>
     </div>
 </section>
+<h2>Répartition des médias par catégorie</h2>
+<table>
+    <tr>
+        <th>Catégorie</th>
+        <th>Nombre</th>
+        <th>Barre</th>
+    </tr>
+    <tr>
+        <td>Livres</td>
+        <td><?php echo $stats['books']; ?></td>
+        <td><div style="background:#007bff;width:<?php echo $stats['books']*10; ?>px;height:20px;"></div></td>
+    </tr>
+    <tr>
+        <td>Films</td>
+        <td><?php echo $stats['movies']; ?></td>
+        <td><div style="background:#28a745;width:<?php echo $stats['movies']*10; ?>px;height:20px;"></div></td>
+    </tr>
+    <tr>
+        <td>Jeux vidéo</td>
+        <td><?php echo $stats['video_games']; ?></td>
+        <td><div style="background:#ffc107;width:<?php echo $stats['video_games']*10; ?>px;height:20px;"></div></td>
+    </tr>
+</table>
 <style>
     .stats-container {
         margin-top: 20px;
@@ -72,6 +95,19 @@
         font-size: 1.5em;
         color: #4CAF50;
         margin: 0;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
     }
     @media (max-width: 768px) {
         .stats-grid {
