@@ -66,11 +66,14 @@ function get_items_by_type($type, $search_term = '', $search_genre = 'all', $sea
         $params[] = $search_genre;
     }
 
-    // Filtrer par disponibilité uniquement سی explicitement sélectionné
-    if ($search_availability != 'all') {
-        $conditions[] = "available = ?";
-        $params[] = ($search_availability == 'true') ? 1 : 0;
+    // Commentaire: Changement pour utiliser stock à la place de available pour la disponibilité
+if ($search_availability != 'all') {
+    if ($search_availability == 'true') {
+        $conditions[] = "stock > 0";
+    } else {
+        $conditions[] = "stock = 0";
     }
+}
 
     $condition_str = !empty($conditions) ? " WHERE " . implode(" AND ", $conditions) : "";
 
@@ -119,10 +122,14 @@ function get_items_count_by_type($type, $search_term = '', $search_genre = 'all'
         $params[] = $search_genre;
     }
 
-    if ($search_availability != 'all') {
-        $conditions[] = "available = ?";
-        $params[] = ($search_availability == 'true') ? 1 : 0;
+  // Commentaire: Changement pour utiliser stock à la place de available pour la disponibilité
+if ($search_availability != 'all') {
+    if ($search_availability == 'true') {
+        $conditions[] = "stock > 0";
+    } else {
+        $conditions[] = "stock = 0";
     }
+}
 
     $condition_str = !empty($conditions) ? " WHERE " . implode(" AND ", $conditions) : "";
 
@@ -157,11 +164,14 @@ function search_items($search_term = '', $search_type = 'all', $search_genre = '
         $params[] = $search_genre;
     }
 
-    // Filtrer par disponibilité uniquement سی explicitement sélectionné
-    if ($search_availability != 'all') {
-        $conditions[] = "available = ?";
-        $params[] = ($search_availability == 'true') ? 1 : 0;
+    // Commentaire: Changement pour utiliser stock à la place de available pour la disponibilité
+if ($search_availability != 'all') {
+    if ($search_availability == 'true') {
+        $conditions[] = "stock > 0";
+    } else {
+        $conditions[] = "stock = 0";
     }
+}
 
     $condition_str = !empty($conditions) ? " AND " . implode(" AND ", $conditions) : "";
 

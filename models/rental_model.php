@@ -27,10 +27,10 @@ function create_rental($user_id, $item_id) {
     $pure_id = $parts[1];
     $media_type = ($type == 'book' || $type == 'livre') ? 'book' : (($type == 'film') ? 'movie' : 'video_game');
     $item = get_item_by_id($item_id);
-    
-    // Vérifie si le média est disponible (available > 0)
-    if (!$item || !isset($item['available']) || $item['available'] <= 0) {
-        error_log("Media not available: item_id=$item_id, available=" . ($item['available'] ?? 'null'));
+
+    // Vérifie si le média est disponible (stock > 0)
+    if (!$item || !isset($item['stock']) || $item['stock'] <= 0) {
+        error_log("Media not available: item_id=$item_id, stock=" . ($item['stock'] ?? 'null'));
         return ['success' => false, 'error' => 'Le média n\'est pas disponible.'];
     }
     
@@ -86,7 +86,7 @@ function create_rental($user_id, $item_id) {
         
         // Met à jour la disponibilité du média
         $table = ($media_type == 'book') ? 'books' : (($media_type == 'movie') ? 'movies' : 'video_games');
-        $update_query = "UPDATE $table SET available = available - 1 WHERE id = ?";
+        $update_query = "UPDATE $table SET stock = stock - 1 WHERE id = ?";
         db_execute($update_query, [$pure_id]);
         
         db_commit();
@@ -141,8 +141,8 @@ function return_rental($rental_id, $user_id) {
         
         // Augmente la disponibilité du média
         $table = ($rental['media_type'] == 'book') ? 'books' : (($rental['media_type'] == 'movie') ? 'movies' : 'video_games');
-        $update_query = "UPDATE $table SET available = available + 1 WHERE id = ?";
-        db_execute($update_query, [$rental['media_id']]); // Correction : remplacement de ) par ] pour fermer آرایه
+        $update_query = "UPDATE $table SET stock = stock + 1 WHERE id = ?";
+        db_execute($update_query, [$rental['media_id']]); // Correction : remplacement de ) par ] pour fermer l'array
         
         db_commit();
         return true;

@@ -499,13 +499,13 @@ code {
 .hero-banner{
     text-align: center;
 }
-.catalog-section h2 {
+/* .catalog-section h2 {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #1f2937;
+    color: #000000;
     margin-bottom: 1.5rem;
     text-align: center;
-}
+} */
 
 /* Conteneur carrousel */
 .carousel-container {
@@ -556,6 +556,34 @@ code {
     color: #6b7280;
     margin-bottom: 1rem;
     flex-grow: 1; /* Remplir l'espace vide */
+}
+.detail span {
+    font-size: x-small;
+    color: white;
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+}
+.detail span.available {
+    font-size: x-small;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    padding: 5px;
+    border-radius: 5px;
+}
+ p span {
+    font-size: x-small;
+    color: white;
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+}
+p span.available {
+    font-size: x-small;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    padding: 5px;
+    border-radius: 5px;
 }
 
 /* 🎯 Détails des boutons en ligne - Amélioré */
@@ -705,7 +733,6 @@ code {
     background-color: white;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     appearance: none;
-    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); */
     background-repeat: no-repeat;
     background-position: right 1rem center;
     background-size: 1em;
@@ -1020,7 +1047,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 .page-number.active {
     background-color: black;
     color: var(--white);
-    border-color: rgb(255, 0, 0);
+    border-color: rgb(255, 255, 255);
 }
 
 /* Bouton de page précédente */
@@ -1165,8 +1192,74 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 .detail .btn-back:hover {
     background-color: #5a6268;
 }
+.catalog-section h2{
+    background-color: rgba(0, 0, 0, 0.783);
+    color: white;
+    width: fit-content;
+    font-size: smaller;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+}
+/* ================= */
+/* 🎯 Rental Management Section */
+        .rental-image {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .rentals-table {
+            width: 100%;
+            /* border-collapse: collapse; */
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .rentals-table th,
+        .rentals-table td {
+            border-radius: 5px;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .rentals-table th {
+            background-color: #000000ff;
+            color: white;
+            font-weight: bold;
+        }
+        .rentals-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .rentals-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-return {
+            background-color: #ff4444;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn-return:hover {
+            background-color: #cc0000;
+        }
+        .returned {
+            color: #888;
+            font-style: italic;
+        }
+        .section-title {
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #333;
+        }
 /* Responsive */
 @media (max-width: 768px) {
+    *{
+        font-size: x-small;
+    }
+²
     .header {
         gap: 0px;
         font-size: x-small;
@@ -1238,7 +1331,8 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     }
     
     .carousel-actions {
-        flex-direction: column;
+        text-align: center;
+        /* flex-direction: column; */
         gap: 0.5rem;
     }
     
