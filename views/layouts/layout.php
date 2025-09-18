@@ -33,6 +33,7 @@
     </style>
 </head>
 <body>
+    <?php if (!isset($hide_nav)): ?>  <!-- Masquer le header si $hide_nav est défini -->
     <header class="header">
         <nav class="navbar">
             <div class="nav-brand">
@@ -41,6 +42,9 @@
             <ul class="nav-menu">
                 <li><a href="<?php echo url(); ?>">Accueil</a></li>
                 <li><a href="<?php echo url('catalog/index'); ?>">Catalogue</a></li>
+                <li class="nav-item">
+    <a class="nav-link" href="<?php echo url('rental/my_rentals'); ?>">Mes Emprunts</a>
+</li>
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
                 <li><a href="<?php echo url('home/upload'); ?>">Upload</a></li>
@@ -65,6 +69,7 @@
             </ul>
         </nav>
     </header>
+    <?php endif; ?>
 
     <main class="main-content">
         <?php flash_messages(); ?>

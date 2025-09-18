@@ -1,21 +1,34 @@
 <style>
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-th {
-    background: #007bff;
-    color: white;
-}
-table tbody tr:nth-child(even) { background: #f9f9f9; }
-a { color: #007bff; text-decoration: none; }
-a:hover { text-decoration: underline; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background: #007bff;
+        color: white;
+    }
+
+    table tbody tr:nth-child(even) {
+        background: #f9f9f9;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <h1>Détails utilisateur: <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></h1>
@@ -26,14 +39,14 @@ a:hover { text-decoration: underline; }
     <p>Email: <?= htmlspecialchars($user['email']); ?></p>
     <p>Rôle: <?= htmlspecialchars($user['role']); ?></p>
     <p>Inscrit le: <?= $user['created_at']; ?></p>
-    
+
     <h2>Statistiques d'utilisation</h2>
     <ul>
         <li>Emprunts totaux: <?= $user['total_loans']; ?></li>
         <li>Emprunts actifs: <?= $user['active_loans']; ?></li>
         <li>Emprunts en retard: <?= count($user['overdue_loans']); ?></li>
     </ul>
-    
+
     <h2>Emprunts actuels</h2>
     <?php if (!empty($user['loans'])): ?>
         <table>
@@ -54,8 +67,8 @@ a:hover { text-decoration: underline; }
                         <td><?= $loan['return_date']; ?></td>
                         <td><?= (strtotime($loan['return_date']) < time()) ? 'En retard' : 'OK'; ?></td>
                         <td>
-                            <a href="/admin/loans/return/<?= $loan['id']; ?>" 
-                               onclick="return confirm('Forcer le retour ?')">Retour forcé</a>
+                            <a href="/admin/loans/return/<?= $loan['id']; ?>"
+                                onclick="return confirm('Forcer le retour ?')">Retour forcé</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

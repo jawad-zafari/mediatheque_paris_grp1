@@ -79,13 +79,12 @@
                     <div class="item">
                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
                         <h3><?php echo htmlspecialchars($item['title']); ?></h3>
-                        <p>Auteur : <?php echo htmlspecialchars($item['author_director_publisher']); ?></p>
-                        <p>Pages : <?php echo htmlspecialchars($item['pages_duration_min_age']); ?></p>
-                        <p>Statut : <?php echo $item['available'] ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
+                        <p><?php echo htmlspecialchars($item['author_director_publisher']); ?></p>
+                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                        <div class="item-buttons"> 
                         <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
-                        <?php if ($item['available']): ?>
-                            <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                        <?php if ($item['stock'] > 0): ?>
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                         <?php endif; ?>
                     </div>
                     </div>
@@ -99,42 +98,43 @@
             <a href="<?php echo url('catalog/index'); ?>" class="btn btn-catalog-return">Retour au catalogue</a>
 
             <!-- Bouton page précédente -->
-            <?php $current_page = isset($current_page) ? $current_page : 1; ?>
-            <?php $total_pages = isset($total_pages) ? $total_pages : 1; ?>
-            <?php if ($current_page > 1): ?>
-                <a href="<?php echo url('catalog/books?page=' . ($current_page - 1)); ?>" class="btn btn-prev-page">Page précédente</a>
-            <?php endif; ?>
+<?php if ($current_page > 1): ?>
+    <a href="<?php echo url('catalog/books?page=' . ($current_page - 1) . '&search_term=' . urlencode($search_term) . '&genre=' . ($search_genre ?? 'all') . '&availability=' . ($search_availability ?? 'all')); ?>" class="btn btn-prev-page">Page précédente</a>
+<?php endif; ?>
 
-            <!-- Liens numériques des pages -->
-            <div class="page-numbers">
-                <!-- Toujours afficher la page 1 -->
-                <a href="<?php echo url('catalog/books?page=1'); ?>" class="page-number <?php echo $current_page == 1 ? 'active' : ''; ?>">1</a>
-                
-                <?php
-                // Si la page actuelle est supérieure à 3, afficher le signe ...
-                if ($current_page > 3) {
-                    echo '<span class="ellipsis">...</span>';
-                }
-                
-                // Afficher les pages autour de la page actuelle (sauf la page 1)
-                $start_page = max(2, $current_page - 2);
-                $end_page = min($total_pages, $current_page + 2);
-                for ($i = $start_page; $i <= $end_page; $i++): ?>
-                    <a href="<?php echo url('catalog/books?page=' . $i); ?>" class="page-number <?php echo $i == $current_page ? 'active' : ''; ?>">
-                        <?php echo $i; ?>
-                    </a>
-                <?php endfor; ?>
+<!-- Liens numériques des pages -->
+<div class="page-numbers">
+    <!-- Toujours afficher la page 1 -->
+    <a href="<?php echo url('catalog/books?page=1&search_term=' . urlencode($search_term) . '&genre=' . ($search_genre ?? 'all') . '&availability=' . ($search_availability ?? 'all')); ?>" class="page-number <?php echo $current_page == 1 ? 'active' : ''; ?>">1</a>
+    
+    <?php
+    // Si la page actuelle است supérieure à 3, afficher le signe ...
+    if ($current_page > 3) {
+        echo '<span class="ellipsis">...</span>';
+    }
+    
+    // Afficher les pages autour de la page actuelle (سوای la page 1)
+    $start_page = max(2, $current_page - 2);
+    $end_page = min($total_pages, $current_page + 2);
+    for ($i = $start_page; $i <= $end_page; $i++): ?>
+        <a href="<?php echo url('catalog/books?page=' . $i . '&search_term=' . urlencode($search_term) . '&genre=' . ($search_genre ?? 'all') . '&availability=' . ($search_availability ?? 'all')); ?>" class="page-number <?php echo $i == $current_page ? 'active' : ''; ?>">
+            <?php echo $i; ?>
+        </a>
+    <?php endfor; ?>
 
-                <!-- Si la page actuelle est inférieure au total des pages moins 2, afficher le signe ... -->
-                <?php if ($current_page < $total_pages - 2): ?>
-                    <span class="ellipsis">...</span>
-                <?php endif; ?>
-            </div>
+    <!-- Si la page actuelle est inférieure au total des pages moins 2, afficher le signe ... -->
+    <?php if ($current_page < $total_pages - 2): ?>
+        <span class="ellipsis">...</span>
+    <?php endif; ?>
+</div>
 
-            <!-- Bouton page suivante -->
-            <?php if ($current_page < $total_pages): ?>
-                <a href="<?php echo url('catalog/books?page=' . ($current_page + 1)); ?>" class="btn btn-next-page">Page suivante</a>
-            <?php endif; ?>
+<!-- Bouton page suivante -->
+<?php if ($current_page < $total_pages): ?>
+    <a href="<?php echo url('catalog/books?page=' . ($current_page + 1) . '&search_term=' . urlencode($search_term) . '&genre=' . ($search_genre ?? 'all') . '&availability=' . ($search_availability ?? 'all')); ?>" class="btn btn-next-page">Page suivante</a>
+<?php endif; ?>
+
+            <!-- Affichage du numéro de page actuel et du total des pages -->
+            <span class="page-info">Page <?php echo $current_page; ?> sur <?php echo $total_pages; ?></span>
         </div>
 
         <!-- Modal pour les détails -->
@@ -150,10 +150,10 @@
                         <p>Auteur : <?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
                         <p>ISBN : <?php echo htmlspecialchars($item['isbn_rating_platform'] ?? 'N/A'); ?></p>
                         <p>Pages : <?php echo htmlspecialchars($item['pages_duration_min_age'] ?? 'N/A'); ?></p>
-                        <p>Statut : <?php echo $item['available'] ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
+                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                         <div>
-                            <?php if ($item['available']): ?>
-                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" class="btn btn-rent">Emprunter</a>
+                            <?php if ($item['stock']): ?>
+                                <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>
                             <?php endif; ?>
                             <a href="#close-modal" class="btn btn-back">Fermer</a>
                         </div>

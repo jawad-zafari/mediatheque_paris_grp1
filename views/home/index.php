@@ -1,8 +1,7 @@
-
 <div class="hero">
     <div class="hero-content">
         <h1><?php e($message); ?></h1>
-        <p class="hero-subtitle">Un starter kit PHP avec architecture MVC procédurale</p>
+        <p class="hero-subtitle">Cultivons notre culture !</p>
         <?php if (!is_logged_in()): ?>
             <div class="hero-buttons">
                 <a href="<?php echo url('auth/register'); ?>" class="btn btn-primary">Commencer</a>
@@ -10,7 +9,7 @@
             </div>
         <?php else: ?>
             <p class="welcome-message">
-                <i class="fas fa-user"></i> 
+                <i class="fas fa-user"></i>
                 Bienvenue, <?php e($_SESSION['user']['name'] ?? ''); ?> !
             </p>
         <?php endif; ?>
@@ -33,22 +32,42 @@
 
 <section class="getting-started">
     <div class="container">
-        <h2>Commencer rapidement</h2>
+        <h2>Commencer rapidement grâce au CEPRR</h2>
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <h3>Configuration</h3>
-                <p>Configurez votre base de données dans <code>config/database.php</code></p>
+                <h3>Créez</h3>
+                <p>Créez votre profil sur la page inscription</p>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <h3>Développement</h3>
-                <p>Créez vos contrôleurs, modèles et vues dans leurs dossiers respectifs</p>
+                <h3>Explorez</h3>
+                <p>
+                    Parcourez le catalogue à la recherche de vos médias préférés ou de nouveaux médias
+                </p>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
-                <h3>Déploiement</h3>
-                <p>Uploadez votre application sur votre serveur web</p>
+                <h3>Profitez</h3>
+                <p>
+                    Une fois que vous avez trouvé ce que vous cherchiez, empruntez jusqu'à 3
+                    articles et profitez de vos nouvelles aquisitions temporaires pendant 2 semaines
+                </p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Rendez</h3>
+                <p>
+                    Retournez vos emprunts très simplement via votre profil
+                </p>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Recommencez</h3>
+                <p>
+                    Feuilletez à nouveau le catalogue, empruntez de nouveau articles, et profitez-en.
+                    Recommencez autant que vous le souhaiterez !
+                </p>
             </div>
         </div>
     </div>

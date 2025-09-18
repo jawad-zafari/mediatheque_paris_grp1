@@ -24,7 +24,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: 
+    rgb(255, 255, 255);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -89,10 +90,21 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    /* background-color: var(--primary-color); */
+    background-size: cover;
+    background-position: center;
     color: var(--white);
     padding: 4rem 0;
     text-align: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
+  filter: blur(4px);  /* Flou pour un meilleur effet */
+  transform: scale(1.1); /* Un peu plus grand pour que les bords ne soient pas nets */
+  z-index: -1;
 }
 
 .hero-content h1 {
@@ -476,7 +488,7 @@ code {
 }
 
 /* ================= */
-/* 🎯 بخش کاتالوگ - بهبود یافته */
+/* 🎯 Catalog section -Improved */
 /* ================= */
 .catalog-section {
     padding: 2rem 1rem;
@@ -487,15 +499,15 @@ code {
 .hero-banner{
     text-align: center;
 }
-.catalog-section h2 {
+/* .catalog-section h2 {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #1f2937;
+    color: #000000;
     margin-bottom: 1.5rem;
     text-align: center;
-}
+} */
 
-/* کانتینر کاروسل */
+/* Conteneur carrousel */
 .carousel-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -507,11 +519,7 @@ code {
     min-width: 100%;
 }
 
-.carousel {
-   
-}
-
-/* کارت‌های آیتم - بهبود یافته */
+/* Cartes d'objets - Améliorées */
 .carousel-item {
     flex: 0 0 320px;
     background-color: #ffffff;
@@ -522,11 +530,11 @@ code {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    min-height: 420px; /* ارتفاع ثابت برای همه کارت‌ها */
+    min-height: 420px; /* Hauteur fixe pour toutes les cartes */
 }
 
 .carousel-item img {
-    width: 100%;
+    width: 300px;
     height: 200px;
     object-fit: cover;
     border-radius: 0.5rem;
@@ -547,15 +555,43 @@ code {
     font-size: 0.95rem;
     color: #6b7280;
     margin-bottom: 1rem;
-    flex-grow: 1; /* پر کردن فضای خالی */
+    flex-grow: 1; /* Remplir l'espace vide */
+}
+.detail span {
+    font-size: x-small;
+    color: white;
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+}
+.detail span.available {
+    font-size: x-small;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    padding: 5px;
+    border-radius: 5px;
+}
+ p span {
+    font-size: x-small;
+    color: white;
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+}
+p span.available {
+    font-size: x-small;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    padding: 5px;
+    border-radius: 5px;
 }
 
-/* 🎯 دکمه‌ها در یک ردیف - بهبود یافته */
+/* 🎯 Détails des boutons en ligne - Amélioré */
 .carousel-actions {
     display: flex;
     gap: 0.8rem;
     justify-content: center;
-    margin-top: auto; /* فشار دادن دکمه‌ها به پایین */
+    margin-top: auto; /* Pousser les boutons vers le bas */
     padding-top: 1rem;
 }
 
@@ -566,7 +602,7 @@ code {
     font-size: 0.9rem;
 }
 
-/* 🎨 استایل دکمه جزئیات */
+/* 🎨 Style du bouton Détails */
 .btn-detail {
     background-color: #e5e7eb;
     color: #000000;
@@ -580,7 +616,7 @@ code {
     transform: translateY(-2px);
 }
 
-/* 🎨 استایل دکمه قرض گرفتن */
+/* 🎨 Style du bouton Emprunter */
 .btn-rent {
     background-color: #000000;
     color: #ffffff;
@@ -599,7 +635,7 @@ code {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* پنهان کردن اسکرول‌بار */
+/* Masquer la barre de défilement */
 .carousel-container::-webkit-scrollbar {
     display: none;
 }
@@ -609,7 +645,7 @@ code {
     scrollbar-width: none;
 }
 
-/* استایل‌های بخش جستجو و فیلترها */
+/* Styles de la section de recherche et de filtres */
 .search-filters {
     padding: 2rem 1rem;
     margin-bottom: 2rem;
@@ -618,7 +654,7 @@ code {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* استایل نوار جستجو */
+/* Style de la barre de recherche */
 .search-bar {
     display: flex;
     justify-content: center;
@@ -664,7 +700,7 @@ code {
     transform: translateY(-2px);
 }
 
-/* استایل بخش فیلترها */
+/*Style Filter section */
 .filters {
     display: flex;
     flex-direction: row;
@@ -697,7 +733,6 @@ code {
     background-color: white;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     appearance: none;
-    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); */
     background-repeat: no-repeat;
     background-position: right 1rem center;
     background-size: 1em;
@@ -726,7 +761,7 @@ code {
     transform: translateY(-2px);
 }
 
-/* استایل‌های بخش نتایج جستجو */
+/* Style des résultats de recherche */
 .search-results {
     padding: 2rem 1rem;
 }
@@ -748,7 +783,7 @@ code {
     box-shadow: var(--shadow);
 }
 
-/* بهبود استایل دکمه Effacer */
+/* Amélioration du style du bouton Effacer */
 .btn-secondary {
     background-color: var(--secondary-color);
     color: var(--white);
@@ -762,7 +797,7 @@ code {
 .btn-secondary:hover {
     background-color: #4b5563;
 }
-/* استایل‌های منوی کشویی (modal) برای جزئیات */
+/*Modal menu styles for details */
 .modal {
     display: none;
     position: fixed;
@@ -770,7 +805,9 @@ code {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: transparent;
+    backdrop-filter: blur(5px);
+    /* background: rgba(0, 0, 0, 0.5); */
     z-index: 1000;
     overflow-y: auto;
 }
@@ -781,7 +818,7 @@ code {
 
 
 
-/* استایل‌های جزئیات در modal */
+/* Modal details styles */
 .detail {
     padding: 1rem;
     text-align: left;
@@ -834,7 +871,7 @@ code {
 .detail .btn-back {
     background-color: rgb(161, 159, 159);
     color: var(--white);
-    padding: 0.6rem 1.2rem; /* اطمینان از هماهنگی با .btn */
+    padding: 0.6rem 1.2rem; /* Assure consistency with .btn */
     border-radius: 5px;
 }
 
@@ -884,33 +921,34 @@ code {
     background-color: #010911;
     color: #ffffff;
 }
-/* استایل‌های مربوط به صفحات کتاب، فیلم و بازی */
+/* Style des pages de livres, films et jeux vidéo */
 
 /* Grid for items */
 .grid-container {
+    font-size: smaller;
     display: grid;
-grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گرید با عرض حداقل 250px */
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grille avec une largeur minimale de 250px */
     margin: 20px 0;
 }
 
-/* استایل کادرهای آیتم (کتاب، فیلم، بازی) */
+/* Style des cartes d'éléments (livres, films, jeux vidéo) */
 .item {
     margin: 10px;
     display: flex;
-    flex-direction: column; /* چیدمان عمودی برای محتوا */
-    justify-content: space-between; /* توزیع فضا برای تراز کردن دکمه‌ها در پایین */
-    height: 600px; /* ارتفاع ثابت 500px برای همه کادرها */
-    border: 1px solid var(--border-color); /* حاشیه کادر */
-    border-radius: 8px; /* گوشه‌های گرد */
-    padding: 10px; /* فاصله داخلی */
-    background: var(--white); /* پس‌زمینه سفید */
-    box-shadow: var(--shadow); /* سایه ملایم */
-    transition: transform 0.3s ease; /* انیمیشن برای هاور */
+    flex-direction: column; /* Layout vertical pour le contenu */
+    justify-content: space-between; /* Distribution de l'espace pour aligner les boutons en bas */
+    height: 450px; /* Hauteur fixe de 600px pour tous les cadres */
+    border: 1px solid var(--border-color); /* Bordure du cadre */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px; /* Espacement interne */
+    background: rgba(255, 255, 255, 0.678); /* Fond blanc */
+    box-shadow: var(--shadow); /* Ombre légère */
+    transition: transform 0.3s ease; /* Animation pour le hover */
 }
 
 .item img {
-    max-width: 100%;
-    height: auto;
+    max-width: 300px;
+    height: 150px;
     border-radius: 8px;
     margin-bottom: 10px;
 }
@@ -933,49 +971,49 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
     font-weight: bold;
 }
 
-/* دکمه‌های عملیاتی در آیتم‌ها */
-/* کانتینر دکمه‌ها برای تراز افقی دکمه‌های جزئیات و قرض گرفتن */
+/* Boutons d'action dans les éléments */
+/* Conteneur des boutons pour l'alignement horizontal des boutons Détails et Emprunter */
 .item-buttons {
-    display: flex; /* چیدمان افقی دکمه‌ها */
-    justify-content: space-between; /* فاصله یکنواخت بین دکمه‌ها */
-    align-items: center; /* تراز عمودی دکمه‌ها */
-    margin-top: auto; /* قرار گرفتن دکمه‌ها در پایین کادر */
-    gap: 10px; /* فاصله بین دکمه‌ها */
+    display: flex; /* Layout horizontal des boutons */
+    justify-content: space-between; /* Espacement uniforme entre les boutons */
+    align-items: center; /* Alignement vertical des boutons */
+    margin-top: auto; /* Positionnement des boutons en bas du cadre */
+    gap: 10px; /* Espacement entre les boutons */
 }
 
-/* استایل پایه دکمه‌ها داخل .item-buttons */
+/*Style base buttons inside .item-buttons */
 .item-buttons .btn {
-    padding: 8px 15px; /* فاصله داخلی دکمه */
-    text-decoration: none; /* حذف زیرخط لینک */
-    border-radius: 5px; /* گوشه‌های گرد */
-    font-size: 0.9em; /* اندازه فونت */
-    text-align: center; /* تراز متن */
-    /* transition: background-color 0.3s ease; انیمیشن تغییر رنگ */
-    flex: 1; /* تقسیم فضای برابر بین دکمه‌ها */
+    padding: 8px 15px; /* Espacement interne du bouton */
+    text-decoration: none; /* Suppression du soulignement du lien */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 0.9em; /* Taille de police */
+    text-align: center; /* Alignement du texte */
+    /* transition: background-color 0.3s ease; Animation pour le hover */
+    flex: 1; /* Division de l'espace égal entre les boutons */
 }
 
-/* استایل دکمه جزئیات (رنگ توسط کاربر تنظیم شده، فقط ساختار حفظ می‌شود) */
+/* Style du bouton Détails (couleur définie par l'utilisateur, seule la structure est conservée) */
 .item-buttons .btn-detail {
-    background-color: #e6e3e3; /* رنگ پس‌زمینه خاکستری */
-    color: #000000; /* رنگ متن سیاه */
+    background-color: #e6e3e3; /* Couleur de fond gris */
+    color: #000000; /* Couleur du texte noir */
 }
 
 .item-buttons .btn-detail:hover {
-    background-color: #b7b5b5; /* خاکستری تیره‌تر برای هاور */
+    background-color: #b7b5b5; /* Gris plus foncé pour le hover */
     transition: 0.3s;
 }
 
-/* استایل دکمه قرض گرفتن */
+/* Style du bouton Emprunter */
 .item-buttons .btn-rent {
-    background-color: black; /* رنگ سبز */
-    color: white; /* متن سفید */
+    background-color: black; /* Couleur verte */
+    color: white; /* Texte blanc */
 }
 
 .item-buttons .btn-rent:hover {
-    background-color: #2e2d2d; /* سبز تیره‌تر برای هاور */
+    background-color: #2e2d2d; /* Vert plus foncé pour le hover */
     transition: 0.3s;
 }
-/* صفحه‌بندی */
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -994,10 +1032,10 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
     display: inline-block;
     padding: 8px 12px;
     background-color: var(--white);
-    border: 1px solid var(--border-color);
+    border: 1px solid grey;
     border-radius: 5px;
     text-decoration: none;
-    color: var(--text-color);
+    color: black;
     font-weight: 500;
 }
 
@@ -1009,10 +1047,10 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
 .page-number.active {
     background-color: black;
     color: var(--white);
-    border-color: var(--primary-color);
+    border-color: rgb(255, 255, 255);
 }
 
-/* دکمه صفحه قبل */
+/* Bouton de page précédente */
 .btn-prev-page {
     display: inline-block;
     margin: 20px 10px;
@@ -1029,7 +1067,7 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
     background-color: #041930;
 }
 
-/* دکمه صفحه بعد */
+/* Détails du bouton suivant */
 .btn-next-page {
     display: inline-block;
     margin: 20px 10px;
@@ -1047,7 +1085,7 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
     color: #ffffff;
 }
 
-/* دکمه بازگشت به کاتالوگ */
+/* Détails du bouton retour au catalogue */
 .btn-catalog-return {
     display: inline-block;
     margin: 20px 10px;
@@ -1082,17 +1120,18 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
 }
 
 .modal-content {
-    background: rgb(255, 255, 255);
+    background: white;
+    backdrop-filter: blur(5px);
     max-width: 400px;
     margin: 2rem auto;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: var(--shadow-lg);
     position: relative;
-    left: 20%; /* مرکز افقی */
+    left: 20%; /* Centre horizontal */
 }
 
-/* استایل‌های جزئیات در modal */
+/* Styles des détails dans le modal */
 .detail {
     padding: 1rem;
     text-align: left;
@@ -1153,8 +1192,74 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
 .detail .btn-back:hover {
     background-color: #5a6268;
 }
+.catalog-section h2{
+    background-color: rgba(0, 0, 0, 0.783);
+    color: white;
+    width: fit-content;
+    font-size: smaller;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+}
+/* ================= */
+/* 🎯 Rental Management Section */
+        .rental-image {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .rentals-table {
+            width: 100%;
+            /* border-collapse: collapse; */
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .rentals-table th,
+        .rentals-table td {
+            border-radius: 5px;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .rentals-table th {
+            background-color: #000000ff;
+            color: white;
+            font-weight: bold;
+        }
+        .rentals-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .rentals-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-return {
+            background-color: #ff4444;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn-return:hover {
+            background-color: #cc0000;
+        }
+        .returned {
+            color: #888;
+            font-style: italic;
+        }
+        .section-title {
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #333;
+        }
 /* Responsive */
 @media (max-width: 768px) {
+    *{
+        font-size: x-small;
+    }
+²
     .header {
         gap: 0px;
         font-size: x-small;
@@ -1213,6 +1318,7 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
     }
     
     .carousel-item img {
+        max-width: 300px;
         height: 150px;
     }
     
@@ -1225,7 +1331,8 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
     }
     
     .carousel-actions {
-        flex-direction: column;
+        text-align: center;
+        /* flex-direction: column; */
         gap: 0.5rem;
     }
     
@@ -1291,11 +1398,11 @@ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* چیدمان گ
         width: 100% 
     }
     .item-buttons {
-        flex-direction: row; /* حفظ چیدمان افقی در موبایل */
-        gap: 8px; /* فاصله کمتر بین دکمه‌ها */
+        flex-direction: row; /* Conserver la disposition horizontale sur mobile */
+        gap: 8px; /* Réduire l'espace entre les boutons */
     }
 
     .item-buttons .btn {
-        flex: 1; /* تقسیم فضای برابر در موبایل */
-        font-size: 0.85em; /* اندازه فونت کوچکتر */
+        flex: 1; /* Répartir l'espace également sur mobile */
+        font-size: 0.85em; /* Taille de police réduite */
     }
