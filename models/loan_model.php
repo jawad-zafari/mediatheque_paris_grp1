@@ -82,6 +82,19 @@ function return_loan($loan_id) {
 
     return false;
 }
+/**
+ * Récupère les emprunts en retard d'un utilisateur
+ */
+function get_user_overdue_loans($user_id) {
+    $query = "
+        SELECT *
+        FROM loans
+        WHERE user_id = ?
+          AND returned_at IS NULL
+          AND return_date < CURDATE()
+    ";
+    return db_select($query, [$user_id]);
+}
 
 /**
  * Récupère tous les emprunts (avec option overdue)

@@ -1,11 +1,9 @@
 <?php
 
-require_once MODEL_PATH . '/user_model.php';
-require_once MODEL_PATH . '/media_model.php';
-require_once MODEL_PATH . '/rental_model.php';
 
 // ----------------- TABLEAU DE BORD -----------------
-function get_total_media_count() {
+function get_total_media_count()
+{
     // Récupère le nombre total de livres
     $books = db_select_one("SELECT COUNT(*) as total FROM books")['total'] ?? 0;
     // Récupère le nombre total de films
@@ -16,7 +14,8 @@ function get_total_media_count() {
     return $books + $movies + $video_games;
 }
 
-function admin_dashboard() {
+function admin_dashboard()
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Prépare les statistiques pour le tableau de bord
@@ -35,7 +34,8 @@ function admin_dashboard() {
 }
 
 // ----------------- GESTION DES MÉDIAS -----------------
-function admin_media_list() {
+function admin_media_list()
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les médias
@@ -44,7 +44,8 @@ function admin_media_list() {
     load_view_with_layout('admin/media_list', ['medias' => $medias]);
 }
 
-function admin_media_edit($id = null) {
+function admin_media_edit($id = null)
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Initialisation de la variable média
@@ -68,7 +69,8 @@ function admin_media_edit($id = null) {
 /**
  * Enregistre un média (création ou mise à jour)
  */
-function admin_media_save($id = null) {
+function admin_media_save($id = null)
+{
     require_admin();
     if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
         set_flash('error', 'Token CSRF invalide');
@@ -148,7 +150,8 @@ function admin_media_save($id = null) {
 /**
  * Supprime un média
  */
-function admin_media_delete($id, $type) {
+function admin_media_delete($id, $type)
+{
     require_admin();
     $type_map = ['livre' => 'book', 'film' => 'movie', 'jeu' => 'video_game'];
     $type_db = $type_map[$type] ?? $type;
@@ -181,7 +184,8 @@ function admin_media_delete($id, $type) {
 }
 
 // ----------------- GESTION DES UTILISATEURS -----------------
-function admin_users_list() {
+function admin_users_list()
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les utilisateurs
@@ -190,23 +194,36 @@ function admin_users_list() {
     load_view_with_layout('admin/users_list', ['users' => $users]);
 }
 
-function admin_user_detail($id) {
-    // Vérifie les droits د'administrateur
+function admin_user_detail($id)
+{
     require_admin();
+
+    // Récupérer les infos utilisateur
     $user = get_user_by_id($id);
-    $user['loans'] = get_user_loans($id);
+    if (!$user) {
+        set_flash('error', 'Utilisateur introuvable.');
+        redirect('/admin/users');
+        return;
+    }
 
-    // Statistiques demandées
-    $user['total_loans'] = count($user['loans']);
-    $user['active_loans'] = count(array_filter($user['loans'], fn($l) => !$l['returned_at']));
-    $user['overdue_loans'] = array_filter($user['loans'], fn($l) => !$l['returned_at'] && strtotime($l['return_date']) < time());
+    // Stats emprunts
+    $all_loans = get_user_loans($id) ?: [];
+    $user['total_loans'] = count($all_loans);
+    $user['active_loans'] = count_active_loans($id) ?? 0;
+    $user['overdue_loans'] = get_user_overdue_loans($id) ?: [];
 
-    // Affiche la vue des détails de ل'utilisateur
-    load_view_with_layout('admin/user_detail', ['user' => $user]);
+    // Affiche la vue
+    load_view_with_layout('admin/user_detail', [
+        'user' => $user,
+        'loans' => $all_loans
+    ]);
 }
 
+
+
 // ----------------- GESTION DES EMPRUNTS -----------------
-function admin_loans_list() {
+function admin_loans_list()
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Récupère tous les emprunts
@@ -215,7 +232,8 @@ function admin_loans_list() {
     load_view_with_layout('admin/loans_list', ['loans' => $loans]);
 }
 
-function admin_loan_return($loan_id) {
+function admin_loan_return($loan_id)
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Marque ل'emprunt comme rendu
@@ -228,7 +246,8 @@ function admin_loan_return($loan_id) {
     redirect('/admin/loans');
 }
 
-function admin_loan_create($user_id, $media_id, $media_type) {
+function admin_loan_create($user_id, $media_id, $media_type)
+{
     // Vérifie les droits د'administrateur
     require_admin();
     // Crée un nouvel emprunt
@@ -240,4 +259,21 @@ function admin_loan_create($user_id, $media_id, $media_type) {
     // Redirection vers la liste des emprunts
     redirect('/admin/loans');
 }
-?>
+
+
+// ----------------- ALIASES POUR ROUTER -----------------
+// Regroupés ici pour simplifier le routing
+function admin_media()
+{
+    return admin_media_list();
+}
+
+function admin_users()
+{
+    return admin_users_list();
+}
+
+function admin_loans()
+{
+    return admin_loans_list();
+}

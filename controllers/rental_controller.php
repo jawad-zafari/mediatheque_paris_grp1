@@ -3,10 +3,11 @@ require_once MODEL_PATH . '/rental_model.php';
 require_once INCLUDE_PATH . '/helpers.php';
 
 /**
- * Gère la location د'un média par un utilisateur
+ * Gère la location d'un média par un utilisateur
  * @param string $item_id Identifiant du média à emprunter
  */
-function rental_rent($item_id) {
+function rental_rent($item_id)
+{
     // Vérifie سی l'utilisateur است connecté
     if (!is_logged_in()) {
         set_flash('error', 'Vous devez vous connecter pour emprunter.');
@@ -36,7 +37,8 @@ function rental_rent($item_id) {
 /**
  * Affiche la liste des locations د'utilisateur (actives و historiques)
  */
-function rental_my_rentals() {
+function rental_my_rentals()
+{
     // Vérifie سی l'utilisateur است connecté
     if (!is_logged_in()) {
         redirect('auth/login');
@@ -54,10 +56,11 @@ function rental_my_rentals() {
 }
 
 /**
- * Gère le retour د'un média emprunté
+ * Gère le retour d'un média emprunté
  * @param int $rental_id Identifiant de la location à retourner
  */
-function rental_return($rental_id) {
+function rental_return($rental_id)
+{
     // Vérifie سی l'utilisateur است connecté
     if (!is_logged_in()) {
         redirect('auth/login');
@@ -72,4 +75,3 @@ function rental_return($rental_id) {
     }
     redirect('rental/my_rentals');
 }
-?>

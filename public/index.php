@@ -21,7 +21,13 @@ require_once CORE_PATH . '/view.php';
 require_once INCLUDE_PATH . '/helpers.php';
 
 // Charger les modèles
+require_once MODEL_PATH . '/catalogue_model.php';
+//require_once MODEL_PATH . '/media_model.php';
+require_once MODEL_PATH . '/loan_model.php';
+require_once MODEL_PATH . '/rental_model.php';
 require_once MODEL_PATH . '/user_model.php';
+require_once MODEL_PATH . '/item_model.php';
+require_once MODEL_PATH . '/home_model.php';
 
 // Activer l'affichage des erreurs en développement
 // À désactiver en production
