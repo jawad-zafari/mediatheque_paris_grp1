@@ -155,13 +155,30 @@ function admin_users_list() {
 }
 
 function admin_user_detail($id) {
-    // Vérifie les droits د'administrateur
     require_admin();
-    // Récupère les détails de ل'utilisateur
+    
+    // Récupérer les infos utilisateur
     $user = get_user_by_id($id);
-    // Affiche la vue des détails de ل'utilisateur
-    load_view_with_layout('admin/user_detail', ['user' => $user]);
+    if (!$user) {
+        set_flash('error', 'Utilisateur introuvable.');
+        redirect('/admin/users');
+        return;
+    }
+
+    // Stats emprunts
+    $all_loans = get_user_loans($id) ?: [];
+    $user['total_loans'] = count($all_loans);
+    $user['active_loans'] = count_active_loans($id) ?? 0;
+    $user['overdue_loans'] = get_user_overdue_loans($id) ?: [];
+
+    // Affiche la vue
+    load_view_with_layout('admin/user_detail', [
+        'user' => $user,
+        'loans' => $all_loans
+    ]);
 }
+
+
 
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list() {
@@ -198,4 +215,20 @@ function admin_loan_create($user_id, $media_id, $media_type) {
     // Redirection vers la liste des emprunts
     redirect('/admin/loans');
 }
+
+
+// ----------------- ALIASES POUR ROUTER -----------------
+// Regroupés ici pour simplifier le routing
+function admin_media() {
+    return admin_media_list();
+}
+
+function admin_users() {
+    return admin_users_list();
+}
+
+function admin_loans() {
+    return admin_loans_list();
+}
+
 ?>

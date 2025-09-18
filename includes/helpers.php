@@ -143,4 +143,10 @@ function generate_slug($string) {
     $string = preg_replace('/[\s-]+/', '-', $string);
     return trim($string, '-');
 }
+
+
+function base_url($path = '') {
+    return '/mediatheque_paris_grp1_pierre/public' . $path;
+}
+
 ?>

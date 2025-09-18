@@ -48,19 +48,21 @@ a:hover { text-decoration: underline; }
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?php echo $user['id']; ?></td>
-                <td><?php echo htmlspecialchars($user['name']); ?></td>
-                <td><?php echo htmlspecialchars($user['last_name']); ?></td>
-                <td><?php echo htmlspecialchars($user['email']); ?></td>
-                <td><?php echo htmlspecialchars($user['role'] ?? 'user'); ?></td>
-                <td><?php echo $user['created_at']; ?></td>
-                <td>
-                    <a href="/admin/user/<?php echo $user['id']; ?>">Voir</a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
+  <tbody>
+    <?php foreach ($users as $user): ?>
+        <tr>
+            <td><?= htmlspecialchars($user['id']); ?></td>
+            <td><?= htmlspecialchars($user['name']); ?></td>
+            <td><?= htmlspecialchars($user['last_name']); ?></td>
+            <td><?= htmlspecialchars($user['email']); ?></td>
+            <td><?= htmlspecialchars($user['role'] ?? 'user'); ?></td>
+            <td><?= htmlspecialchars($user['created_at']); ?></td>
+            <td>
+                <a href="<?= base_url('/admin/user_detail/' . $user['id']); ?>">Voir</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
+
 </table>
