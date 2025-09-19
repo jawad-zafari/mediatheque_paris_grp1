@@ -43,7 +43,7 @@
                 <li><a href="<?php echo url(); ?>">Accueil</a></li>
                 <li><a href="<?php echo url('catalog/index'); ?>">Catalogue</a></li>
                 <li class="nav-item">
-    <a class="nav-link" href="<?php echo url('rental/my_rentals'); ?>">Mes Emprunts</a>
+    <a class="nav-link" href="<?php echo url('rental/my_rentals'); ?>" target="rental_tab">Mes Emprunts</a>
 </li>
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>

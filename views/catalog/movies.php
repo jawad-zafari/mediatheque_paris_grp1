@@ -78,11 +78,9 @@
                     <div class="item">
                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
                         <h3><?php echo htmlspecialchars($item['title']); ?></h3>
-                        <p>Réalisateur : <?php echo htmlspecialchars($item['author_director_publisher']); ?></p>
-                        <p>Note : <?php echo htmlspecialchars($item['isbn_rating_platform']); ?></p>
+                        <p><?php echo htmlspecialchars($item['author_director_publisher']); ?></p>
                         <p>Durée : <?php echo htmlspecialchars($item['pages_duration_min_age']); ?> min</p>
-                        <p>Statut : <?php echo $item['stock'] > 0 ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
-
+                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                         <div class="item-buttons">
                             <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
                             <?php if ($item['stock'] > 0): ?>
@@ -151,7 +149,7 @@
                         <p>Réalisateur : <?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
                         <p>Note : <?php echo htmlspecialchars($item['isbn_rating_platform'] ?? 'N/A'); ?></p>
                         <p>Durée : <?php echo htmlspecialchars($item['pages_duration_min_age'] ?? 'N/A'); ?> min</p>
-                        <p>Statut : <?php echo $item['stock'] > 0 ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
+                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                         <div>
                             <?php if ($item['stock'] > 0
                                 ): ?>

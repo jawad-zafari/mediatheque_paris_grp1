@@ -15,6 +15,7 @@
     <section class="container">
         <section class="banner">
             <section class="hero-banner">
+                <div class="hero-content">
                 <h1>Catalogue de la Médiathèque</h1>
                 <p class="hero-subtitle">Découvrez notre collection de médias organisée par catégorie</p>
                         <!-- Formulaire de recherche -->
@@ -66,6 +67,8 @@
                 </div>
             </form>
         </section>
+        </div>
+            </section>
 
         <!-- Résultats de recherche -->
         <!-- Commentaire: Afficher les résultats uniquement si une recherche est effectuée, avec séparation par type (Livres, Films, Jeux Vidéo) -->
@@ -100,6 +103,7 @@
                                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?>">
                                         <h3><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
                                         <p><?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
+                                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                                         <div class="carousel-actions">
                                             <!-- Commentaire: Afficher le bouton Emprunter si stock > 0 -->
                                             <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
@@ -126,6 +130,7 @@
                                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?>">
                                         <h3><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
                                         <p><?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
+                                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                                         <div class="carousel-actions">
                                             <!-- Commentaire: Afficher le bouton Emprunter si stock > 0 -->
                                             <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
@@ -152,6 +157,7 @@
                                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?>">
                                         <h3><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
                                         <p><?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
+                                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                                         <div class="carousel-actions">
                                             <!-- Commentaire: Afficher le bouton Emprunter si stock > 0 -->
                                             <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
@@ -170,7 +176,46 @@
         </section>
             </section>
         </section>
-            <h1>Derniers médias ajoutés</h1>
+         <div class="catalog-nouveautes" data-section="nouveautes">
+        <h2>Notre collection!</h2>
+            <h4>Explorez nos médias par catégorie.</h4>
+         </div>
+        <section class="media-stats-section">
+    <div class="media-stats-container">
+        <!-- باکس کتاب‌ها -->
+        <a href="<?php echo url('catalog/books'); ?>" class="media-stats-box media-stats-book-box">
+            <div class="media-stats-content">
+                <h3>Livres</h3>
+                <p><?php echo count($books ?? []) . ' livres'; ?></p>
+                <hr class="media-stats-divider">
+            </div>
+        </a>
+
+        <!-- باکس فیلم‌ها -->
+        <a href="<?php echo url('catalog/movies'); ?>" class="media-stats-box media-stats-film-box">
+            <div class="media-stats-content">
+                <h3>Films</h3>
+                <p><?php echo count($movies ?? []) . ' films'; ?></p>
+                <hr class="media-stats-divider">
+            </div>
+        </a>
+
+        <!-- باکس بازی‌ها -->
+        <a href="<?php echo url('catalog/games'); ?>" class="media-stats-box media-stats-game-box">
+            <div class="media-stats-content">
+                <h3>Jeux Vidéo</h3>
+                <p><?php echo count($games ?? []) . ' jeux'; ?></p>
+                <hr class="media-stats-divider">
+            </div>
+        </a>
+    </div>
+</section>
+<hr>
+        <!-- Section des nouveautés -->
+        <div class="catalog-nouveautes" data-section="nouveautes">
+        <h2>Dernières nouveautés!</h2>
+            <h4>Les derniers ajouts à notre collection</h4>
+         </div>
         <!-- Section des livres -->
         <!-- Commentaire: Section avec scroll horizontal pour les livres -->
         <div class="catalog-section" data-section="livre">
@@ -264,7 +309,7 @@
             <a href="<?php echo url('catalog/games'); ?>" class="btn btn-view-all">Tout voir!</a>
         </div>
 
-        <!-- Menu déroulant (modal) pour les détails de chaque élément -->
+        <!--(modal) pour les détails de chaque élément -->
         <?php foreach (array_merge($books ?? [], $movies ?? [], $games ?? []) as $item): ?>
             <!-- Commentaire: Vérifier l'existence des clés pour éviter les erreurs null -->
             <?php if (isset($item['id']) && !empty($item['id'])): ?>
