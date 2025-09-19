@@ -7,7 +7,7 @@ if (!defined('DB_PASS')) define('DB_PASS', '');
 if (!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8');
 
 // Configuration générale de l'application
-if (!defined('BASE_URL')) define('BASE_URL', 'http://localhost/mediatheque_paris_grp1_pierre/public');
+if (!defined('BASE_URL')) define('BASE_URL', 'http://localhost/temporaire/mediatheque_paris_grp1_pierre/public');
 if (!defined('APP_NAME')) define('APP_NAME', 'Paris en culture');
 if (!defined('APP_VERSION')) define('APP_VERSION', '1.0.0');
 
