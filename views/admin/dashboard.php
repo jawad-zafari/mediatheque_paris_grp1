@@ -43,20 +43,27 @@
     </tr>
     <tr>
         <td>Livres</td>
-        <td><?php echo $stats['books']; ?></td>
-        <td><div style="background:#007bff;width:<?php echo $stats['books']*10; ?>px;height:20px;"></div></td>
+        <td><?= htmlspecialchars($stats['media_stats']['books'] ?? 0) ?></td>
+        <td>
+            <div style="background:#007bff;width:<?= ($stats['media_stats']['books'] ?? 0) * 10 ?>px;height:20px;"></div>
+        </td>
     </tr>
     <tr>
         <td>Films</td>
-        <td><?php echo $stats['movies']; ?></td>
-        <td><div style="background:#28a745;width:<?php echo $stats['movies']*10; ?>px;height:20px;"></div></td>
+        <td><?= htmlspecialchars($stats['media_stats']['movies'] ?? 0) ?></td>
+        <td>
+            <div style="background:#28a745;width:<?= ($stats['media_stats']['movies'] ?? 0) * 10 ?>px;height:20px;"></div>
+        </td>
     </tr>
     <tr>
         <td>Jeux vidéo</td>
-        <td><?php echo $stats['video_games']; ?></td>
-        <td><div style="background:#ffc107;width:<?php echo $stats['video_games']*10; ?>px;height:20px;"></div></td>
+        <td><?= htmlspecialchars($stats['media_stats']['video_games'] ?? 0) ?></td>
+        <td>
+            <div style="background:#ffc107;width:<?= ($stats['media_stats']['video_games'] ?? 0) * 10 ?>px;height:20px;"></div>
+        </td>
     </tr>
 </table>
+
 <style>
     .stats-container {
         margin-top: 20px;

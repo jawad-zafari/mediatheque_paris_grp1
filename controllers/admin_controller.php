@@ -1,36 +1,13 @@
 <?php
 
-
-// ----------------- TABLEAU DE BORD -----------------
-function get_total_media_count()
-{
-    // Récupère le nombre total de livres
-    $books = db_select_one("SELECT COUNT(*) as total FROM books")['total'] ?? 0;
-    // Récupère le nombre total de films
-    $movies = db_select_one("SELECT COUNT(*) as total FROM movies")['total'] ?? 0;
-    // Récupère le nombre total de jeux vidéo
-    $video_games = db_select_one("SELECT COUNT(*) as total FROM video_games")['total'] ?? 0;
-    // Retourne la somme des médias
-    return $books + $movies + $video_games;
-}
-
-function admin_dashboard()
-{
-    // Vérifie les droits د'administrateur
+function admin_dashboard() {
     require_admin();
-    // Prépare les statistiques pour le tableau de bord
-    $stats = [
-        'users_count' => count_users(),
-        'media_count' => get_total_media_count(),
-        'loans_count' => get_rentals_count(),
-        'media_stats' => [
-            'books' => db_select_one("SELECT COUNT(*) as total FROM books")['total'] ?? 0,
-            'movies' => db_select_one("SELECT COUNT(*) as total FROM movies")['total'] ?? 0,
-            'video_games' => db_select_one("SELECT COUNT(*) as total FROM video_games")['total'] ?? 0,
-        ],
-    ];
-    // Affiche la vue du tableau de bord
-    load_view_with_layout('admin/dashboard', ['stats' => $stats]);
+
+    // Récupérer les stats depuis le modèle
+    $stats = get_dashboard_stats();
+
+    // Charger la vue
+    include __DIR__ . '/../views/admin/dashboard.php';
 }
 
 // ----------------- GESTION DES MÉDIAS -----------------

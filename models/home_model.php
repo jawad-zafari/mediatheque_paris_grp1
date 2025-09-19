@@ -1,4 +1,47 @@
 <?php
+
+/**
+ * -----------------------------
+ * FONCTIONS POUR LE TABLEAU DE BORD
+ * -----------------------------
+ */
+
+
+
+/**
+ * Récupère le nombre total de médias par type
+ */
+function get_total_media_count() {
+    $books = db_select_one("SELECT COUNT(*) AS total FROM books")['total'] ?? 0;
+    $movies = db_select_one("SELECT COUNT(*) AS total FROM movies")['total'] ?? 0;
+    $video_games = db_select_one("SELECT COUNT(*) AS total FROM video_games")['total'] ?? 0;
+
+    return $books + $movies + $video_games;
+}
+
+
+
+/**
+ * Récupère toutes les statistiques du tableau de bord
+ */
+function get_dashboard_stats() {
+    $books = db_select_one("SELECT COUNT(*) AS total FROM books");
+    $movies = db_select_one("SELECT COUNT(*) AS total FROM movies");
+    $video_games = db_select_one("SELECT COUNT(*) AS total FROM video_games");
+
+    return [
+        'users_count' => count_users(),
+        'media_count' => get_total_media_count(),
+        'loans_count' => get_rentals_count(),
+        'media_stats' => [
+            'books' => isset($books['total']) ? $books['total'] : 0,
+            'movies' => isset($movies['total']) ? $movies['total'] : 0,
+            'video_games' => isset($video_games['total']) ? $video_games['total'] : 0,
+        ],
+    ];
+}
+
+
 /**
  * Récupère tous les médias
  */
