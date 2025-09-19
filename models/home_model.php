@@ -45,7 +45,8 @@ function get_dashboard_stats() {
 /**
  * Récupère tous les médias
  */
-function get_all_media($limit = null, $offset = 0) {
+function get_all_media($limit = null, $offset = 0)
+{
     $query = "
         SELECT id, title, 'book' AS media_type, gender AS genre, stock FROM books
         UNION ALL
@@ -63,9 +64,10 @@ function get_all_media($limit = null, $offset = 0) {
 /**
  * Récupère un média par son ID et son type
  */
-function get_media_by_id($id, $type) {
+function get_media_by_id($id, $type)
+{
     $db = db_connect();
-    switch($type) {
+    switch ($type) {
         case 'book':
         case 'livre':
             $stmt = $db->prepare("SELECT * FROM books WHERE id = ?");
@@ -93,7 +95,8 @@ function get_media_by_id($id, $type) {
 /**
  * Compte le nombre total de médias
  */
-function get_media_count() {
+function get_media_count()
+{
     $db = db_connect();
     return $db->query("
         SELECT 
@@ -106,29 +109,54 @@ function get_media_count() {
 /**
  * Crée un nouveau média
  */
-function create_media($type, $data) {
+function create_media($type, $data)
+{
     $db = db_connect();
-    switch($type) {
+    switch ($type) {
         case 'book':
             $stmt = $db->prepare("INSERT INTO books (title, writer, ISBN13, gender, page_number, synopsis, year, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
-                $data['title'], $data['writer'] ?? '', $data['ISBN13'] ?? '', $data['genre'] ?? '',
-                $data['page_number'] ?? 0, $data['synopsis'] ?? '', $data['year'] ?? 0, $data['stock'] ?? 1, 
-                1, $data['image_url'] ?? '', date('Y-m-d')
+                $data['title'],
+                $data['writer'] ?? '',
+                $data['ISBN13'] ?? '',
+                $data['genre'] ?? '',
+                $data['page_number'] ?? 0,
+                $data['synopsis'] ?? '',
+                $data['year'] ?? 0,
+                $data['stock'] ?? 1,
+                1,
+                $data['image_url'] ?? '',
+                date('Y-m-d')
             ]);
         case 'movie':
             $stmt = $db->prepare("INSERT INTO movies (title, producer, year, gender, duration_m, synopsis, classification, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
-                $data['title'], $data['producer'] ?? '', $data['year'] ?? 0, $data['genre'] ?? '',
-                $data['duration_m'] ?? 0, $data['synopsis'] ?? '', $data['classification'] ?? '', $data['stock'] ?? 1,
-                1, $data['image_url'] ?? '', date('Y-m-d')
+                $data['title'],
+                $data['producer'] ?? '',
+                $data['year'] ?? 0,
+                $data['genre'] ?? '',
+                $data['duration_m'] ?? 0,
+                $data['synopsis'] ?? '',
+                $data['classification'] ?? '',
+                $data['stock'] ?? 1,
+                1,
+                $data['image_url'] ?? '',
+                date('Y-m-d')
             ]);
         case 'video_game':
             $stmt = $db->prepare("INSERT INTO video_games (title, editor, platform, gender, min_age, synopsis, year, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
-                $data['title'], $data['editor'] ?? '', $data['platform'] ?? '', $data['genre'] ?? '',
-                $data['min_age'] ?? 0, $data['synopsis'] ?? '', $data['year'] ?? 0, $data['stock'] ?? 1,
-                1, $data['image_url'] ?? '', date('Y-m-d')
+                $data['title'],
+                $data['editor'] ?? '',
+                $data['platform'] ?? '',
+                $data['genre'] ?? '',
+                $data['min_age'] ?? 0,
+                $data['synopsis'] ?? '',
+                $data['year'] ?? 0,
+                $data['stock'] ?? 1,
+                1,
+                $data['image_url'] ?? '',
+                date('Y-m-d')
             ]);
         default:
             return false;
@@ -138,32 +166,54 @@ function create_media($type, $data) {
 /**
  * Met à jour un média
  */
-function update_media($id, $type, $data) {
+function update_media($id, $type, $data)
+{
     $db = db_connect();
-    switch($type) {
+    switch ($type) {
         case 'book':
         case 'livre':
             $stmt = $db->prepare("UPDATE books SET title = ?, writer = ?, ISBN13 = ?, gender = ?, page_number = ?, synopsis = ?, year = ?, stock = ?, image_url = ? WHERE id = ?");
             return $stmt->execute([
-                $data['title'], $data['writer'] ?? '', $data['ISBN13'] ?? '', $data['genre'] ?? '',
-                $data['page_number'] ?? 0, $data['synopsis'] ?? '', $data['year'] ?? 0, $data['stock'] ?? 1, 
-                $data['image_url'] ?? '', $id
+                $data['title'],
+                $data['writer'] ?? '',
+                $data['ISBN13'] ?? '',
+                $data['genre'] ?? '',
+                $data['page_number'] ?? 0,
+                $data['synopsis'] ?? '',
+                $data['year'] ?? 0,
+                $data['stock'] ?? 1,
+                $data['image_url'] ?? '',
+                $id
             ]);
         case 'movie':
         case 'film':
             $stmt = $db->prepare("UPDATE movies SET title = ?, producer = ?, year = ?, gender = ?, duration_m = ?, synopsis = ?, classification = ?, stock = ?, image_url = ? WHERE id = ?");
             return $stmt->execute([
-                $data['title'], $data['producer'] ?? '', $data['year'] ?? 0, $data['genre'] ?? '',
-                $data['duration_m'] ?? 0, $data['synopsis'] ?? '', $data['classification'] ?? '', $data['stock'] ?? 1, 
-                $data['image_url'] ?? '', $id
+                $data['title'],
+                $data['producer'] ?? '',
+                $data['year'] ?? 0,
+                $data['genre'] ?? '',
+                $data['duration_m'] ?? 0,
+                $data['synopsis'] ?? '',
+                $data['classification'] ?? '',
+                $data['stock'] ?? 1,
+                $data['image_url'] ?? '',
+                $id
             ]);
         case 'video_game':
         case 'jeu':
             $stmt = $db->prepare("UPDATE video_games SET title = ?, editor = ?, platform = ?, gender = ?, min_age = ?, synopsis = ?, year = ?, stock = ?, image_url = ? WHERE id = ?");
             return $stmt->execute([
-                $data['title'], $data['editor'] ?? '', $data['platform'] ?? '', $data['genre'] ?? '',
-                $data['min_age'] ?? 0, $data['synopsis'] ?? '', $data['year'] ?? 0, $data['stock'] ?? 1, 
-                $data['image_url'] ?? '', $id
+                $data['title'],
+                $data['editor'] ?? '',
+                $data['platform'] ?? '',
+                $data['genre'] ?? '',
+                $data['min_age'] ?? 0,
+                $data['synopsis'] ?? '',
+                $data['year'] ?? 0,
+                $data['stock'] ?? 1,
+                $data['image_url'] ?? '',
+                $id
             ]);
         default:
             return false;
@@ -173,9 +223,10 @@ function update_media($id, $type, $data) {
 /**
  * Supprime un média
  */
-function delete_media($id, $type) {
+function delete_media($id, $type)
+{
     $db = db_connect();
-    switch($type) {
+    switch ($type) {
         case 'book':
         case 'livre':
             $stmt = $db->prepare("DELETE FROM books WHERE id = ?");
@@ -194,8 +245,11 @@ function delete_media($id, $type) {
     return $stmt->execute([$id]);
 }
 
-
-function media_upload_image($type, $data, $image) {
+/**
+ * Vérifie si l'image choisie est valide, et si elle l'est l'ajoute au dossier upload/
+ */
+function media_upload_image($type, $data, $image)
+{
     $errors = [];
     $success = "";
 
@@ -211,7 +265,7 @@ function media_upload_image($type, $data, $image) {
         $errors[] = "Le fichier est trop volumineux (max 2 Mo).";
     }
 
-    $allowedExt = ['jpg','jpeg','png','gif'];
+    $allowedExt = ['jpg', 'jpeg', 'png', 'gif'];
     $fileExt = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
 
     $dim = getimagesize($image['tmp_name']);
@@ -222,18 +276,18 @@ function media_upload_image($type, $data, $image) {
             $errors[] = "L'image doit avoir au minimum 100x100 pixels.";
         }
         $mime = image_type_to_mime_type($dim[2]);
-        if (!in_array($fileExt, $allowedExt) || !in_array($mime, ['image/jpeg','image/png','image/gif'])) {
+        if (!in_array($fileExt, $allowedExt) || !in_array($mime, ['image/jpeg', 'image/png', 'image/gif'])) {
             $errors[] = "Format non supporté. Formats acceptés : JPG, PNG, GIF.";
         }
     }
 
     if (empty($errors)) {
-        $newName = uniqid("media_", true).".".$fileExt;
+        $newName = uniqid("media_", true) . "." . $fileExt;
         $uploadDir = __DIR__ . "/../uploads/";
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
-        if (move_uploaded_file($image['tmp_name'], $uploadDir.$newName)) {
+        if (move_uploaded_file($image['tmp_name'], $uploadDir . $newName)) {
             $success = $newName;
         } else {
             $errors[] = "Impossible d'enregistrer l'image.";

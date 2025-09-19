@@ -94,7 +94,6 @@ function home_test()
 /** 
  * Page Upload
  */
-
 function home_upload()
 {
     $type = $_POST['type'] ?? '';
@@ -102,7 +101,9 @@ function home_upload()
     $success = "";
     $image = null;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $type) {
+    //$_SERVER['REQUEST_METHOD'] === 'POST' && $type 
+
+    if (isset($_POST['submit_button'])) {
         $data = $_POST;
         $image = $_FILES['image'] ?? null;
 
@@ -110,6 +111,8 @@ function home_upload()
 
         $errors = $result['errors'];
         $success = $result['success'];
+
+        $createMedia = create_media($type, $data);
     }
 
     $data = [
