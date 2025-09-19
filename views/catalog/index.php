@@ -185,7 +185,9 @@
         <!-- باکس کتاب‌ها -->
         <a href="<?php echo url('catalog/books'); ?>" class="media-stats-box media-stats-book-box">
             <div class="media-stats-content">
+                <h3>📚</h3>
                 <h3>Livres</h3>
+                <h5>Titres variés</h5>
                 <p><?php echo count($books ?? []) . ' livres'; ?></p>
                 <hr class="media-stats-divider">
             </div>
@@ -194,7 +196,9 @@
         <!-- باکس فیلم‌ها -->
         <a href="<?php echo url('catalog/movies'); ?>" class="media-stats-box media-stats-film-box">
             <div class="media-stats-content">
+                <h3>🎬</h3>
                 <h3>Films</h3>
+                <h5>Cinéma mondial</h5>
                 <p><?php echo count($movies ?? []) . ' films'; ?></p>
                 <hr class="media-stats-divider">
             </div>
@@ -203,7 +207,9 @@
         <!-- باکس بازی‌ها -->
         <a href="<?php echo url('catalog/games'); ?>" class="media-stats-box media-stats-game-box">
             <div class="media-stats-content">
+                <h3>🎮</h3>
                 <h3>Jeux Vidéo</h3>
+                <h5>Divertissement numérique</h5>
                 <p><?php echo count($games ?? []) . ' jeux'; ?></p>
                 <hr class="media-stats-divider">
             </div>
@@ -219,7 +225,7 @@
         <!-- Section des livres -->
         <!-- Commentaire: Section avec scroll horizontal pour les livres -->
         <div class="catalog-section" data-section="livre">
-        <h2>Derniers livres ajoutés</h2>
+        <h2>Nouveaux livres</h2>
             <div class="carousel-container">
                 <?php if (!empty($books)): ?>
                     <?php foreach ($books as $item): ?>
@@ -250,7 +256,7 @@
         <!-- Section des films -->
         <!-- Commentaire: Section avec scroll horizontal pour les films -->
         <div class="catalog-section" data-section="film">
-            <h2>Derniers films ajoutés</h2>
+            <h2>Nouveaux films</h2>
             <div class="carousel-container">
                 <?php if (!empty($movies)): ?>
                     <?php foreach ($movies as $item): ?>
@@ -281,7 +287,7 @@
         <!-- Section des jeux vidéo -->
         <!-- Commentaire: Section avec scroll horizontal pour jeux vidéo -->
         <div class="catalog-section" data-section="jeu">
-            <h2>Derniers jeux vidéo ajoutés</h2>
+            <h2>Nouveaux jeux vidéo</h2>
             <div class="carousel-container">
                 <?php if (!empty($games)): ?>
                     <?php foreach ($games as $item): ?>

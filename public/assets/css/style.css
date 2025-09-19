@@ -19,6 +19,37 @@
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
+.confirm-message {
+    max-width: 600px;
+    color: #000000;
+    background-color: #0000000e;
+    width: fit-content;
+    margin: 20px auto;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.confirm-message button {
+    margin: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.confirm-message button[value="yes"] {
+    background-color: #000000;
+    color: white;
+}
+.confirm-message button[value="no"] {
+    background-color: #dc3545;
+    color: white;
+}
+hr {
+    margin: auto;
+    max-width: 1200px;
+    color: #bcbcbc;
+}
 /* استایل بخش آمار رسانه‌ها */
 .media-stats-section {
     padding: 20px;
@@ -36,11 +67,11 @@
 .media-stats-box {
     display: flex;
     align-items: flex-start;
-    background-color: #FFFFFF;
+    background-color: #f1f1f1;
     border: 1px solid #E6E6E6;
     box-shadow: var(--shadow);
     border-radius: 12px;
-    padding: 20px;
+    padding: 10px;
     text-decoration: none;
     color: inherit;
     transition: all 0.3s ease;
@@ -51,7 +82,7 @@
 .media-stats-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border-color: #000000ff;
+    border-color: rgba(0, 0, 0, 0.4);
 }
 
 .media-stats-icon {
@@ -63,33 +94,40 @@
 }
 
 .media-stats-content h3 {
-    color: #FF7F00;
+    color: #4b4b4b;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 400;
+    margin: 0 0 5px 0;
+}.media-stats-content h5 {
+    color: #575757;
+    font-size: smaller;
+    font-weight: 100;
     margin: 0 0 5px 0;
 }
 
 .media-stats-content p {
     color: #333333;
-    font-size: 16px;
+    font-size: small;
     margin: 5px 0;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .media-stats-divider {
     border: 0;
     height: 1px;
-    background-color: #E6E6E6;
+    background-color: #cd3838;
     margin-top: 10px;
 }
 
 /* استایل‌های خاص برای هر باکس (اختیاری) */
 .media-stats-film-box:hover .media-stats-content h3 {
-    color: #3498DB;
+    color: #ff0303;
 }
 
 .media-stats-game-box:hover .media-stats-content h3 {
-    color: #1ABC9C;
+    color: #ff0303;
+}.media-stats-book-box:hover .media-stats-content h3 {
+    color: #ff0303;
 }
 .hero-content {
     margin: 50px auto;
@@ -145,8 +183,8 @@ body {
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.5rem;
     border-radius: 10px;
-    font-weight: bold;
-    /* text-transform: uppercase; */
+    font-weight: 200;
+    text-transform: uppercase;
     padding: 10px 15px;
     color: #2B2B2B;
     /* text-shadow: 1px 1px 2px rgba(252, 252, 252, 0.8); */
@@ -164,7 +202,7 @@ body {
     border-radius: 5px;
     padding: 5px 10px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     transition: color 0.3s ease;
 }
 
@@ -202,8 +240,10 @@ body {
 
 .hero-content h1 {
     font-size: 3rem;
+    margin-top: 10px;
     margin-bottom: 1rem;
-    font-weight: 700;
+    font-weight: 200;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .hero-subtitle {
@@ -236,7 +276,7 @@ body {
     border: none;
     border-radius: 0.5rem;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 200;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
@@ -313,20 +353,16 @@ body {
 
 /* Getting Started */
 .getting-started {
-    color: #ffffff;
+    color: #000000;
+    font-weight: 200;
     padding: 4rem 0;
     /* background: var(--background-color); */
 }
-
-.getting-started {
-    color: #2563eb;
-    font-weight: bold;
-}
-
 .getting-started h2 {
     text-align: center;
     margin-bottom: 3rem;
     font-size: 2.5rem;
+    font-weight: 200;
 }
 
 .steps {
@@ -353,7 +389,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 200;
     margin: 0 auto 1rem;
 }
 
@@ -482,6 +518,8 @@ body {
 
 /* Messages Flash */
 .alert {
+    margin: auto;
+    width: fit-content;
     padding: 1rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
@@ -563,7 +601,7 @@ body {
 
 .footer-content p {
     margin-bottom: 0.5rem;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 /* Code blocks */
@@ -586,19 +624,6 @@ code {
 /* ================= */
 /* 🎯 Catalog section -Improved */
 /* ================= */
-body h2{
-    color: #000000;
-    /* background-color: #fffffff5; */
-    padding: 10px;
-    border-radius: 10px;
-    width: 600px;
-    margin: auto;
-    font-weight: bold;
-    text-align: center;
-    /* font-size: medium; */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-
-}
 .catalog-section {
     padding: 2rem 1rem;
     /* background-color: #ffffff; */
@@ -608,14 +633,6 @@ body h2{
 .hero-banner{
     text-align: center;
 }
-/* .catalog-section h2 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 1.5rem;
-    text-align: center;
-} */
-
 /* Conteneur carrousel */
 .carousel-container {
     overflow-x: auto;
@@ -652,7 +669,7 @@ body h2{
 
 .carousel-item h3 {
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 200;
     color: #1f2937;
     margin-bottom: 0.5rem;
     overflow: hidden;
@@ -718,7 +735,7 @@ p span.available {
     text-align: center;
     padding: 5px 10px;
     font-size: small;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 /* 🎨 Style du bouton Détails */
@@ -742,6 +759,7 @@ p span.available {
 .btn-rent {
     background-color: #000000;
     color: #ffffff;
+    font-weight: 200;
     border: none;
     border-radius: 0.375rem;
     transition: all 0.3s ease;
@@ -772,7 +790,6 @@ p span.available {
 /* Styles de la section de recherche et de filtres */
 .search-filters {
     padding: 2rem 1rem;
-    font-weight: bold;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
     background-color: #ffffff1d;
@@ -793,11 +810,11 @@ p span.available {
 }
 
 .search-input {
-    /* background-color: transparent; */
+    background-color: rgba(255, 255, 255, 0.322);
     padding: 10px 15px;
     width: 100%;
     max-width: 500px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #ffffffa5;
     border-radius: 0.375rem;
     font-size: small;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -811,12 +828,13 @@ p span.available {
 
 .search-button {
     padding: 10px 15px;
-    background-color: #2B2B2B;
+    background-color: #232323;
     color: white;
     border: none;
     border-radius: 0.375rem;
     font-size: small;
-    font-weight: bold;
+    font-weight: 50;
+    width: fit-content;
     cursor: pointer;
     margin-left: 0.5rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -852,16 +870,16 @@ p span.available {
 .filter-group label {
     font-size: small;
     color: #ffffff;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 .filter-select {
     padding: 5px 15px;
     border: 1px solid #e5e7eb;
     border-radius: 0.375rem;
-    font-size: small;
-    /* font-weight: bold; */
-    background-color: white;
+    font-size: x-small;
+    font-weight: 100;
+    background-color: rgba(255, 255, 255, 0.349);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     appearance: none;
     background-repeat: no-repeat;
@@ -899,9 +917,10 @@ p span.available {
 
 .search-results h2 {
     font-size: 1.8rem;
-    color: var(--text-color);
+    color: black;
     margin-bottom: 2rem;
     text-align: center;
+    font-weight: 200;
 }
 
 .no-results {
@@ -916,7 +935,7 @@ p span.available {
 
 /* Amélioration du style du bouton Effacer */
 .btn-secondary {
-    font-weight: bold;
+    font-weight: 200;
     font-size: small;
     background-color: var(--secondary-color);
     color: var(--white);
@@ -978,7 +997,7 @@ p span.available {
 
 .detail p {
     font-size: 0.9rem;
-    font-weight: bold;
+    font-weight: 200;
     margin-bottom: 0.8rem;
     line-height: 1.6;
 }
@@ -1042,19 +1061,19 @@ p span.available {
     /* display: block; */
     align-items: center;
     margin: 20px auto;
-    padding: 10px 20px;
+    padding: 10px 15px;
     background-color: #ffffff;
     color: rgb(11, 0, 0);
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: 200;
     border: solid 1px #00000025;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .btn-view-all:hover {
     background-color: #010911;
     color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 /* Style des pages de livres, films et jeux vidéo */
 
@@ -1103,7 +1122,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     margin-top: 10px;
     color: var(--primary-color);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 /* Boutons d'action dans les éléments */
@@ -1327,7 +1346,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     background-color: black;
     color: var(--white);
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 .detail .btn-rent:hover {
@@ -1341,7 +1360,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     color: var(--white);
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: 200;
 }
 
 .detail .btn-back:hover {
@@ -1351,27 +1370,31 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 }
 .catalog-section h2{
     background-color: #000000ff;
-    color: #ffffffff;
+    font-weight: 200;
+    color: rgb(255, 255, 255);
     width: fit-content;
     font-size: large;
     border-radius: 10px;
-    padding: 10px;
+    padding: 6px;
     text-align: left;
     margin: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .catalog-nouveautes h2 {
-    color: #000e77ff;
+    color: rgb(0, 0, 0);
     font-size: xx-large;
-    text-align: left;
+    text-align: center;
+    font-weight: 100;
     /* margin: 5px; */
-    margin-left: 10px;
+    margin-left: 50px;
+    margin-top: 20px;
 }.catalog-nouveautes h4 {
-    color: #000363ff;
+    color: rgb(132, 131, 131);
     font-size: large;
-    text-align: left;
+    font-weight: 100;
+    text-align: center;
     /* margin: 5px; */
-    margin-left: 30px;
+    margin-left: 50px;
 }
 /* ================= */
 /* 🎯 Rental Management Section */
@@ -1400,7 +1423,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
         .rentals-table th {
             background-color: #000000ff;
             color: white;
-            font-weight: bold;
+            font-weight: 200;
         }
         .rentals-table tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -1531,7 +1554,6 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     }
     
     .search-button {
-        width: 100%;
         margin-left: 0;
     }
     

@@ -36,6 +36,18 @@
             <?php endforeach; ?>
         <?php endif; ?>
 
+        <!-- Affichage du message de confirmation si nécessaire -->
+        <?php if (isset($_SESSION['confirm_rental_item_id'])): ?>
+            <div class="confirm-message">
+                <p>Confirmer l'emprunt de ce média ?</p>
+                <form method="POST" action="<?php echo url('rental/rent/' . $_SESSION['confirm_rental_item_id']); ?>">
+                    <button type="submit" name="confirm" value="yes">Oui</button>
+                    <button type="submit" name="confirm" value="no">Non</button>
+                </form>
+            </div>
+            <?php unset($_SESSION['confirm_rental_item_id']); // Supprime la session après affichage ?>
+        <?php endif; ?>
+
         <!-- Affichage des emprunts actifs -->
         <section class="rentals-list">
             <h2 class="section-title">Emprunts en cours</h2>
@@ -118,16 +130,16 @@
                         <?php foreach ($returned_rentals as $rental): ?>
                             <tr>
                                 <td>
-                                    <!-- Affichage de l'image à côté du titre avec une taille de 40px -->
+                                    <!-- Affichage de l'image à côté du titre با اندازه 40px -->
                                     <img src="<?php echo htmlspecialchars($rental['image_url'] ?? ''); ?>" alt="<?php echo htmlspecialchars($rental[''] ?? ''); ?>" class="rental-image">
                                     <?php echo htmlspecialchars($rental['title'] ?? ''); ?>
                                 </td>
                                 <td><?php echo htmlspecialchars($rental['type'] == 'book' ? 'Livre' : ($rental['type'] == 'movie' ? 'Film' : ($rental['type'] == 'video_game' ? 'Jeu Vidéo' : ''))); ?></td>
-                                <td><?php echo htmlspecialchars($rental['rent_date'] ? format_date($rental['rent_date']) : ''); // Utilisation de format_date pour fuseau horaire utilisateur ?></td>
-                                <td><?php echo htmlspecialchars($rental['returned_at'] ? format_date($rental['returned_at']) : ''); // Utilisation de format_date pour fuseau horaire utilisateur ?></td>
+                                <td><?php echo htmlspecialchars($rental['rent_date'] ? format_date($rental['rent_date']) : ''); // Utilisation de format_date برای fuseau horaire کاربر ?></td>
+                                <td><?php echo htmlspecialchars($rental['returned_at'] ? format_date($rental['returned_at']) : ''); // Utilisation de format_date برای fuseau horaire کاربر ?></td>
                                 <td>
                                     <?php
-                                    // Calcul du retard با استفاده از تاریخ واقعی بازگشت
+                                    // محاسبه تأخیر با استفاده از تاریخ واقعی بازگشت
                                     $days_late = calculate_days_late($rental['return_date'], $rental['returned_at']);
                                     echo htmlspecialchars($days_late) . ' jours';
                                     ?>
