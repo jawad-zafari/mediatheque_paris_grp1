@@ -19,13 +19,99 @@
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
+/* استایل بخش آمار رسانه‌ها */
+.media-stats-section {
+    padding: 20px;
+    /* background-color: #FFFFFF; */
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
 
+.media-stats-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.media-stats-box {
+    display: flex;
+    align-items: flex-start;
+    background-color: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    box-shadow: var(--shadow);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    width: 30%;
+    text-align: left; /* متن سمت چپ */
+}
+
+.media-stats-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: #000000ff;
+}
+
+.media-stats-icon {
+    margin-right: 15px; /* فاصله از متن */
+}
+
+.media-stats-content {
+    flex: 1;
+}
+
+.media-stats-content h3 {
+    color: #FF7F00;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.media-stats-content p {
+    color: #333333;
+    font-size: 16px;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.media-stats-divider {
+    border: 0;
+    height: 1px;
+    background-color: #E6E6E6;
+    margin-top: 10px;
+}
+
+/* استایل‌های خاص برای هر باکس (اختیاری) */
+.media-stats-film-box:hover .media-stats-content h3 {
+    color: #3498DB;
+}
+
+.media-stats-game-box:hover .media-stats-content h3 {
+    color: #1ABC9C;
+}
+.hero-content {
+    margin: 50px auto;
+    background-size: cover;
+    background-position: center;    
+    border-radius: 10px;
+    color: #ffffff;
+}
+.hero-content::before {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
+    filter: blur(4px);  /* Flou pour un meilleur effet */
+    transform: scale(1.0); /* Un peu plus grand pour que les bords ne soient pas nets */
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: 
-    rgb(255, 255, 255);
+    /* color: rgb(0, 0, 0) ; */
+    background-color: #ffffff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -40,7 +126,8 @@ body {
 
 /* Header et Navigation */
 .header {
-    background: var(--white);
+    color: #ffffff;
+    background: #ffffffff;
     box-shadow: var(--shadow);
     position: sticky;
     top: 0;
@@ -55,31 +142,37 @@ body {
 }
 
 .nav-brand a {
+    font-family: 'Times New Roman', Times, serif;
     font-size: 1.5rem;
+    border-radius: 10px;
     font-weight: bold;
-    color: var(--primary-color);
+    /* text-transform: uppercase; */
+    padding: 10px 15px;
+    color: #2B2B2B;
+    /* text-shadow: 1px 1px 2px rgba(252, 252, 252, 0.8); */
     text-decoration: none;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .nav-menu a {
-    color: var(--text-color);
-    border-radius: 6px;
-    padding: 8px;
+    color: #2B2B2B;
+    border-radius: 5px;
+    padding: 5px 10px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .nav-menu a:hover {
     color: #f7faf9;
-    background-color: #00040c;
+    background-color: #000000ff;
     transition: 0.3s;
+    text-decoration: underline;
 }
 
 /* Main Content */
@@ -103,7 +196,7 @@ body {
   inset: 0;
   background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
   filter: blur(4px);  /* Flou pour un meilleur effet */
-  transform: scale(1.1); /* Un peu plus grand pour que les bords ne soient pas nets */
+  transform: scale(1.0); /* Un peu plus grand pour que les bords ne soient pas nets */
   z-index: -1;
 }
 
@@ -220,12 +313,14 @@ body {
 
 /* Getting Started */
 .getting-started {
+    color: #ffffff;
     padding: 4rem 0;
-    background: var(--background-color);
+    /* background: var(--background-color); */
 }
 
 .getting-started {
     color: #2563eb;
+    font-weight: bold;
 }
 
 .getting-started h2 {
@@ -468,6 +563,7 @@ body {
 
 .footer-content p {
     margin-bottom: 0.5rem;
+    font-weight: bold;
 }
 
 /* Code blocks */
@@ -490,9 +586,22 @@ code {
 /* ================= */
 /* 🎯 Catalog section -Improved */
 /* ================= */
+body h2{
+    color: #000000;
+    /* background-color: #fffffff5; */
+    padding: 10px;
+    border-radius: 10px;
+    width: 600px;
+    margin: auto;
+    font-weight: bold;
+    text-align: center;
+    /* font-size: medium; */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+
+}
 .catalog-section {
     padding: 2rem 1rem;
-    background-color: #f9fafb;
+    /* background-color: #ffffff; */
     margin-bottom: 2rem;
     border-radius: 0.5rem;
 }
@@ -522,7 +631,7 @@ code {
 /* Cartes d'objets - Améliorées */
 .carousel-item {
     flex: 0 0 320px;
-    background-color: #ffffff;
+    background-color: #ffffff45;
     border: 1px solid #e5e7eb;
     border-radius: 0.75rem;
     padding: 1.2rem;
@@ -559,12 +668,14 @@ code {
 }
 .detail span {
     font-size: x-small;
+    font-weight: bold;
     color: white;
     background-color: red;
     padding: 5px;
     border-radius: 5px;
 }
 .detail span.available {
+    font-weight: bold;
     font-size: x-small;
     color: white;
     background-color: rgb(0, 0, 0);
@@ -572,6 +683,9 @@ code {
     border-radius: 5px;
 }
  p span {
+    display: inline-flex;
+    font-weight: bold;
+    align-items: center;
     font-size: x-small;
     color: white;
     background-color: red;
@@ -579,6 +693,9 @@ code {
     border-radius: 5px;
 }
 p span.available {
+    display: inline-flex;
+    font-weight: bold;
+    align-items: center;
     font-size: x-small;
     color: white;
     background-color: rgb(0, 0, 0);
@@ -596,10 +713,12 @@ p span.available {
 }
 
 .carousel-actions .btn {
+    margin: auto;
     flex: 1;
     text-align: center;
-    padding: 0.7rem 1rem;
-    font-size: 0.9rem;
+    padding: 5px 10px;
+    font-size: small;
+    font-weight: bold;
 }
 
 /* 🎨 Style du bouton Détails */
@@ -614,6 +733,9 @@ p span.available {
 .btn-detail:hover {
     background-color: #d1d5db;
     transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+    text-decoration: underline;
+    
 }
 
 /* 🎨 Style du bouton Emprunter */
@@ -626,8 +748,10 @@ p span.available {
 }
 
 .btn-rent:hover {
-    background-color: #374151;
+    background-color: #000000;
     transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+    text-decoration: underline;
 }
 
 .carousel-item:hover {
@@ -648,9 +772,11 @@ p span.available {
 /* Styles de la section de recherche et de filtres */
 .search-filters {
     padding: 2rem 1rem;
+    font-weight: bold;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
-    background-color: rgb(220, 219, 219);
+    background-color: #ffffff1d;
+    backdrop-filter: blur(10px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -667,12 +793,13 @@ p span.available {
 }
 
 .search-input {
-    padding: 0.75rem 1rem;
+    /* background-color: transparent; */
+    padding: 10px 15px;
     width: 100%;
     max-width: 500px;
     border: 1px solid #e5e7eb;
     border-radius: 0.375rem;
-    font-size: 1rem;
+    font-size: small;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     outline: none;
 }
@@ -683,12 +810,13 @@ p span.available {
 }
 
 .search-button {
-    padding: 0.75rem 1.5rem;
-    background-color: #232527;
+    padding: 10px 15px;
+    background-color: #2B2B2B;
     color: white;
     border: none;
     border-radius: 0.375rem;
-    font-size: 1rem;
+    font-size: small;
+    font-weight: bold;
     cursor: pointer;
     margin-left: 0.5rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -698,6 +826,8 @@ p span.available {
     background-color: #010612;
     color: #ffffff;
     transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
+    text-decoration: underline;
 }
 
 /*Style Filter section */
@@ -720,16 +850,17 @@ p span.available {
 }
 
 .filter-group label {
-    font-size: 0.95rem;
-    color: #374151;
-    font-weight: 500;
+    font-size: small;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .filter-select {
-    padding: 0.75rem 1rem;
+    padding: 5px 15px;
     border: 1px solid #e5e7eb;
     border-radius: 0.375rem;
-    font-size: 1rem;
+    font-size: small;
+    /* font-weight: bold; */
     background-color: white;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     appearance: none;
@@ -785,9 +916,11 @@ p span.available {
 
 /* Amélioration du style du bouton Effacer */
 .btn-secondary {
+    font-weight: bold;
+    font-size: small;
     background-color: var(--secondary-color);
     color: var(--white);
-    padding: 0.5rem 1rem;
+    padding: 5px 5px;
     border-radius: 0.375rem;
     text-decoration: none;
     display: inline-block;
@@ -796,6 +929,8 @@ p span.available {
 
 .btn-secondary:hover {
     background-color: #4b5563;
+    text-decoration: underline;
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
 }
 /*Modal menu styles for details */
 .modal {
@@ -836,14 +971,14 @@ p span.available {
 
 .detail h2 {
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: rgb(0, 0, 0);
     margin-bottom: 1rem;
     text-align: center;
 }
 
 .detail p {
     font-size: 0.9rem;
-    color: var(--text-color);
+    font-weight: bold;
     margin-bottom: 0.8rem;
     line-height: 1.6;
 }
@@ -937,7 +1072,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     display: flex;
     flex-direction: column; /* Layout vertical pour le contenu */
     justify-content: space-between; /* Distribution de l'espace pour aligner les boutons en bas */
-    height: 450px; /* Hauteur fixe de 600px pour tous les cadres */
+    height: 370px; /* Hauteur fixe de 600px pour tous les cadres */
     border: 1px solid var(--border-color); /* Bordure du cadre */
     border-radius: 8px; /* Coins arrondis */
     padding: 10px; /* Espacement interne */
@@ -1030,18 +1165,20 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 
 .page-number {
     display: inline-block;
-    padding: 8px 12px;
+    font-size: small;
+    padding: 5px 10px;
     background-color: var(--white);
     border: 1px solid grey;
     border-radius: 5px;
     text-decoration: none;
     color: black;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .page-number:hover {
     background-color: black;
     color: var(--white);
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
 }
 
 .page-number.active {
@@ -1053,8 +1190,9 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 /* Bouton de page précédente */
 .btn-prev-page {
     display: inline-block;
+    font-size: small;
     margin: 20px 10px;
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #000000;
     color: white;
     text-align: center;
@@ -1065,13 +1203,17 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 
 .btn-prev-page:hover {
     background-color: #041930;
+    color: #ffffff;
+    text-decoration: underline;
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
 }
 
 /* Détails du bouton suivant */
 .btn-next-page {
     display: inline-block;
+    font-size: small;
     margin: 20px 10px;
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #00050a;
     color: white;
     text-align: center;
@@ -1083,13 +1225,16 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 .btn-next-page:hover {
     background-color: #03172d;
     color: #ffffff;
+    text-decoration: underline;
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
 }
 
 /* Détails du bouton retour au catalogue */
 .btn-catalog-return {
     display: inline-block;
+    font-size: small;
     margin: 20px 10px;
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #6b7280;
     color: white;
     text-align: center;
@@ -1100,6 +1245,10 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 
 .btn-catalog-return:hover {
     background-color: #4b5563;
+    color: #ffffff;
+    text-decoration: underline;
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
+
 }
 
 /* Modal */
@@ -1133,6 +1282,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 
 /* Styles des détails dans le modal */
 .detail {
+    color: rgb(0, 0, 0);
     padding: 1rem;
     text-align: left;
 }
@@ -1149,14 +1299,14 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 
 .detail h2 {
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: var rgb(0, 0, 0);
     margin-bottom: 1rem;
     text-align: center;
 }
 
 .detail p {
     font-size: 0.9rem;
-    color: var(--text-color);
+    color: rgb(0, 0, 0);
     margin-bottom: 0.8rem;
     line-height: 1.6;
 }
@@ -1169,17 +1319,21 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 }
 
 .detail .btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 5px 10px;
+    font-size: small;
 }
 
 .detail .btn-rent {
     background-color: black;
     color: var(--white);
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 .detail .btn-rent:hover {
-    background-color: #212222cc;
+    background-color: #000000cc;
+    box-shadow: 0 5px 10px rgb(4, 0, 0);
+    text-decoration: underline;
 }
 
 .detail .btn-back {
@@ -1187,29 +1341,49 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     color: var(--white);
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .detail .btn-back:hover {
     background-color: #5a6268;
+    box-shadow: 0 5px 10px rgb(0, 0, 0);
+    text-decoration: underline;
 }
 .catalog-section h2{
-    background-color: rgba(0, 0, 0, 0.783);
-    color: white;
+    background-color: #000000ff;
+    color: #ffffffff;
     width: fit-content;
-    font-size: smaller;
+    font-size: large;
     border-radius: 10px;
     padding: 10px;
     text-align: left;
+    margin: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.catalog-nouveautes h2 {
+    color: #000e77ff;
+    font-size: xx-large;
+    text-align: left;
+    /* margin: 5px; */
+    margin-left: 10px;
+}.catalog-nouveautes h4 {
+    color: #000363ff;
+    font-size: large;
+    text-align: left;
+    /* margin: 5px; */
+    margin-left: 30px;
 }
 /* ================= */
 /* 🎯 Rental Management Section */
         .rental-image {
-            width: 40px;
+            width: 50px;
             height: auto;
             margin-right: 10px;
             vertical-align: middle;
+            object-fit: cover;
         }
         .rentals-table {
+            font-size: small;
             width: 100%;
             /* border-collapse: collapse; */
             margin-top: 20px;
@@ -1219,7 +1393,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
         .rentals-table th,
         .rentals-table td {
             border-radius: 5px;
-            padding: 12px 15px;
+            padding: 12px 20px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -1318,7 +1492,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     }
     
     .carousel-item img {
-        max-width: 300px;
+        max-width: 150px;
         height: 150px;
     }
     
