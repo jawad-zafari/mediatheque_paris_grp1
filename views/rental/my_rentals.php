@@ -13,7 +13,7 @@
 </head>
 <body>
     <section class="container">
-        <section class="banner">
+        <section class="banner_emprunt">
             <section class="hero-banner">
                 <h1>Mes Emprunts</h1>
                 <p class="hero-subtitle">Liste de vos médias empruntés</p>

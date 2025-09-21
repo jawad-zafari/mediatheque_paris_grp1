@@ -56,15 +56,15 @@ function rental_rent($item_id) {
  * Affiche la liste des locations de l'utilisateur (actives et historiques)
  */
 function rental_my_rentals() {
-    // Vérifie si l'utilisateur است connecté
+    // Vérifie si l'utilisateur est connecté
     if (!is_logged_in()) {
         redirect('auth/login');
-        return; // Arrête l'exécution سی l'utilisateur ن'est پاس connecté
+        return; // Arrête l'exécution si l'utilisateur n'est pas connecté
     }
     $user_id = current_user_id();
-    // Prépare les données برای la vue با locations actives و historiques
+    // Prépare les données pour la vue avec locations actives et historiques
     $data = [
-        'title' => 'Mes Locations',
+        'title' => 'Mes Emprunts',
         'active_rentals' => get_user_rentals_by_status($user_id, 'active'),
         'returned_rentals' => get_user_rentals_by_status($user_id, 'returned'),
     ];
@@ -73,7 +73,7 @@ function rental_my_rentals() {
 
 /**
  * Gère le retour د'un média emprunté
- * @param int $rental_id Identifiant de la location à retourner
+ * param int $rental_id Identifiant de la location à retourner
  */
 function rental_return($rental_id) {
     // Vérifie سی l'utilisateur است connecté

@@ -12,11 +12,10 @@
 </head>
 <body>
     <section class="container">
-        <section class="banner">
+        <section class="banner_media">
             <section class="hero-banner">
                 <h1>Catalogue des Jeux Vidéo</h1>
                 <p class="hero-subtitle">Découvrez notre collection de jeux vidéo</p>
-            </section>
         </section>
 <!-- Début de la section des filtres de recherche pour la page des jeux vidéo -->
 <section class="search-filters">
@@ -68,6 +67,7 @@
             </div>
         </div>
     </form>
+            </section>
 </section>
 <!-- Fin de la section des filtres de recherche -->
         <div class="grid-container">

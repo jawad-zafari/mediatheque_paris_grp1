@@ -84,4 +84,51 @@ function get_articles_by_stock_loaned() {
               SELECT CONCAT('game_', id) AS id, title, editor AS author_director_publisher, plateform AS isbn_rating_platform, gender AS genre, min_age AS pages_duration_min_age, description, year, available, stock, image_url, 'game' AS type, upload_date FROM video_games WHERE stock = 0";
     return db_select($query);
 }
+/**
+ * Compte le nombre total de livres
+ * Commentaire: Fonction extraite du dashboard admin pour les statistiques
+ */
+function get_books_count() {
+    return db_select_one("SELECT COUNT(*) as total FROM books")['total'] ?? 0;
+}
+
+/**
+ * Compte le nombre total de films
+ * Commentaire: Fonction extraite du dashboard admin pour les statistiques
+ */
+function get_movies_count() {
+    return db_select_one("SELECT COUNT(*) as total FROM movies")['total'] ?? 0;
+}
+
+/**
+ * Compte le nombre total de jeux vidéo
+ * Commentaire: Fonction extraite du dashboard admin pour les statistiques
+ */
+function get_video_games_count() {
+    return db_select_one("SELECT COUNT(*) as total FROM video_games")['total'] ?? 0;
+}
+
+/**
+ * Compte le stock total disponible pour les livres
+ * Commentaire: Fonction extraite du dashboard admin pour les statistiques
+ */
+function get_books_stock() {
+    return db_select_one("SELECT SUM(stock) as total_stock FROM books")['total_stock'] ?? 0;
+}
+
+/**
+ * Compte le stock total disponible برای les films
+ * Commentaire: Fonction extraite du dashboard admin برای les statistiques
+ */
+function get_movies_stock() {
+    return db_select_one("SELECT SUM(stock) as total_stock FROM movies")['total_stock'] ?? 0;
+}
+
+/**
+ * Compte le stock total disponible برای les jeux vidéo
+ * Commentaire: Fonction extraite du dashboard admin برای les statistiques
+ */
+function get_video_games_stock() {
+    return db_select_one("SELECT SUM(stock) as total_stock FROM video_games")['total_stock'] ?? 0;
+}
 ?>

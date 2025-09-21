@@ -17,7 +17,7 @@
             <section class="hero-banner">
                 <div class="hero-content">
                 <h1>Catalogue de la Médiathèque</h1>
-                <p class="hero-subtitle">Découvrez notre collection de médias organisée par catégorie</p>
+                <p class="hero-subtitle">Découvrez notre collection de médias organisée par catégorie !</p>
                         <!-- Formulaire de recherche -->
         <section class="search-filters">
             <form method="GET" action="<?php echo url('catalog/index'); ?>">
@@ -176,9 +176,18 @@
         </section>
             </section>
         </section>
+         <section class="getting-started">
+            <h2>Prêt à découvrir de nouveaux médias ?</h2>
+            <h4>Parcourez notre catalogue complet et trouvez votre prochaine lecture, film ou jeu préféré.</h4>
+            <div class="steps">
+                <div class="step">1. Inscription</div>
+                <div class="step">2. Recherches</div>
+                <div class="step">3. Emprunts</div>
+            </div>
+        </section>
          <div class="catalog-nouveautes" data-section="nouveautes">
         <h2>Notre collection!</h2>
-            <h4>Explorez nos médias par catégorie.</h4>
+            <h4>Explorez nos médias par catégorie !</h4>
          </div>
         <section class="media-stats-section">
     <div class="media-stats-container">
@@ -188,7 +197,8 @@
                 <h3>📚</h3>
                 <h3>Livres</h3>
                 <h5>Titres variés</h5>
-                <p><?php echo count($books ?? []) . ' livres'; ?></p>
+                <p><?php echo htmlspecialchars($books_count ?? 0) . ' livres'; ?></p>
+                <p>Disponibles: <?php echo htmlspecialchars($books_stock ?? 0); ?></p>
                 <hr class="media-stats-divider">
             </div>
         </a>
@@ -199,7 +209,8 @@
                 <h3>🎬</h3>
                 <h3>Films</h3>
                 <h5>Cinéma mondial</h5>
-                <p><?php echo count($movies ?? []) . ' films'; ?></p>
+                <p><?php echo htmlspecialchars($movies_count ?? 0) . ' films'; ?></p>
+                <p>Disponibles: <?php echo htmlspecialchars($movies_stock ?? 0); ?></p>
                 <hr class="media-stats-divider">
             </div>
         </a>
@@ -210,8 +221,8 @@
                 <h3>🎮</h3>
                 <h3>Jeux Vidéo</h3>
                 <h5>Divertissement numérique</h5>
-                <p><?php echo count($games ?? []) . ' jeux'; ?></p>
-                <hr class="media-stats-divider">
+                <p><?php echo htmlspecialchars($video_games_count ?? 0) . ' jeux'; ?></p>
+                <p>Disponibles: <?php echo htmlspecialchars($video_games_stock ?? 0); ?></p>                <hr class="media-stats-divider">
             </div>
         </a>
     </div>
@@ -220,7 +231,7 @@
         <!-- Section des nouveautés -->
         <div class="catalog-nouveautes" data-section="nouveautes">
         <h2>Dernières nouveautés!</h2>
-            <h4>Les derniers ajouts à notre collection</h4>
+            <h4>Les derniers ajouts à notre collection !</h4>
          </div>
         <!-- Section des livres -->
         <!-- Commentaire: Section avec scroll horizontal pour les livres -->
@@ -353,16 +364,6 @@
             </div>
             <?php endif; ?>
         <?php endforeach; ?>
-
-        <section class="getting-started">
-            <h2>Commencez</h2>
-            <div class="steps">
-                <div class="step">1. Inscription</div>
-                <div class="step">2. Recherches</div>
-                <div class="step">3. Emprunts</div>
-            </div>
-        </section>
-
         <!-- Élément caché pour éviter le saut de page -->
         <div id="close-modal" style="display: none;"></div>
     </section>

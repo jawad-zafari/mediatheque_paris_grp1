@@ -21,8 +21,8 @@
 }
 .confirm-message {
     max-width: 600px;
-    color: #000000;
-    background-color: #0000000e;
+    color: #ffffff;
+    background-color: #5b17010e;
     width: fit-content;
     margin: 20px auto;
     text-align: center;
@@ -67,8 +67,9 @@ hr {
 .media-stats-box {
     display: flex;
     align-items: flex-start;
-    background-color: #f1f1f1;
-    border: 1px solid #E6E6E6;
+    background: rgba(230, 154, 124, 0.45);
+    backdrop-filter: blur(10px);    
+ border: 1px solid #E6E6E6;
     box-shadow: var(--shadow);
     border-radius: 12px;
     padding: 10px;
@@ -94,19 +95,19 @@ hr {
 }
 
 .media-stats-content h3 {
-    color: #4b4b4b;
+    color: #ffffff;
     font-size: 18px;
     font-weight: 400;
     margin: 0 0 5px 0;
 }.media-stats-content h5 {
-    color: #575757;
+    color: #ffffff;
     font-size: smaller;
     font-weight: 100;
     margin: 0 0 5px 0;
 }
 
 .media-stats-content p {
-    color: #333333;
+    color: #ffffff;
     font-size: small;
     margin: 5px 0;
     /* font-weight: bold; */
@@ -149,7 +150,9 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     /* color: rgb(0, 0, 0) ; */
-    background-color: #ffffff;
+    background: linear-gradient(to right, #028378, #532301);
+    /* background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp'); */
+    filter:blur(50%) ;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -233,9 +236,9 @@ body {
   position: absolute;
   inset: 0;
   background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
-  filter: blur(4px);  /* Flou pour un meilleur effet */
+  filter: blur(4px) brightness(10%);  /* Flou pour un meilleur effet */
   transform: scale(1.0); /* Un peu plus grand pour que les bords ne soient pas nets */
-  z-index: -1;
+  z-index: -1;  
 }
 
 .hero-content h1 {
@@ -243,13 +246,15 @@ body {
     margin-top: 10px;
     margin-bottom: 1rem;
     font-weight: 200;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 2px rgba(117, 4, 4, 0.8);
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     margin-bottom: 2rem;
+    font-weight: 200;
     opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(117, 4, 4, 0.8);
 }
 
 .hero-buttons {
@@ -276,7 +281,7 @@ body {
     border: none;
     border-radius: 0.5rem;
     text-decoration: none;
-    font-weight: 200;
+    /* font-weight: 200; */
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
@@ -353,15 +358,23 @@ body {
 
 /* Getting Started */
 .getting-started {
-    color: #000000;
-    font-weight: 200;
-    padding: 4rem 0;
-    /* background: var(--background-color); */
-}
+    flex-direction: column;
+    padding: 1rem 0;
+    border-radius: 5px;
+background: linear-gradient(to right, #028378, #532301);}
 .getting-started h2 {
+    padding-top: 10px;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 3rem;
     font-size: 2.5rem;
+    font-weight: 200;
+}.getting-started h4 {
+    padding-top: 10px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: large;
     font-weight: 200;
 }
 
@@ -630,8 +643,40 @@ code {
     margin-bottom: 2rem;
     border-radius: 0.5rem;
 }
+.banner_media{
+/* background: linear-gradient(to right, #028378, #532301); */
+border-radius: 10px;
+max-width: 100%;
+padding: 10px;
+filter: blur(50%);
+}
+.banner_media::before {
+    z-index: -1;
+    margin-bottom: 4rem;
+    content: "";
+    position: absolute;
+    inset: 0;
+    height: 420px;
+    background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
+    filter: blur(4px);  /* Flou pour un meilleur effet */
+    transform: scale(1.0); /* Un peu plus grand pour que les bords ne soient pas nets */
+}.banner_emprunt::before {
+    z-index: -1;
+    margin-bottom: 9rem;
+    content: "";
+    position: absolute;
+    inset: 0;
+    height: 230px;
+    background: url('https://diglib.uswr.ac.ir/thumbnail/1920-h_60/uploads/16/2024/jul/14/books-tablet-digital-library-blending-traditional-modern-knowledge_36722-4773_crop.webp');
+    filter: blur(4px);  /* Flou pour un meilleur effet */
+    transform: scale(1.0); /* Un peu plus grand pour que les bords ne soient pas nets */
+}
+.banner_media h1{
+font-weight: 400;
+}
 .hero-banner{
     text-align: center;
+    color: #ffffff;
 }
 /* Conteneur carrousel */
 .carousel-container {
@@ -647,8 +692,10 @@ code {
 
 /* Cartes d'objets - Améliorées */
 .carousel-item {
+    color: #ffffff;
     flex: 0 0 320px;
-    background-color: #ffffff45;
+    background-color: #f0848463;
+    backdrop-filter: blur(50px);
     border: 1px solid #e5e7eb;
     border-radius: 0.75rem;
     padding: 1.2rem;
@@ -670,7 +717,7 @@ code {
 .carousel-item h3 {
     font-size: 1.2rem;
     font-weight: 200;
-    color: #1f2937;
+    color: #ffffff;
     margin-bottom: 0.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -679,7 +726,7 @@ code {
 
 .carousel-item p {
     font-size: 0.95rem;
-    color: #6b7280;
+    color: #ffffff;
     margin-bottom: 1rem;
     flex-grow: 1; /* Remplir l'espace vide */
 }
@@ -789,6 +836,8 @@ p span.available {
 
 /* Styles de la section de recherche et de filtres */
 .search-filters {
+    margin: auto;
+    max-width: 800px;
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
@@ -811,6 +860,7 @@ p span.available {
 
 .search-input {
     background-color: rgba(255, 255, 255, 0.322);
+    /* color: #000000; */
     padding: 10px 15px;
     width: 100%;
     max-width: 500px;
@@ -828,7 +878,7 @@ p span.available {
 
 .search-button {
     padding: 10px 15px;
-    background-color: #232323;
+    background-color:rgba(146, 81, 2, 0.642);
     color: white;
     border: none;
     border-radius: 0.375rem;
@@ -841,7 +891,7 @@ p span.available {
 }
 
 .search-button:hover {
-    background-color: #010612;
+    background-color: #6a4402;
     color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 5px 10px rgb(0, 0, 0);
@@ -877,7 +927,7 @@ p span.available {
     padding: 5px 15px;
     border: 1px solid #e5e7eb;
     border-radius: 0.375rem;
-    font-size: x-small;
+    font-size: small;
     font-weight: 100;
     background-color: rgba(255, 255, 255, 0.349);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -935,11 +985,11 @@ p span.available {
 
 /* Amélioration du style du bouton Effacer */
 .btn-secondary {
-    font-weight: 200;
-    font-size: small;
+    /* font-weight: 200; */
+    /* font-size: small; */
     background-color: var(--secondary-color);
     color: var(--white);
-    padding: 5px 5px;
+    /* padding: 5px 5px; */
     border-radius: 0.375rem;
     text-decoration: none;
     display: inline-block;
@@ -961,7 +1011,7 @@ p span.available {
     height: 100%;
     background: transparent;
     backdrop-filter: blur(5px);
-    /* background: rgba(0, 0, 0, 0.5); */
+    /* background: rgba(245, 14, 14, 0.5); */
     z-index: 1000;
     overflow-y: auto;
 }
@@ -979,8 +1029,8 @@ p span.available {
 }
 
 .detail img {
-    max-width: 100%;
-    height: 200px;
+    max-width: 400px;
+    height: 300px;
     border-radius: 8px;
     margin-bottom: 1.5rem;
     display: block;
@@ -1091,10 +1141,10 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     display: flex;
     flex-direction: column; /* Layout vertical pour le contenu */
     justify-content: space-between; /* Distribution de l'espace pour aligner les boutons en bas */
-    height: 370px; /* Hauteur fixe de 600px pour tous les cadres */
-    border: 1px solid var(--border-color); /* Bordure du cadre */
+    height: 400px; /* Hauteur fixe de 600px pour tous les cadres */
+    border: 1px solid rgba(0, 0, 0, 0.205); /* Bordure du cadre */
     border-radius: 8px; /* Coins arrondis */
-    padding: 10px; /* Espacement interne */
+    padding: 5px; /* Espacement interne */
     background: rgba(255, 255, 255, 0.678); /* Fond blanc */
     box-shadow: var(--shadow); /* Ombre légère */
     transition: transform 0.3s ease; /* Animation pour le hover */
@@ -1105,6 +1155,8 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     height: 150px;
     border-radius: 8px;
     margin-bottom: 10px;
+    margin: 0%;
+    padding: 0%;
 }
 
 .item h3 {
@@ -1290,7 +1342,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 .modal-content {
     background: white;
     backdrop-filter: blur(5px);
-    max-width: 400px;
+    max-width: fit-content;
     margin: 2rem auto;
     padding: 1rem;
     border-radius: 8px;
@@ -1307,7 +1359,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 }
 
 .detail img {
-    max-width: 100%;
+    max-width: 400px;
     height: 300px;
     border-radius: 8px;
     margin-bottom: 1.5rem;
@@ -1317,7 +1369,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 }
 
 .detail h2 {
-    font-size: 1.5rem;
+    font-size: xx-small;
     color: var rgb(0, 0, 0);
     margin-bottom: 1rem;
     text-align: center;
@@ -1369,28 +1421,28 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
     text-decoration: underline;
 }
 .catalog-section h2{
-    background-color: #000000ff;
+    background-color: rgb(183, 101, 2);
     font-weight: 200;
     color: rgb(255, 255, 255);
     width: fit-content;
-    font-size: large;
+    font-size: larger;
     border-radius: 10px;
     padding: 6px;
     text-align: left;
     margin: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.212);
 }
 .catalog-nouveautes h2 {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: xx-large;
     text-align: center;
-    font-weight: 100;
+    font-weight: 400;
     /* margin: 5px; */
     margin-left: 50px;
     margin-top: 20px;
 }.catalog-nouveautes h4 {
-    color: rgb(132, 131, 131);
-    font-size: large;
+    color: rgb(255, 255, 255);
+    font-size: x-large;
     font-weight: 100;
     text-align: center;
     /* margin: 5px; */
@@ -1400,7 +1452,7 @@ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Layout en grill
 /* 🎯 Rental Management Section */
         .rental-image {
             width: 50px;
-            height: auto;
+            height: 50px;
             margin-right: 10px;
             vertical-align: middle;
             object-fit: cover;
