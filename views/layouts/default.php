@@ -10,6 +10,7 @@
         .nav a { margin-right: 10px; color: #007bff; text-decoration: none; }
         .nav a:hover { text-decoration: underline; }
     </style>
+    <link rel="stylesheet" href="<?= url('assets/css/style.css'); ?>">
 </head>
 <body>
     <div class="nav">
@@ -23,6 +24,7 @@
             <a href="/auth/login">Connexion</a>
         <?php endif; ?>
     </div>
+
     <div class="container">
         <?php echo $content; ?>
     </div>

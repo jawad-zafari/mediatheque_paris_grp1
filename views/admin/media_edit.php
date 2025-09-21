@@ -1,20 +1,12 @@
-<style>
-form { max-width: 600px; margin: 20px 0; }
-label { display: block; margin: 10px 0 5px; }
-input, textarea, select { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
-textarea { height: 100px; }
-button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-button:hover { background: #0056b3; }
-a { color: #007bff; text-decoration: none; margin-left: 10px; }
-a:hover { text-decoration: underline; }
-img { margin-top: 10px; }
-</style>
-
+<div class="admin-container">
+    <div class="form-card">
 <?php 
-$type = $media['media_type'] ?? ($_POST['type'] ?? '');
+// Determine which type to show fields for:
+// Priority: resolved_type from controller (derived from id or GET) -> media media_type -> POST -> GET -> ''
+$type = $resolved_type ?? ($media['media_type'] ?? ($_POST['type'] ?? ($_GET['type'] ?? '')));
 ?>
 
-<form action="<?php echo $media ? '/admin/media/save/' . $media['media_type'] . '_' . $media['id'] : '/admin/media/save'; ?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo $media ? url('admin/media_save/' . $media['media_type'] . '_' . $media['id']) : url('admin/media_save'); ?>" method="post" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
     
     <label>Type de média:</label>
@@ -32,7 +24,7 @@ $type = $media['media_type'] ?? ($_POST['type'] ?? '');
     <input type="text" name="genre" value="<?php echo htmlspecialchars($media['genre'] ?? ''); ?>" required> <!-- Fix: genre -->
     
     <label>Stock (تعداد نسخه‌ها):</label>
-    <input type="number" name="stock" value="<?php echo $media['stock'] ?? 1; ?>" min="0" required>
+    <input type="number" name="stock" value="<?php echo $media['stock'] ?? 1; ?>" min="1" required>
     
     <?php if ($type === 'book' || $type === 'livre'): ?>
         <label>Écrivain:</label>
@@ -53,16 +45,52 @@ $type = $media['media_type'] ?? ($_POST['type'] ?? '');
         <label>Synopsis:</label>
         <textarea name="synopsis"><?php echo htmlspecialchars($media['synopsis'] ?? ''); ?></textarea>
         <label>Classification:</label>
-        <input type="text" name="classification" value="<?php echo htmlspecialchars($media['classification'] ?? ''); ?>">
+        <?php
+            $current_class = $media['classification'] ?? '';
+            $allowed_class = ['Tous publics', '-12', '-16', '-18'];
+        ?>
+        <select name="classification" required>
+            <option value="" <?php echo empty($current_class) ? 'selected' : ''; ?>>Sélectionner</option>
+            <?php foreach ($allowed_class as $c): ?>
+                <option value="<?php echo $c; ?>" <?php echo ($current_class === $c) ? 'selected' : ''; ?>><?php echo $c; ?></option>
+            <?php endforeach; ?>
+            <?php if ($current_class !== '' && !in_array($current_class, $allowed_class)): ?>
+                <option value="<?php echo htmlspecialchars($current_class); ?>" selected><?php echo htmlspecialchars($current_class); ?> (actuel)</option>
+            <?php endif; ?>
+        </select>
         <label>Année:</label>
         <input type="number" name="year" value="<?php echo $media['year'] ?? ''; ?>" min="1900" max="<?php echo date('Y'); ?>">
     <?php elseif ($type === 'video_game' || $type === 'jeu'): ?>
         <label>Éditeur:</label>
         <input type="text" name="editor" value="<?php echo htmlspecialchars($media['editor'] ?? ''); ?>" required>
         <label>Plateforme:</label>
-        <input type="text" name="platform" value="<?php echo htmlspecialchars($media['platform'] ?? ''); ?>">
+        <?php
+            $current_platform = $media['platform'] ?? '';
+            $allowed_platforms = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'];
+        ?>
+        <select name="platform" required>
+            <option value="" <?php echo empty($current_platform) ? 'selected' : ''; ?>>Sélectionner</option>
+            <?php foreach ($allowed_platforms as $p): ?>
+                <option value="<?php echo $p; ?>" <?php echo ($current_platform === $p) ? 'selected' : ''; ?>><?php echo $p; ?></option>
+            <?php endforeach; ?>
+            <?php if ($current_platform !== '' && !in_array($current_platform, $allowed_platforms)): ?>
+                <option value="<?php echo htmlspecialchars($current_platform); ?>" selected><?php echo htmlspecialchars($current_platform); ?> (actuel)</option>
+            <?php endif; ?>
+        </select>
         <label>Âge minimum:</label>
-        <input type="number" name="min_age" value="<?php echo $media['min_age'] ?? ''; ?>" min="0">
+        <?php
+            $current_age = isset($media['min_age']) ? intval($media['min_age']) : null;
+            $allowed_ages = [3,7,12,16,18];
+        ?>
+        <select name="min_age" required>
+            <option value="" <?php echo $current_age === null ? 'selected' : ''; ?>>Sélectionner</option>
+            <?php foreach ($allowed_ages as $a): ?>
+                <option value="<?php echo $a; ?>" <?php echo ($current_age === $a) ? 'selected' : ''; ?>><?php echo $a; ?></option>
+            <?php endforeach; ?>
+            <?php if ($current_age !== null && !in_array($current_age, $allowed_ages)): ?>
+                <option value="<?php echo $current_age; ?>" selected><?php echo $current_age; ?> (actuel)</option>
+            <?php endif; ?>
+        </select>
         <label>Synopsis:</label>
         <textarea name="synopsis"><?php echo htmlspecialchars($media['synopsis'] ?? ''); ?></textarea>
         <label>Année:</label>
@@ -72,9 +100,10 @@ $type = $media['media_type'] ?? ($_POST['type'] ?? '');
     <label>Image de couverture (optionnel):</label>
     <input type="file" name="image" accept="image/*">
     <?php if (!empty($media['image_url'])): ?>
-        <img src="/uploads/covers/<?php echo htmlspecialchars($media['image_url']); ?>" style="max-width:150px;max-height:200px;">
+        <img src="<?= url('uploads/covers/' . $media['image_url']); ?>" class="cover-thumb">
     <?php endif; ?>
     
-    <button type="submit">Enregistrer</button>
-    <a href="/admin/media">Annuler</a>
-</form>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a href="<?= url('admin/media'); ?>" class="btn-link">Annuler</a>
+    </div>
+</div>

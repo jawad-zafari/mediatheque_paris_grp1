@@ -13,6 +13,11 @@ function auth_login() {
     $data = ['title' => 'Connexion'];
 
     if (is_post()) {
+        if (!verify_csrf_token(post('csrf_token', ''))) {
+            set_flash('error', 'Token CSRF invalide.');
+            redirect('auth/login');
+            return;
+        }
         $email = clean_input(post('email'));
         $password = post('password');
 
@@ -59,6 +64,11 @@ function auth_register() {
     $data = ['title' => 'Inscription'];
 
     if (is_post()) {
+        if (!verify_csrf_token(post('csrf_token', ''))) {
+            set_flash('error', 'Token CSRF invalide.');
+            redirect('auth/register');
+            return;
+        }
         $name = mb_convert_case(clean_input(post('name')), MB_CASE_TITLE, 'UTF-8');
         $last_name = mb_convert_case(clean_input(post('last_name')), MB_CASE_TITLE, 'UTF-8');
         $email = clean_input(post('email'));
@@ -81,11 +91,8 @@ function auth_register() {
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
-            // Hashage sécurisé
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Création utilisateur
-           $user_id = create_user($name, $last_name, $email, $password);
+            // Création utilisateur (le hashing est effectué dans create_user)
+            $user_id = create_user($name, $last_name, $email, $password);
 
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');

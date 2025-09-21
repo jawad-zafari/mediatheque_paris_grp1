@@ -157,4 +157,50 @@ function count_active_loans($user_id) {
     $result = db_select_one($query, [$user_id]);
     return $result['total'] ?? 0;
 }
+
+/**
+ * Récupère un emprunt par son ID
+ */
+function get_loan_by_id($loan_id)
+{
+    $query = "
+        SELECT l.id, l.user_id, u.name AS user_name, u.email AS user_email, l.media_id, l.media_type,
+               CASE l.media_type
+                   WHEN 'book' THEN b.title
+                   WHEN 'movie' THEN m.title
+                   WHEN 'video_game' THEN v.title
+               END AS media_title,
+               CASE l.media_type
+                   WHEN 'book' THEN b.gender
+                   WHEN 'movie' THEN m.gender
+                   WHEN 'video_game' THEN v.gender
+               END AS media_genre,
+               l.loan_date, l.return_date, l.returned_at
+        FROM loans l
+        JOIN users u ON l.user_id = u.id
+        LEFT JOIN books b ON l.media_id = b.id AND l.media_type = 'book'
+        LEFT JOIN movies m ON l.media_id = m.id AND l.media_type = 'movie'
+        LEFT JOIN video_games v ON l.media_id = v.id AND l.media_type = 'video_game'
+        WHERE l.id = ?
+        LIMIT 1
+    ";
+    return db_select_one($query, [$loan_id]);
+}
+
+/**
+ * Met à jour certains champs d'un emprunt (pour l'instant : return_date)
+ */
+function update_loan($loan_id, $data)
+{
+    $fields = [];
+    $params = [];
+    if (isset($data['return_date'])) {
+        $fields[] = 'return_date = ?';
+        $params[] = $data['return_date'];
+    }
+    if (empty($fields)) return false;
+    $params[] = $loan_id;
+    $query = "UPDATE loans SET " . implode(', ', $fields) . " WHERE id = ?";
+    return db_execute($query, $params);
+}
 ?>
