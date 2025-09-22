@@ -1,5 +1,49 @@
 <?php
 
+
+/**
+ * -----------------------------
+ * FONCTIONS POUR LE TABLEAU DE BORD
+ * -----------------------------
+ */
+
+
+
+/**
+ * Récupère le nombre total de médias par type
+ */
+function get_total_media_count() {
+    $books = db_select_one("SELECT COUNT(*) AS total FROM books")['total'] ?? 0;
+    $movies = db_select_one("SELECT COUNT(*) AS total FROM movies")['total'] ?? 0;
+    $video_games = db_select_one("SELECT COUNT(*) AS total FROM video_games")['total'] ?? 0;
+
+    return $books + $movies + $video_games;
+}
+
+
+
+/**
+ * Récupère toutes les statistiques du tableau de bord
+ */
+function get_dashboard_stats() {
+    $books = db_select_one("SELECT COUNT(*) AS total FROM books");
+    $movies = db_select_one("SELECT COUNT(*) AS total FROM movies");
+    $video_games = db_select_one("SELECT COUNT(*) AS total FROM video_games");
+
+    return [
+        'users_count' => count_users(),
+        'media_count' => get_total_media_count(),
+        'loans_count' => get_rentals_count(),
+        'media_stats' => [
+            'books' => isset($books['total']) ? $books['total'] : 0,
+            'movies' => isset($movies['total']) ? $movies['total'] : 0,
+            'video_games' => isset($video_games['total']) ? $video_games['total'] : 0,
+        ],
+    ];
+}
+
+
+
 /**
  * Récupère tous les médias
  */
@@ -87,13 +131,19 @@ function create_media($type, $data)
                 date('Y-m-d')
             ]);
         case 'movie':
-            $stmt = $db->prepare("INSERT INTO movies (title, producer, year, gender, duration_m, synopsis, classification, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            // DB column is `duration` (not duration_m)
+            $stmt = $db->prepare("INSERT INTO movies (title, producer, year, gender, duration, synopsis, classification, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
                 $data['title'],
                 $data['producer'] ?? '',
                 $data['year'] ?? 0,
                 $data['genre'] ?? '',
-                $data['duration_m'] ?? 0,
+
+
+                // Accept either duration_m (from form) or duration
+                $data['duration_m'] ?? $data['duration'] ?? 0,
+
+
                 $data['synopsis'] ?? '',
                 $data['classification'] ?? '',
                 $data['stock'] ?? 1,
@@ -102,14 +152,21 @@ function create_media($type, $data)
                 date('Y-m-d')
             ]);
         case 'video_game':
-            $stmt = $db->prepare("INSERT INTO video_games (title, editor, platform, gender, min_age, synopsis, year, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            // DB columns: plateform, description (not platform/synopsis)
+            $stmt = $db->prepare("INSERT INTO video_games (title, editor, plateform, gender, min_age, description, year, stock, available, image_url, upload_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             return $stmt->execute([
                 $data['title'],
                 $data['editor'] ?? '',
-                $data['platform'] ?? '',
+
+
+                // Accept key 'platform' from form but DB column is 'plateform'
+                $data['platform'] ?? $data['plateform'] ?? '',
                 $data['genre'] ?? '',
                 $data['min_age'] ?? 0,
-                $data['synopsis'] ?? '',
+                // Map 'synopsis' (form) to DB 'description'
+                $data['synopsis'] ?? $data['description'] ?? '',
+
+
                 $data['year'] ?? 0,
                 $data['stock'] ?? 1,
                 1,
@@ -145,13 +202,17 @@ function update_media($id, $type, $data)
             ]);
         case 'movie':
         case 'film':
-            $stmt = $db->prepare("UPDATE movies SET title = ?, producer = ?, year = ?, gender = ?, duration_m = ?, synopsis = ?, classification = ?, stock = ?, image_url = ? WHERE id = ?");
+            // DB column is `duration`
+            $stmt = $db->prepare("UPDATE movies SET title = ?, producer = ?, year = ?, gender = ?, duration = ?, synopsis = ?, classification = ?, stock = ?, image_url = ? WHERE id = ?");
             return $stmt->execute([
                 $data['title'],
                 $data['producer'] ?? '',
                 $data['year'] ?? 0,
                 $data['genre'] ?? '',
-                $data['duration_m'] ?? 0,
+
+
+                $data['duration_m'] ?? $data['duration'] ?? 0,
+
                 $data['synopsis'] ?? '',
                 $data['classification'] ?? '',
                 $data['stock'] ?? 1,
@@ -160,14 +221,19 @@ function update_media($id, $type, $data)
             ]);
         case 'video_game':
         case 'jeu':
-            $stmt = $db->prepare("UPDATE video_games SET title = ?, editor = ?, platform = ?, gender = ?, min_age = ?, synopsis = ?, year = ?, stock = ?, image_url = ? WHERE id = ?");
+            // DB columns: plateform, description
+            $stmt = $db->prepare("UPDATE video_games SET title = ?, editor = ?, plateform = ?, gender = ?, min_age = ?, description = ?, year = ?, stock = ?, image_url = ? WHERE id = ?");
             return $stmt->execute([
                 $data['title'],
                 $data['editor'] ?? '',
-                $data['platform'] ?? '',
+
+
+                $data['platform'] ?? $data['plateform'] ?? '',
                 $data['genre'] ?? '',
                 $data['min_age'] ?? 0,
-                $data['synopsis'] ?? '',
+                $data['synopsis'] ?? $data['description'] ?? '',
+
+
                 $data['year'] ?? 0,
                 $data['stock'] ?? 1,
                 $data['image_url'] ?? '',
@@ -253,4 +319,24 @@ function media_upload_image($type, $data, $image)
     }
 
     return ["errors" => $errors, "success" => $success];
+}
+
+/**
+ * Vérifie si un ISBN existe déjà dans la table books
+ * @param string $isbn
+ * @param int|null $exclude_id
+ * @return bool
+ */
+function isbn_exists($isbn, $exclude_id = null)
+{
+    if (empty($isbn)) return false;
+    $db = db_connect();
+    $query = "SELECT COUNT(*) as count FROM books WHERE ISBN13 = ?";
+    $params = [$isbn];
+    if ($exclude_id) {
+        $query .= " AND id != ?";
+        $params[] = $exclude_id;
+    }
+    $res = db_select_one($query, $params);
+    return ($res['count'] ?? 0) > 0;
 }

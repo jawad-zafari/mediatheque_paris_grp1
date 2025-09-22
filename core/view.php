@@ -37,7 +37,10 @@ function load_view_with_layout($view, $data = [], $layout = 'layout') {
     
     // Ajouter le contenu aux données
     $data['content'] = $content;
-    
+
+    // Détecter si la vue est une vue admin pour charger des ressources spécifiques
+    $data['is_admin'] = strpos($view, 'admin/') === 0;
+
     // Charger le layout
     load_view('layouts/' . $layout, $data);
 }

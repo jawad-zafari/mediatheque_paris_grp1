@@ -1,35 +1,7 @@
-<style>
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-th {
-    background: #007bff;
-    color: white;
-}
-.flash {
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-.flash.success { background: #d4edda; color: #155724; }
-.flash.error { background: #f8d7da; color: #721c24; }
-a { color: #007bff; text-decoration: none; }
-a:hover { text-decoration: underline; }
-.overdue { background-color: #f8d7da; }
-.in-progress { background-color: #fff3cd; }
-.returned { background-color: #d4edda; }
-</style>
+<div class="admin-container">
+    <div class="admin-header"><h1>Liste des emprunts</h1></div>
 
-<h1>Liste des emprunts</h1>
-
-<?php if (has_flash_messages()): ?>
+    <?php if (has_flash_messages()): ?>
     <?php foreach (get_flash_messages() as $type => $messages): ?>
         <?php foreach ($messages as $message): ?>
             <div class="flash <?php echo $type; ?>">
@@ -42,7 +14,7 @@ a:hover { text-decoration: underline; }
 <?php if (empty($loans)): ?>
     <p>Aucun emprunt trouvé.</p>
 <?php else: ?>
-    <table>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>Média</th>
@@ -68,9 +40,14 @@ a:hover { text-decoration: underline; }
                     <td><?php echo date('d/m/Y', strtotime($loan['return_date'])); ?></td>
                     <td><?php echo $is_overdue ? 'En retard (' . floor((time() - strtotime($loan['return_date'])) / (3600 * 24)) . ')' : ($loan['returned_at'] ? 'Retourné' : 'En cours'); ?></td>
                     <td><?php echo $return_date; ?></td>
-                    <td>
-                        <a href="/admin/loan/return/<?php echo $loan['id']; ?>">&#8635;</a>
-                        <a href="/admin/loan/edit/<?php echo $loan['id']; ?>">&#9998;</a>
+                    <td class="actions">
+                        <div class="action-group">
+                            <form method="post" action="<?= url('admin/loan_return/' . $loan['id']); ?>" class="inline-form">
+                                <input type="hidden" name="csrf_token" value="<?= csrf_token(); ?>">
+                                <button type="submit" title="Retour" class="icon-btn">↺</button>
+                            </form>
+                            <a href="<?= url('admin/loan_edit/' . $loan['id']); ?>" class="icon-btn" title="Éditer">✎</a>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>

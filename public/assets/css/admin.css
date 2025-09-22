@@ -1,0 +1,73 @@
+/* Admin-only CSS - mobile-first modern admin styles
+    This file is loaded only for admin views. Do not modify navbar here. */
+
+/* Container and header */
+.admin-container { box-sizing: border-box; padding: 1rem; margin: 1.25rem auto; max-width: 1100px; }
+.admin-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 0.75rem; }
+.admin-header h1 { margin:0; font-size:1.25rem; color:var(--primary-color); }
+.admin-actions { display:flex; gap:8px; align-items:center; }
+
+/* Flash */
+.admin-flash { padding:12px; border-radius:8px; margin-bottom:12px; }
+.admin-flash.success { background:#e6ffef; color:#065f46; border:1px solid #b7f0d0; }
+.admin-flash.error { background:#fff1f2; color:#7f1d1d; border:1px solid #ffc9cc; }
+
+/* Generic flash (.flash used in some admin views) */
+.flash { padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid transparent; }
+.flash.success { background:#e6ffef; color:#065f46; border-color:#b7f0d0; }
+.flash.error { background:#fff1f2; color:#7f1d1d; border-color:#ffc9cc; }
+
+/* Forms */
+.form-card { background:var(--white); padding:14px; border-radius:8px; box-shadow:var(--shadow); }
+.form-row { margin-bottom:12px; }
+.form-row label { display:block; margin-bottom:6px; font-weight:600; }
+.form-row input, .form-row select, .form-row textarea { width:100%; padding:10px; border-radius:8px; border:1px solid var(--border-color); }
+
+/* Form action spacing (replace inline margin usages in admin views) */
+.form-actions { margin-top: 12px; }
+.form-actions-row { margin-top: 10px; display:flex; gap:8px; align-items:center; }
+.admin-container h2 { margin-top: 1rem; }
+
+/* Ensure simple forms (loan_edit) use consistent spacing */
+.admin-container h1 { margin-bottom: 0.75rem; }
+.admin-container p { margin-bottom: 0.6rem; color:var(--text-color); }
+.admin-container table { width:100%; border-collapse:collapse; }
+.admin-container table th, .admin-container table td { padding:10px; border-bottom:1px solid var(--border-color); }
+.admin-container .btn { margin-right:8px; }
+
+/* Buttons & icons */
+.btn { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; border:1px solid transparent; cursor:pointer; font-weight:600; text-decoration:none; }
+.btn-primary { background:var(--primary-color); color:var(--white); }
+.btn-ghost { background:transparent; border:1px solid var(--border-color); }
+.btn-link { background:none; border:0; padding:0; color:var(--primary-color); text-decoration:underline; }
+.action-group { display:flex; gap:8px; align-items:center; }
+.icon-btn { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:8px; border:1px solid transparent; background:transparent; color:var(--secondary-color); cursor:pointer; text-decoration:none; }
+.icon-btn:hover { background:rgba(15,23,42,0.04); color:var(--primary-color); }
+.icon-btn.danger { color:var(--error-color); }
+
+/* Thumbnails and table */
+.cover-thumb { width:100px; height:140px; object-fit:cover; border-radius:6px; }
+.admin-table { width:100%; border-collapse:collapse; }
+.admin-table thead { display:none; }
+.admin-table tbody tr { display:block; background:var(--white); border-radius:8px; padding:12px; margin-bottom:12px; box-shadow:var(--shadow); border:1px solid var(--border-color); }
+.admin-table td { display:flex; gap:8px; align-items:center; justify-content:space-between; padding:6px 0; }
+.admin-table td .cell-left { display:flex; gap:12px; align-items:center; flex:1; }
+.admin-table td .label { display:block; color:var(--secondary-color); font-weight:700; min-width:90px; }
+
+/* Dashboard */
+.stat-grid { display:grid; grid-template-columns:repeat(1,1fr); gap:12px; }
+.stat-card { background:var(--white); padding:12px; border-radius:8px; box-shadow:var(--shadow); text-align:center; }
+.bar-track { background: var(--background-color); border-radius:6px; padding:4px; width: 100%; max-width:220px; }
+.bar { height:16px; border-radius:4px; display:block; }
+
+@media (min-width: 900px) {
+    .admin-table thead { display:table-header-group; }
+    .admin-table tbody tr { display:table-row; background:transparent; box-shadow:none; border:none; margin:0; }
+    .admin-table td { display:table-cell; padding:12px 14px; vertical-align:middle; }
+    .stat-grid { grid-template-columns:repeat(3,1fr); }
+}
+
+@media (max-width: 480px) {
+    .admin-header h1 { font-size:1.05rem; }
+    .icon-btn { width:34px; height:34px; }
+}
