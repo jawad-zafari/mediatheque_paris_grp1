@@ -1,55 +1,43 @@
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+<div class="admin-container">
+    <div class="admin-header"><h1>Détails utilisateur: <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></h1></div>
 
-    th,
-    td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
-    }
+    <?php if ($user): ?>
+    <div class="form-card">
+        <p><strong>ID:</strong> <?= $user['id']; ?></p>
+        <p><strong>Nom:</strong> <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></p>
+        <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
+        <p><strong>Rôle:</strong> <?= htmlspecialchars($user['role']); ?></p>
+        <!-- Role change form (admin only) -->
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+            <form method="post" action="<?= url('admin/user_update_role/' . $user['id']); ?>" class="form-actions">
+                <input type="hidden" name="csrf_token" value="<?= csrf_token(); ?>">
+                <label for="role_select">Modifier le rôle :</label>
+                <select id="role_select" name="role">
+                    <option value="user" <?php echo ($user['role'] === 'user') ? 'selected' : ''; ?>>Utilisateur</option>
+                    <option value="admin" <?php echo ($user['role'] === 'admin') ? 'selected' : ''; ?>>Administrateur</option>
+                </select>
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['id'] == $user['id']): ?>
+                    <p class="flash error">Vous ne pouvez pas retirer vos propres droits administrateur.</p>
+                <?php endif; ?>
+                <div class="form-actions-row">
+                    <button type="submit" class="btn btn-primary">Mettre à jour le rôle</button>
+                    <a href="<?= url('admin/users'); ?>" class="btn btn-ghost">Retour</a>
+                </div>
+            </form>
+        <?php endif; ?>
+        <p><strong>Inscrit le:</strong> <?= $user['created_at']; ?></p>
 
-    th {
-        background: #007bff;
-        color: white;
-    }
-
-    table tbody tr:nth-child(even) {
-        background: #f9f9f9;
-    }
-
-    a {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
-
-<h1>Détails utilisateur: <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></h1>
-
-<?php if ($user): ?>
-    <p>ID: <?= $user['id']; ?></p>
-    <p>Nom: <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></p>
-    <p>Email: <?= htmlspecialchars($user['email']); ?></p>
-    <p>Rôle: <?= htmlspecialchars($user['role']); ?></p>
-    <p>Inscrit le: <?= $user['created_at']; ?></p>
-
-    <h2>Statistiques d'utilisation</h2>
-    <ul>
-        <li>Emprunts totaux: <?= $user['total_loans']; ?></li>
-        <li>Emprunts actifs: <?= $user['active_loans']; ?></li>
-        <li>Emprunts en retard: <?= count($user['overdue_loans']); ?></li>
-    </ul>
+        <h3>Statistiques d'utilisation</h3>
+        <ul>
+            <li>Emprunts totaux: <?= $user['total_loans']; ?></li>
+            <li>Emprunts actifs: <?= $user['active_loans']; ?></li>
+            <li>Emprunts en retard: <?= count($user['overdue_loans']); ?></li>
+        </ul>
+    </div>
 
     <h2>Emprunts actuels</h2>
     <?php if (!empty($user['loans'])): ?>
-        <table>
+    <table class="admin-table">
             <thead>
                 <tr>
                     <th>Média</th>
@@ -67,20 +55,24 @@
                         <td><?= $loan['return_date']; ?></td>
                         <td><?= (strtotime($loan['return_date']) < time()) ? 'En retard' : 'OK'; ?></td>
                         <td>
-                            <a href="/admin/loans/return/<?= $loan['id']; ?>"
-                                onclick="return confirm('Forcer le retour ?')">Retour forcé</a>
+                            <div class="action-group">
+                                <form method="post" action="<?= url('admin/loan_return/' . $loan['id']); ?>" onsubmit="return confirm('Forcer le retour ?')" class="inline-form">
+                                    <input type="hidden" name="csrf_token" value="<?= csrf_token(); ?>">
+                                    <button type="submit" class="icon-btn danger" title="Retour forcé">↺</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
+    </table>
     <?php else: ?>
         <p>Aucun emprunt en cours.</p>
     <?php endif; ?>
 
     <h2>Emprunts en retard</h2>
     <?php if (!empty($user['overdue_loans'])): ?>
-        <table>
+        <table class="admin-table">
             <thead>
                 <tr>
                     <th>Média</th>
@@ -101,6 +93,7 @@
     <?php else: ?>
         <p>Aucun emprunt en retard.</p>
     <?php endif; ?>
-<?php else: ?>
-    <p>Utilisateur introuvable.</p>
+    <?php else: ?>
+    <div class="form-card"><p>Utilisateur introuvable.</p></div>
 <?php endif; ?>
+</div>

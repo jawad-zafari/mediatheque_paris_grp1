@@ -4,7 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($title) ? esc($title) . ' - ' . APP_NAME : APP_NAME; ?></title>
-    <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
+    <?php
+        $cssPath = PUBLIC_PATH . '/assets/css/style.css';
+        $ver = file_exists($cssPath) ? filemtime($cssPath) : (defined('APP_VERSION') ? APP_VERSION : time());
+    ?>
+    <link rel="stylesheet" href="<?php echo url('assets/css/style.css') . '?v=' . $ver; ?>">
+    <?php if (!empty($is_admin)): ?>
+        <?php
+            $adminCss = PUBLIC_PATH . '/assets/css/admin.css';
+            $adminVer = file_exists($adminCss) ? filemtime($adminCss) : $ver;
+        ?>
+        <link rel="stylesheet" href="<?php echo url('assets/css/admin.css') . '?v=' . $adminVer; ?>">
+    <?php endif; ?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Style */
@@ -64,7 +75,6 @@
                 <?php else: ?>
                     <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
                     <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
-                    <li><a href="<?php echo url('auth/forgot-password2'); ?>">Se déconnecter</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
