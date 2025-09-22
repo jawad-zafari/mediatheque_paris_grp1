@@ -84,7 +84,8 @@
                                 <td><?php echo htmlspecialchars($rental['return_date'] ? format_date($rental['return_date']) : ''); // Utilisation de format_date pour fuseau horaire utilisateur ?></td>
                                 <td>
                                     <?php
-                                    // Calcul du retard با استفاده از تاریخ واقعی بازگشت
+                                    // Calcul du retard en utilisant le rendement de la date réel
+
                                     $days_late = calculate_days_late($rental['return_date'], $rental['returned_at']);
                                     echo htmlspecialchars($days_late) . ' jours';
                                     ?>
@@ -107,7 +108,8 @@
         <section class="rentals-list">
             <h2 class="section-title">Historique des emprunts</h2>
             <?php
-            // Trier les emprunts بازگشت داده شده بر اساس تاریخ بازگشت (نوین در بالا)
+            // Tierrier Les Emprurts Retour en fonction de la date de retour (Novin on Top)
+
             usort($returned_rentals, function($a, $b) {
                 return strtotime($b['returned_at']) - strtotime($a['returned_at']);
             });
@@ -130,16 +132,16 @@
                         <?php foreach ($returned_rentals as $rental): ?>
                             <tr>
                                 <td>
-                                    <!-- Affichage de l'image à côté du titre با اندازه 40px -->
-                                    <img src="<?php echo htmlspecialchars($rental['image_url'] ?? ''); ?>" alt="<?php echo htmlspecialchars($rental[''] ?? ''); ?>" class="rental-image">
+                                    <!-- Affichage de l'image à côté du titre d'une taille de 40px -->
+                                     <img src="<?php echo htmlspecialchars($rental['image_url'] ?? ''); ?>" alt="<?php echo htmlspecialchars($rental[''] ?? ''); ?>" class="rental-image">
                                     <?php echo htmlspecialchars($rental['title'] ?? ''); ?>
                                 </td>
                                 <td><?php echo htmlspecialchars($rental['type'] == 'book' ? 'Livre' : ($rental['type'] == 'movie' ? 'Film' : ($rental['type'] == 'video_game' ? 'Jeu Vidéo' : ''))); ?></td>
-                                <td><?php echo htmlspecialchars($rental['rent_date'] ? format_date($rental['rent_date']) : ''); // Utilisation de format_date برای fuseau horaire کاربر ?></td>
-                                <td><?php echo htmlspecialchars($rental['returned_at'] ? format_date($rental['returned_at']) : ''); // Utilisation de format_date برای fuseau horaire کاربر ?></td>
+                                <td><?php echo htmlspecialchars($rental['rent_date'] ? format_date($rental['rent_date']) : ''); // Utilisation de Format_date pour Fuseau Horaire User ?></td>
+                                <td><?php echo htmlspecialchars($rental['returned_at'] ? format_date($rental['returned_at']) : ''); // Utilisation de Format_date Pour Fuseau Horaire User ?></td>
                                 <td>
                                     <?php
-                                    // محاسبه تأخیر با استفاده از تاریخ واقعی بازگشت
+                                    // Calculez le retard en utilisant la date réelle du retour
                                     $days_late = calculate_days_late($rental['return_date'], $rental['returned_at']);
                                     echo htmlspecialchars($days_late) . ' jours';
                                     ?>

@@ -122,8 +122,12 @@ function get_all_loans($overdue_only = false) {
         $where
         ORDER BY l.loan_date DESC
     ";
-    $loans = db_select($query); // ذخیره نتیجه در متغیر
-    return $loans; // بازگشت نتیجه
+    $loans = db_select($query); 
+    // Enregistrer le résultat dans la variable
+
+    return $loans; 
+    // Retourner le résultat
+
 }
 
 /**

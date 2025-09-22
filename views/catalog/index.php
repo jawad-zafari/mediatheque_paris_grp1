@@ -191,7 +191,7 @@
          </div>
         <section class="media-stats-section">
     <div class="media-stats-container">
-        <!-- باکس کتاب‌ها -->
+        <!-- Boîtes à livres -->
         <a href="<?php echo url('catalog/books'); ?>" class="media-stats-box media-stats-book-box">
             <div class="media-stats-content">
                 <h3>📚</h3>
@@ -203,7 +203,7 @@
             </div>
         </a>
 
-        <!-- باکس فیلم‌ها -->
+        <!-- Film -->
         <a href="<?php echo url('catalog/movies'); ?>" class="media-stats-box media-stats-film-box">
             <div class="media-stats-content">
                 <h3>🎬</h3>
@@ -215,7 +215,7 @@
             </div>
         </a>
 
-        <!-- باکس بازی‌ها -->
+        <!-- Jeux de boîte -->
         <a href="<?php echo url('catalog/games'); ?>" class="media-stats-box media-stats-game-box">
             <div class="media-stats-content">
                 <h3>🎮</h3>

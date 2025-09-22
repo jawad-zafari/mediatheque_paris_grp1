@@ -39,9 +39,9 @@ function catalog_index($search_term = '', $search_type = 'all', $search_genre = 
     $data = [
         'title' => 'Catalogue',
         'items' => $items,
-        'books' => $books, // Ajout برای afficher les livres
-        'movies' => $movies, // Ajout برای afficher les films
-        'games' => $games, // Ajout برای afficher les jeux vidéo
+        'books' => $books, // Ajout pour afficher les livres
+        'movies' => $movies, // Ajout pour afficher les films
+        'games' => $games, // Ajout pour afficher les jeux vidéo
         'books_count' => $books_count,
         'movies_count' => $movies_count,
         'video_games_count' => $video_games_count,

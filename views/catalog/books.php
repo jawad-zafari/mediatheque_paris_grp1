@@ -113,7 +113,7 @@
         echo '<span class="ellipsis">...</span>';
     }
     
-    // Afficher les pages autour de la page actuelle (سوای la page 1)
+// Afficher les pages autour de la page actuelle (sauf la page 1)
     $start_page = max(2, $current_page - 2);
     $end_page = min($total_pages, $current_page + 2);
     for ($i = $start_page; $i <= $end_page; $i++): ?>

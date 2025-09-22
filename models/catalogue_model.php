@@ -33,7 +33,7 @@ function get_all_video_games() {
 
 /**
  * Récupère l'id des docs
- * Commentaire: Fonction non utilisée dans la vue actuelle, حفظ شده برای سازگاری
+ * * Commentaire : Fonction non utilisée dans la vue actuelle, conservée pour des raisons de compatibilité
  */
 function get_id(){
     $query = "SELECT id FROM movies, books, video_games";
@@ -42,8 +42,8 @@ function get_id(){
 
 /**
  * Récupère les articles du catalogue en fonction du genre filtré
- * Commentaire: Fonction غیرفعال شده چون جست‌وجو حذف شده، اما برای سازگاری حفظ می‌شود
- */
+ * Commentaire : Fonction désactivée car la recherche a été supprimée, mais conservée pour des raisons de compatibilité
+ * */
 function get_articles_by_gender($gender) {    
     $query = "SELECT CONCAT('book_', id) AS id, title, writer AS author_director_publisher, ISBN13 AS isbn_rating_platform, gender AS genre, page_number AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'book' AS type, upload_date 
               FROM books WHERE gender = :gender_filter 
@@ -58,8 +58,8 @@ function get_articles_by_gender($gender) {
 
 /**
  * Récupère les articles du catalogue selon le filtre "stock"
- * Commentaire: Fonction غیرفعال شده چون جست‌وجو حذف شده، اما برای سازگاری حفظ می‌شود
- */
+ * Commentaire : Fonction désactivée car la recherche a été supprimée, mais conservée pour des raisons de compatibilité
+*/
 function get_articles_by_stock_all() {
     $query = "SELECT CONCAT('book_', id) AS id, title, writer AS author_director_publisher, ISBN13 AS isbn_rating_platform, gender AS genre, page_number AS pages_duration_min_age, synopsis AS description, year, available, stock, image_url, 'book' AS type, upload_date FROM books
               UNION
@@ -118,15 +118,15 @@ function get_books_stock() {
 
 /**
  * Compte le stock total disponible برای les films
- * Commentaire: Fonction extraite du dashboard admin برای les statistiques
+ * Commentaire: Fonction extraite du dashboard admin pour les statistiques
  */
 function get_movies_stock() {
     return db_select_one("SELECT SUM(stock) as total_stock FROM movies")['total_stock'] ?? 0;
 }
 
 /**
- * Compte le stock total disponible برای les jeux vidéo
- * Commentaire: Fonction extraite du dashboard admin برای les statistiques
+ * Compte le stock total disponible pour les jeux vidéo
+ * Commentaire: Fonction extraite du dashboard admin pour les statistiques
  */
 function get_video_games_stock() {
     return db_select_one("SELECT SUM(stock) as total_stock FROM video_games")['total_stock'] ?? 0;

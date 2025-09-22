@@ -23,7 +23,7 @@ $type = $resolved_type ?? ($media['media_type'] ?? ($_POST['type'] ?? ($_GET['ty
     <label>Genre:</label>
     <input type="text" name="genre" value="<?php echo htmlspecialchars($media['genre'] ?? ''); ?>" required> <!-- Fix: genre -->
     
-    <label>Stock (تعداد نسخه‌ها):</label>
+    <label>Stock (Nombre de versions):</label>
     <input type="number" name="stock" value="<?php echo $media['stock'] ?? 1; ?>" min="1" required>
     
     <?php if ($type === 'book' || $type === 'livre'): ?>

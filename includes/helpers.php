@@ -163,8 +163,7 @@ function get($key, $default = null)
 }
 
 /**
- * Vérifie سی un utilisateur است connecté
- */
+* Vérifiez qu'un utilisateur est connecté */
 function is_logged_in()
 {
     // ✅ ajout expiration session 2h

@@ -283,14 +283,17 @@ carousels.forEach(carousel => {
 
     // شروع درگ
     carousel.addEventListener('mousedown', e => {
-        e.preventDefault(); // جلوگیری از رفتار پیش‌فرض (مثل drag تصاویر)
+        e.preventDefault(); // Empêcher le comportement par défaut (comme les images de glisser)
+
         isDragging = true;
-        carousel.classList.add('active'); // برای تغییر cursor به grabbing
+        carousel.classList.add('active'); // Pour changer le curseur en saisie
+
         startX = e.pageX - carousel.offsetLeft;
         scrollLeft = carousel.scrollLeft;
     });
 
-    // توقف درگ
+    // Arrêter de traîner
+
     document.addEventListener('mouseup', () => {
         isDragging = false;
         carousel.classList.remove('active');

@@ -71,7 +71,7 @@ hr {
     max-width: 1200px;
     color: #bcbcbc;
 }
-/* استایل بخش آمار رسانه‌ها */
+/* Style de statistiques médiatiques */
 .media-stats-section {
     padding: 20px;
     /* background-color: #FFFFFF; */
@@ -98,7 +98,7 @@ hr {
     color: inherit;
     transition: all 0.3s ease;
     width: 30%;
-    text-align: left; /* متن سمت چپ */
+    text-align: left; /* Texte gauche */
 }
 
 .media-stats-box:hover {
@@ -108,7 +108,7 @@ hr {
 }
 
 .media-stats-icon {
-    margin-right: 15px; /* فاصله از متن */
+    margin-right: 15px; /* La distance du texte */
 }
 
 .media-stats-content {
@@ -141,7 +141,7 @@ hr {
     margin-top: 10px;
 }
 
-/* استایل‌های خاص برای هر باکس (اختیاری) */
+/* Styles spéciaux pour chaque boîte (facultatif) catalogue */
 .media-stats-film-box:hover .media-stats-content h3 {
     color: #ff0303;
 }
@@ -712,13 +712,13 @@ background-blend-mode: screen;
     padding: 1rem 0;
     border-radius: 5px;
     /* background: rgba(238, 247, 107, 0.178); */
-    /* جهت: از گوشه بالا-چپ به پایین-راست */
+    /* Direction: des croustilles supérieures supérieures à l'ascendance */
 background: linear-gradient(135deg,
-  #07121A 0%,    /* خیلی تیره (پس‌زمینه کتاب‌ها) */
-  #004A5F 25%,   /* فیروزه‌ای تیره */
-  #00B3C6 45%,   /* فیروزه‌ای روشن (نور اصلی) */
-  #FF6A3D 70%,   /* نارنجی-گرم (هاله‌های نور) */
-  #7A3E1D 100%   /* قهوه‌ای چرم */
+  #07121A 0%,    
+  #004A5F 25%,  
+  #00B3C6 45%,   
+  #FF6A3D 70%,   
+  #7A3E1D 100%   
 );
     backdrop-filter: blur(50%);
 /* background: linear-gradient(to right, #028378, #532301); */
@@ -1023,7 +1023,7 @@ font-weight: 400;
     cursor: grab;
 }
 .carousel-container:active {
-  cursor: grabbing; /* نشانگر ماوس به شکل دست بسته هنگام درگ */
+  cursor: grabbing; /* Marqueur de souris sous la forme d'une main fermée lorsque vous faites glisser */
 }
 
 /* Cartes d'objets - Améliorées */
@@ -1043,7 +1043,7 @@ font-weight: 400;
     min-height: 420px; /* Hauteur fixe pour toutes les cartes */
 }
 .carousel-item a {
-  pointer-events: auto; /* فعال کردن کلیک روی دکمه‌ها */
+  pointer-events: auto; /* Activer Cliquez sur les boutons */
 }
 .carousel-item img {
     width: 300px;

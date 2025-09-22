@@ -108,8 +108,8 @@
     <a href="<?php echo url('catalog/movies?page=1&search_term=' . urlencode($search_term) . '&genre=' . ($search_genre ?? 'all') . '&availability=' . ($search_availability ?? 'all')); ?>" class="page-number <?php echo $current_page == 1 ? 'active' : ''; ?>">1</a>
     
     <?php
-    // Si la page actuelle است supérieure à 3, afficher le signe ...
-    if ($current_page > 3) {
+// Si la page courante est supérieure à 3, afficher le signe...    
+   if ($current_page > 3) {
         echo '<span class="ellipsis">...</span>';
     }
 

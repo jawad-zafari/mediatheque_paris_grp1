@@ -58,7 +58,7 @@ function admin_media_list()
 
 function admin_media_edit($id = null)
 {
-    // Vérifie les droits د'administrateur
+// Vérifie les droits d'administrateur   
     require_admin();
     // Initialisation de la variable média
     $media = null;
@@ -315,7 +315,7 @@ function admin_media_delete($id, $type)
 // ----------------- GESTION DES UTILISATEURS -----------------
 function admin_users_list()
 {
-    // Vérifie les droits د'administrateur
+// Vérifie les droits d'administrateur    
     require_admin();
     // Récupère tous les utilisateurs
     $users = get_all_users();
@@ -405,7 +405,7 @@ function admin_user_update_role($id)
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list()
 {
-    // Vérifie les droits د'administrateur
+// Vérifie les droits d'administrateur    
     require_admin();
     // Récupère tous les emprunts
     $loans = get_all_loans();
@@ -415,7 +415,7 @@ function admin_loans_list()
 
 function admin_loan_return($loan_id)
 {
-    // Vérifie les droits د'administrateur
+// Vérifie les droits d'administrateur   
     require_admin();
     // Only allow POST and verify CSRF
     if (!is_post()) {
@@ -440,7 +440,7 @@ function admin_loan_return($loan_id)
 
 function admin_loan_create($user_id, $media_id, $media_type)
 {
-    // Vérifie les droits د'administrateur
+// Vérifie les droits d'administrateur   
     require_admin();
     // Only allow POST and verify CSRF
     if (!is_post()) {
