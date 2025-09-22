@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const genreFilter = document.getElementById('genre');
     const availabilityFilter = document.getElementById('availability');
 
-    // گوش دادن به رویدادها
+   //écoute les événements
     if (searchInput && searchButton && typeFilter && genreFilter && availabilityFilter) {
         searchInput.addEventListener('input', filterItems);
         searchButton.addEventListener('click', filterItems);
@@ -18,10 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         genreFilter.addEventListener('change', filterItems);
         availabilityFilter.addEventListener('change', filterItems);
 
-        // فیلتر اولیه هنگام بارگذاری صفحه
+       //Filtre initial lors du chargement de la page
         filterItems();
     }
-
     // Gestion des messages flash avec auto-hide
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(function(alert) {
@@ -52,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Smooth scroll pour les ancres (به جز لینک‌های مودال)
+   //Smooth Scroll vers les ancres (sauf pour les liens modaux)
     const anchors = document.querySelectorAll('a[href^="#"]:not(.btn-detail):not(.btn-back)');
     anchors.forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
@@ -239,7 +238,7 @@ function ajax(url, options = {}) {
 }
 
 /**
- * فیلتر کردن آیتم‌ها
+ *Filtrage des articles
  */
 function filterItems() {
     const searchInput = document.getElementById('searchInput');
@@ -275,5 +274,45 @@ function filterItems() {
         });
     });
 }
+//CARCELS GESTION (pour tous les contaps de carrousel)
+const carousels = document.querySelectorAll('.carousel-container');
+carousels.forEach(carousel => {
+    let isDragging = false;
+    let startX;
+    let scrollLeft;
 
-// End of file
+    // شروع درگ
+    carousel.addEventListener('mousedown', e => {
+        e.preventDefault(); // جلوگیری از رفتار پیش‌فرض (مثل drag تصاویر)
+        isDragging = true;
+        carousel.classList.add('active'); // برای تغییر cursor به grabbing
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+    });
+
+    // توقف درگ
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        carousel.classList.remove('active');
+    });
+
+    //stop drag during mouse exit
+    document.addEventListener('mouseleave', () => {
+        isDragging = false;
+        carousel.classList.remove('active');
+    });
+
+    // Le mouvement de Carusol quand traîner
+
+
+    carousel.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2; //Coefficient 2 pour la vitesse de défilement
+        carousel.scrollLeft = scrollLeft - walk;
+    });
+
+//Empêcher le texte ou les images de sélectionner
+    carousel.addEventListener('selectstart', e => e.preventDefault());
+});
