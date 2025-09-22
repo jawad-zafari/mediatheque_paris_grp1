@@ -4,7 +4,7 @@
 /* Container and header */
 .admin-container { box-sizing: border-box; padding: 1rem; margin: 1.25rem auto; max-width: 1100px; }
 .admin-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 0.75rem; }
-.admin-header h1 { margin:0; font-size:1.25rem; color:var(--primary-color); }
+.admin-header h1 { margin:0; font-size:1.25rem; color:white; }
 .admin-actions { display:flex; gap:8px; align-items:center; }
 
 /* Flash */
@@ -30,9 +30,10 @@
 
 /* Ensure simple forms (loan_edit) use consistent spacing */
 .admin-container h1 { margin-bottom: 0.75rem; }
-.admin-container p { margin-bottom: 0.6rem; color:var(--text-color); }
-.admin-container table { width:100%; border-collapse:collapse; }
-.admin-container table th, .admin-container table td { padding:10px; border-bottom:1px solid var(--border-color); }
+.admin-container p { margin-bottom: 0.6rem; color:white; }
+.admin-container table { width:100%; border-collapse:collapse;}
+.admin-container table th, .admin-container table td { padding:10px; border-bottom:1px solid var(--border-color); 
+color: #ffffff;}
 .admin-container .btn { margin-right:8px; }
 
 /* Buttons & icons */
@@ -49,15 +50,16 @@
 .cover-thumb { width:100px; height:140px; object-fit:cover; border-radius:6px; }
 .admin-table { width:100%; border-collapse:collapse; }
 .admin-table thead { display:none; }
-.admin-table tbody tr { display:block; background:var(--white); border-radius:8px; padding:12px; margin-bottom:12px; box-shadow:var(--shadow); border:1px solid var(--border-color); }
+.admin-table tbody tr { display:block; background:black; border-radius:8px; padding:12px; margin-bottom:12px; box-shadow:var(--shadow); border:1px solid var(--border-color); }
 .admin-table td { display:flex; gap:8px; align-items:center; justify-content:space-between; padding:6px 0; }
 .admin-table td .cell-left { display:flex; gap:12px; align-items:center; flex:1; }
 .admin-table td .label { display:block; color:var(--secondary-color); font-weight:700; min-width:90px; }
 
 /* Dashboard */
 .stat-grid { display:grid; grid-template-columns:repeat(1,1fr); gap:12px; }
-.stat-card { background:var(--white); padding:12px; border-radius:8px; box-shadow:var(--shadow); text-align:center; }
-.bar-track { background: var(--background-color); border-radius:6px; padding:4px; width: 100%; max-width:220px; }
+.stat-card { background:rgba(255, 255, 255, 0.199); padding:12px; border-radius:8px; box-shadow:var(--shadow); text-align:center; }
+.bar-track { background: var(--background-color)
+    ; border-radius:6px; padding:4px; width: 100%; max-width:220px; }
 .bar { height:16px; border-radius:4px; display:block; }
 
 @media (min-width: 900px) {
