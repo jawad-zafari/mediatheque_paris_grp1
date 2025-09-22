@@ -43,6 +43,7 @@ function get_dashboard_stats() {
 }
 
 
+
 /**
  * Récupère tous les médias
  */
@@ -138,8 +139,10 @@ function create_media($type, $data)
                 $data['year'] ?? 0,
                 $data['genre'] ?? '',
 
+
                 // Accept either duration_m (from form) or duration
                 $data['duration_m'] ?? $data['duration'] ?? 0,
+
 
                 $data['synopsis'] ?? '',
                 $data['classification'] ?? '',
@@ -155,12 +158,14 @@ function create_media($type, $data)
                 $data['title'],
                 $data['editor'] ?? '',
 
+
                 // Accept key 'platform' from form but DB column is 'plateform'
                 $data['platform'] ?? $data['plateform'] ?? '',
                 $data['genre'] ?? '',
                 $data['min_age'] ?? 0,
                 // Map 'synopsis' (form) to DB 'description'
                 $data['synopsis'] ?? $data['description'] ?? '',
+
 
                 $data['year'] ?? 0,
                 $data['stock'] ?? 1,
@@ -205,6 +210,7 @@ function update_media($id, $type, $data)
                 $data['year'] ?? 0,
                 $data['genre'] ?? '',
 
+
                 $data['duration_m'] ?? $data['duration'] ?? 0,
 
                 $data['synopsis'] ?? '',
@@ -221,10 +227,12 @@ function update_media($id, $type, $data)
                 $data['title'],
                 $data['editor'] ?? '',
 
+
                 $data['platform'] ?? $data['plateform'] ?? '',
                 $data['genre'] ?? '',
                 $data['min_age'] ?? 0,
                 $data['synopsis'] ?? $data['description'] ?? '',
+
 
                 $data['year'] ?? 0,
                 $data['stock'] ?? 1,

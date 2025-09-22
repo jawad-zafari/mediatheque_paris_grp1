@@ -15,8 +15,9 @@
     <section class="container">
         <section class="banner">
             <section class="hero-banner">
+                <div class="hero-content">
                 <h1>Catalogue de la Médiathèque</h1>
-                <p class="hero-subtitle">Découvrez notre collection de médias organisée par catégorie</p>
+                <p class="hero-subtitle">Découvrez notre collection de médias organisée par catégorie !</p>
                         <!-- Formulaire de recherche -->
         <section class="search-filters">
             <form method="GET" action="<?php echo url('catalog/index'); ?>">
@@ -66,6 +67,8 @@
                 </div>
             </form>
         </section>
+        </div>
+            </section>
 
         <!-- Résultats de recherche -->
         <!-- Commentaire: Afficher les résultats uniquement si une recherche est effectuée, avec séparation par type (Livres, Films, Jeux Vidéo) -->
@@ -100,6 +103,7 @@
                                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?>">
                                         <h3><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
                                         <p><?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
+                                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                                         <div class="carousel-actions">
                                             <!-- Commentaire: Afficher le bouton Emprunter si stock > 0 -->
                                             <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
@@ -126,6 +130,7 @@
                                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?>">
                                         <h3><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
                                         <p><?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
+                                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                                         <div class="carousel-actions">
                                             <!-- Commentaire: Afficher le bouton Emprunter si stock > 0 -->
                                             <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
@@ -152,6 +157,7 @@
                                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?>">
                                         <h3><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
                                         <p><?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
+                                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                                         <div class="carousel-actions">
                                             <!-- Commentaire: Afficher le bouton Emprunter si stock > 0 -->
                                             <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
@@ -170,11 +176,67 @@
         </section>
             </section>
         </section>
-            <h1>Derniers médias ajoutés</h1>
+         <section class="getting-started">
+            <h2>Prêt à découvrir de nouveaux médias ?</h2>
+            <h4>Parcourez notre catalogue complet et trouvez votre prochaine lecture, film ou jeu préféré.</h4>
+            <div class="steps">
+                <div class="step">1. Inscription</div>
+                <div class="step">2. Recherches</div>
+                <div class="step">3. Emprunts</div>
+            </div>
+        </section>
+         <div class="catalog-nouveautes" data-section="nouveautes">
+        <h2>Notre collection!</h2>
+            <h4>Explorez nos médias par catégorie !</h4>
+         </div>
+        <section class="media-stats-section">
+    <div class="media-stats-container">
+        <!-- باکس کتاب‌ها -->
+        <a href="<?php echo url('catalog/books'); ?>" class="media-stats-box media-stats-book-box">
+            <div class="media-stats-content">
+                <h3>📚</h3>
+                <h3>Livres</h3>
+                <h5>Titres variés</h5>
+                <p><?php echo htmlspecialchars($books_count ?? 0) . ' livres'; ?></p>
+                <p>Disponibles: <?php echo htmlspecialchars($books_stock ?? 0); ?></p>
+                <hr class="media-stats-divider">
+            </div>
+        </a>
+
+        <!-- باکس فیلم‌ها -->
+        <a href="<?php echo url('catalog/movies'); ?>" class="media-stats-box media-stats-film-box">
+            <div class="media-stats-content">
+                <h3>🎬</h3>
+                <h3>Films</h3>
+                <h5>Cinéma mondial</h5>
+                <p><?php echo htmlspecialchars($movies_count ?? 0) . ' films'; ?></p>
+                <p>Disponibles: <?php echo htmlspecialchars($movies_stock ?? 0); ?></p>
+                <hr class="media-stats-divider">
+            </div>
+        </a>
+
+        <!-- باکس بازی‌ها -->
+        <a href="<?php echo url('catalog/games'); ?>" class="media-stats-box media-stats-game-box">
+            <div class="media-stats-content">
+                <h3>🎮</h3>
+                <h3>Jeux Vidéo</h3>
+                <h5>Divertissement numérique</h5>
+                <p><?php echo htmlspecialchars($video_games_count ?? 0) . ' jeux'; ?></p>
+                <p>Disponibles: <?php echo htmlspecialchars($video_games_stock ?? 0); ?></p>                <hr class="media-stats-divider">
+            </div>
+        </a>
+    </div>
+</section>
+<hr>
+        <!-- Section des nouveautés -->
+        <div class="catalog-nouveautes" data-section="nouveautes">
+        <h2>Dernières nouveautés!</h2>
+            <h4>Les derniers ajouts à notre collection !</h4>
+         </div>
         <!-- Section des livres -->
         <!-- Commentaire: Section avec scroll horizontal pour les livres -->
         <div class="catalog-section" data-section="livre">
-        <h2>Derniers livres ajoutés</h2>
+        <h2>Nouveaux livres</h2>
             <div class="carousel-container">
                 <?php if (!empty($books)): ?>
                     <?php foreach ($books as $item): ?>
@@ -205,7 +267,7 @@
         <!-- Section des films -->
         <!-- Commentaire: Section avec scroll horizontal pour les films -->
         <div class="catalog-section" data-section="film">
-            <h2>Derniers films ajoutés</h2>
+            <h2>Nouveaux films</h2>
             <div class="carousel-container">
                 <?php if (!empty($movies)): ?>
                     <?php foreach ($movies as $item): ?>
@@ -236,7 +298,7 @@
         <!-- Section des jeux vidéo -->
         <!-- Commentaire: Section avec scroll horizontal pour jeux vidéo -->
         <div class="catalog-section" data-section="jeu">
-            <h2>Derniers jeux vidéo ajoutés</h2>
+            <h2>Nouveaux jeux vidéo</h2>
             <div class="carousel-container">
                 <?php if (!empty($games)): ?>
                     <?php foreach ($games as $item): ?>
@@ -264,7 +326,7 @@
             <a href="<?php echo url('catalog/games'); ?>" class="btn btn-view-all">Tout voir!</a>
         </div>
 
-        <!-- Menu déroulant (modal) pour les détails de chaque élément -->
+        <!--(modal) pour les détails de chaque élément -->
         <?php foreach (array_merge($books ?? [], $movies ?? [], $games ?? []) as $item): ?>
             <!-- Commentaire: Vérifier l'existence des clés pour éviter les erreurs null -->
             <?php if (isset($item['id']) && !empty($item['id'])): ?>
@@ -302,16 +364,6 @@
             </div>
             <?php endif; ?>
         <?php endforeach; ?>
-
-        <section class="getting-started">
-            <h2>Commencez</h2>
-            <div class="steps">
-                <div class="step">1. Inscription</div>
-                <div class="step">2. Recherches</div>
-                <div class="step">3. Emprunts</div>
-            </div>
-        </section>
-
         <!-- Élément caché pour éviter le saut de page -->
         <div id="close-modal" style="display: none;"></div>
     </section>

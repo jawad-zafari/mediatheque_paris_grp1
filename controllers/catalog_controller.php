@@ -23,25 +23,37 @@ function catalog_index($search_term = '', $search_type = 'all', $search_genre = 
 
     // Rechercher les items selon les filtres
     $items = search_items($search_term, $search_type, $search_genre, $search_availability);
-    
-    // Charger les données initiales pour les sections livres, films et jeux vidéo
+    // Charger les données initiales برای les sections livres, films و jeux vidéo
     $books = get_all_books();
     $movies = get_all_movies();
     $games = get_all_video_games();
+    // Charger les données initiales pour les sections livres, films et jeux vidéo
+        // Récupérer les statistiques از fonctions du dashboard admin
+    $books_count = get_books_count();
+    $movies_count = get_movies_count();
+    $video_games_count = get_video_games_count();
+    $books_stock = get_books_stock();
+    $movies_stock = get_movies_stock();
+    $video_games_stock = get_video_games_stock();
 
     $data = [
         'title' => 'Catalogue',
         'items' => $items,
-        'books' => $books, // Ajout pour afficher les livres
-        'movies' => $movies, // Ajout pour afficher les films
+        'books' => $books, // Ajout برای afficher les livres
+        'movies' => $movies, // Ajout برای afficher les films
         'games' => $games, // Ajout برای afficher les jeux vidéo
+        'books_count' => $books_count,
+        'movies_count' => $movies_count,
+        'video_games_count' => $video_games_count,
+        'books_stock' => $books_stock,
+        'movies_stock' => $movies_stock,
+        'video_games_stock' => $video_games_stock,
         'is_searching' => !empty($search_term) || $search_type != 'all' || $search_genre != 'all' || $search_availability != 'all',
         'search_term' => $search_term,
         'search_type' => $search_type,
         'search_genre' => $search_genre,
         'search_availability' => $search_availability
     ];
-
     // Charger la vue du catalogue avec les données
     load_view_with_layout('catalog/index', $data);
 }

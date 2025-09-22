@@ -12,11 +12,10 @@
 </head>
 <body>
     <section class="container">
-        <section class="banner">
+        <section class="banner_media">
             <section class="hero-banner">
                 <h1>Catalogue des Jeux Vidéo</h1>
                 <p class="hero-subtitle">Découvrez notre collection de jeux vidéo</p>
-            </section>
         </section>
 <!-- Début de la section des filtres de recherche pour la page des jeux vidéo -->
 <section class="search-filters">
@@ -68,6 +67,7 @@
             </div>
         </div>
     </form>
+            </section>
 </section>
 <!-- Fin de la section des filtres de recherche -->
         <div class="grid-container">
@@ -78,11 +78,9 @@
                     <div class="item">
                         <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
                         <h3><?php echo htmlspecialchars($item['title']); ?></h3>
-                        <p>Éditeur : <?php echo htmlspecialchars($item['author_director_publisher']); ?></p>
+                        <p><?php echo htmlspecialchars($item['author_director_publisher']); ?></p>
                         <p>Plate-forme : <?php echo htmlspecialchars($item['isbn_rating_platform']); ?></p>
-                        <p>Âge minimum : <?php echo htmlspecialchars($item['pages_duration_min_age']); ?></p>
-                        <p>Statut : <?php echo $item['stock'] > 0 ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
-
+                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                         <div class="item-buttons">
                             <a href="#item-<?php echo $item['id']; ?>" class="btn btn-detail">Détails</a>
                             <?php if ($item['stock'] > 0): ?>
@@ -152,7 +150,7 @@
                         <p>Éditeur : <?php echo htmlspecialchars($item['author_director_publisher'] ?? 'N/A'); ?></p>
                         <p>Plate-forme : <?php echo htmlspecialchars($item['isbn_rating_platform'] ?? 'N/A'); ?></p>
                         <p>Âge minimum : <?php echo htmlspecialchars($item['pages_duration_min_age'] ?? 'N/A'); ?></p>
-                        <p>Statut : <?php echo $item['stock'] > 0 ? 'Disponible' : 'Emprunté'; ?> | Stock : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
+                        <p><?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?> : <?php echo htmlspecialchars($item['stock'] ?? '0'); ?></p>
                         <div>
                             <?php if ($item['stock'] > 0): ?>
                                 <a href="<?php echo url('rental/rent/' . $item['id']); ?>" target="rental_tab" class="btn btn-rent">Emprunter</a>

@@ -80,18 +80,18 @@ function create_rental($user_id, $item_id) {
     try {
         // Définit les dates de l'emprunt avec heure précise incluant secondes (14 jours)
         $loan_date = date('Y-m-d H:i:s');
-        $return_date = date('Y-m-d H:i:s', strtotime('+14 days', strtotime($loan_date)));
+        $return_date = date('Y-m-d', strtotime('+14 days', strtotime($loan_date))); // Date de retour prévue (seulement la date, sans heure)
         $query = "INSERT INTO loans (user_id, media_id, media_type, loan_date, return_date) VALUES (?, ?, ?, ?, ?)";
-        $result = db_execute($query, [$user_id, $pure_id, $media_type, $loan_date, $return_date]);
+        db_execute($query, [$user_id, $pure_id, $media_type, $loan_date, $return_date]);
         
-        // Met à jour la disponibilité du média
+        // Diminue la disponibilité du média
         $table = ($media_type == 'book') ? 'books' : (($media_type == 'movie') ? 'movies' : 'video_games');
         $update_query = "UPDATE $table SET stock = stock - 1 WHERE id = ?";
         db_execute($update_query, [$pure_id]);
         
         db_commit();
         error_log("Rental created successfully for user_id: $user_id, item_id: $item_id");
-        return ['success' => true, 'error' => null];
+        return ['success' => true, 'error' => null, 'return_date' => $return_date]; // Retourne la date de retour pour l'utiliser dans le message
     } catch (Exception $e) {
         db_rollback();
         error_log("Error creating rental: " . $e->getMessage());

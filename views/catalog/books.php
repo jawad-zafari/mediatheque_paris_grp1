@@ -12,12 +12,11 @@
 </head>
 <body>
     <section class="container">
-        <section class="banner">
+        <section class="banner_media">
             <section class="hero-banner">
                 <h1>Catalogue des Livres</h1>
                 <p class="hero-subtitle">Découvrez notre collection de livres</p>
             </section>
-        </section>
 <!-- Début de la section des filtres de recherche pour la page des livres -->
 <section class="search-filters">
     <!-- Formulaire de recherche avec méthode GET pour envoyer les paramètres à catalog/books -->
@@ -69,6 +68,7 @@
             </div>
         </div>
     </form>
+</section>
 </section>
 <!-- Fin de la section des filtres de recherche -->
         <div class="grid-container">
