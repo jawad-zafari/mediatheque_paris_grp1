@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * -----------------------------
  * FONCTIONS POUR LE TABLEAU DE BORD
@@ -136,8 +137,10 @@ function create_media($type, $data)
                 $data['producer'] ?? '',
                 $data['year'] ?? 0,
                 $data['genre'] ?? '',
+
                 // Accept either duration_m (from form) or duration
                 $data['duration_m'] ?? $data['duration'] ?? 0,
+
                 $data['synopsis'] ?? '',
                 $data['classification'] ?? '',
                 $data['stock'] ?? 1,
@@ -151,12 +154,14 @@ function create_media($type, $data)
             return $stmt->execute([
                 $data['title'],
                 $data['editor'] ?? '',
+
                 // Accept key 'platform' from form but DB column is 'plateform'
                 $data['platform'] ?? $data['plateform'] ?? '',
                 $data['genre'] ?? '',
                 $data['min_age'] ?? 0,
                 // Map 'synopsis' (form) to DB 'description'
                 $data['synopsis'] ?? $data['description'] ?? '',
+
                 $data['year'] ?? 0,
                 $data['stock'] ?? 1,
                 1,
@@ -199,7 +204,9 @@ function update_media($id, $type, $data)
                 $data['producer'] ?? '',
                 $data['year'] ?? 0,
                 $data['genre'] ?? '',
+
                 $data['duration_m'] ?? $data['duration'] ?? 0,
+
                 $data['synopsis'] ?? '',
                 $data['classification'] ?? '',
                 $data['stock'] ?? 1,
@@ -213,10 +220,12 @@ function update_media($id, $type, $data)
             return $stmt->execute([
                 $data['title'],
                 $data['editor'] ?? '',
+
                 $data['platform'] ?? $data['plateform'] ?? '',
                 $data['genre'] ?? '',
                 $data['min_age'] ?? 0,
                 $data['synopsis'] ?? $data['description'] ?? '',
+
                 $data['year'] ?? 0,
                 $data['stock'] ?? 1,
                 $data['image_url'] ?? '',
