@@ -20,41 +20,42 @@
 </head>
 <body>
     <?php if (!isset($hide_nav)): ?>  <!-- Masquer le header si $hide_nav est défini -->
-    <header class="header">
-       <nav class="navbar">
-            <div class="nav-brand"><a href="<?php echo url(); ?>"><?php echo APP_NAME; ?></a></div>
+   <?php if (!isset($hide_nav)): ?>
+<header class="header">
+    <nav class="navbar">
+        <div class="nav-brand"><a href="<?php echo url(); ?>"><?php echo APP_NAME; ?></a></div>
         <input type="checkbox" id="menu-toggle" class="menu-toggle">
         <label for="menu-toggle" class="hamburger">
             <span></span>
             <span></span>
             <span></span>
         </label>
-            <ul class="nav-menu">
-            <li><a href="<?php echo url(); ?>">Accueil</a></li>
-            <li><a href="<?php echo url('catalog/index'); ?>">Catalogue</a></li>
+        <ul class="nav-menu">
             <li><a class="nav-link" href="<?php echo url('rental/my_rentals'); ?>" target="rental_tab">Mes Emprunts</a></li>
             <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
             <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
-                <?php if (is_logged_in()): ?>
-                    <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-            <li class="dropdown-container">
-            <a href="<?php echo url('admin/dashboard'); ?>">Administration <i class="fas fa-chevron-down"></i></a>
-            <ul class="dropdown">
-            <li><a href="<?php echo url('admin/media'); ?>">Gestion des médias</a></li>
-            <li><a href="<?php echo url('admin/users'); ?>">Gestion des utilisateurs</a></li>
-            <li><a href="<?php echo url('admin/loans'); ?>">Gestion des emprunts</a></li>
-            <li><a href="<?php echo url('admin/dashboard'); ?>">Tableau de bord</a></li>
-            </ul>
-            </li>
-                    <?php endif; ?>
-                    <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
-                <?php else: ?>
-                    <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
-                    <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
+            
+            <?php if (is_logged_in()): ?>
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                    <li class="dropdown-container">
+                        <a href="<?php echo url('admin/dashboard'); ?>">Administration <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="<?php echo url('admin/media'); ?>">Gestion des médias</a></li>
+                            <li><a href="<?php echo url('admin/users'); ?>">Gestion des utilisateurs</a></li>
+                            <li><a href="<?php echo url('admin/loans'); ?>">Gestion des emprunts</a></li>
+                            <li><a href="<?php echo url('admin/dashboard'); ?>">Tableau de bord</a></li>
+                        </ul>
+                    </li>
                 <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
+                <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
+            <?php else: ?>
+                <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
+                <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+</header>
+<?php endif; ?>
     <?php endif; ?>
 
     <main class="main-content">
