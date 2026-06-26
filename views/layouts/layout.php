@@ -37,20 +37,24 @@
             
             <?php if (is_logged_in()): ?>
                 <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                    <li class="dropdown-container">
-                        <a href="<?php echo url('admin/dashboard'); ?>">Administration <i class="fas fa-chevron-down"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="<?php echo url('admin/media'); ?>">Gestion des médias</a></li>
-                            <li><a href="<?php echo url('admin/users'); ?>">Gestion des utilisateurs</a></li>
-                            <li><a href="<?php echo url('admin/loans'); ?>">Gestion des emprunts</a></li>
-                            <li><a href="<?php echo url('admin/dashboard'); ?>">Tableau de bord</a></li>
-                        </ul>
+                    <li>
+                        <a href="<?php echo url('admin/dashboard'); ?>" title="Administration">
+                            <i class="fas fa-cog fa-2x"></i>
+                        </a>
                     </li>
                 <?php endif; ?>
-                <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
+                
+                <li>
+                    <a href="<?php echo url('home/profile'); ?>" title="Mon Profil">
+                        <i class="fas fa-user-circle fa-2x"></i>
+                    </a>
+                </li>
             <?php else: ?>
-                <li><a href="<?php echo url('auth/login'); ?>">Connexion</a></li>
-                <li><a href="<?php echo url('auth/register'); ?>">Inscription</a></li>
+                <li>
+                    <a href="<?php echo url('auth/login'); ?>" title="Connexion">
+                        <i class="far fa-user-circle fa-2x"></i>
+                    </a>
+                </li>
             <?php endif; ?>
         </ul>
     </nav>
