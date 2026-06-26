@@ -16,4 +16,16 @@ function home_contact() {
     ];
     load_view_with_layout('home/contact', $data);
 }
+
+function home_profile() {
+    if (!is_logged_in()) {
+        redirect('auth/login');
+    }
+    
+    $data = [
+        'title' => 'Mon Profil'
+    ];
+    load_view_with_layout('home/profile', $data);
+}
+
 ?>
