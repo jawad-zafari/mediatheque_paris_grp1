@@ -9,13 +9,16 @@ function parse_request_url()
     $url = $_GET['url'] ?? '';
     $url = rtrim($url, '/');
     $url = filter_var($url, FILTER_SANITIZE_URL);
+    
     if (empty($url)) {
-        return ['controller' => 'home', 'action' => 'index', 'params' => []];
+        // catalogue
+        return ['controller' => 'catalog', 'action' => 'index', 'params' => []];
     }
 
     $url_parts = explode('/', $url);
 
-    $controller = $url_parts[0] ?? 'home';
+// catalog    
+    $controller = $url_parts[0] ?? 'catalog';
     $action = $url_parts[1] ?? 'index';
     $params = array_slice($url_parts, 2);
 
