@@ -17,59 +17,35 @@
         <link rel="stylesheet" href="<?php echo url('assets/css/admin.css') . '?v=' . $adminVer; ?>">
     <?php endif; ?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Style */
-        .nav-menu { position: relative; }
-        .dropdown { 
-            display: none; 
-            position: absolute; 
-            top: 100%; 
-            right: 0; 
-            background: #f8f9fa; 
-            min-width: 200px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
-            z-index: 1000; 
-            border-radius: 5px; 
-        }
-        .dropdown li { margin: 0; }
-        .dropdown a { 
-            display: block; 
-            padding: 10px 15px; 
-            color: #333; 
-            text-decoration: none; 
-        }
-        .dropdown a:hover { background: #e9ecef; }
-        /* Affichage du dropdown au survol */
-        .dropdown-container:hover .dropdown { display: block; }
-    </style>
 </head>
 <body>
     <?php if (!isset($hide_nav)): ?>  <!-- Masquer le header si $hide_nav est défini -->
     <header class="header">
-        <nav class="navbar">
-            <div class="nav-brand">
-                <a href="<?php echo url(); ?>"><?php echo APP_NAME; ?></a>
-            </div>
+       <nav class="navbar">
+            <div class="nav-brand"><a href="<?php echo url(); ?>"><?php echo APP_NAME; ?></a></div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
             <ul class="nav-menu">
-                <li><a href="<?php echo url(); ?>">Accueil</a></li>
-                <li><a href="<?php echo url('catalog/index'); ?>">Catalogue</a></li>
-                <li class="nav-item">
-    <a class="nav-link" href="<?php echo url('rental/my_rentals'); ?>" target="rental_tab">Mes Emprunts</a>
-</li>
-                <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
-                <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
-                <li><a href="<?php echo url('home/upload'); ?>">Upload</a></li>
+            <li><a href="<?php echo url(); ?>">Accueil</a></li>
+            <li><a href="<?php echo url('catalog/index'); ?>">Catalogue</a></li>
+            <li><a class="nav-link" href="<?php echo url('rental/my_rentals'); ?>" target="rental_tab">Mes Emprunts</a></li>
+            <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
+            <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
                 <?php if (is_logged_in()): ?>
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                        <li class="dropdown-container">
-                            <a href="<?php echo url('admin/dashboard'); ?>">Administration <i class="fas fa-chevron-down"></i></a>
-                            <ul class="dropdown">
-                                <li><a href="<?php echo url('admin/media'); ?>">Gestion des médias</a></li>
-                                <li><a href="<?php echo url('admin/users'); ?>">Gestion des utilisateurs</a></li>
-                                <li><a href="<?php echo url('admin/loans'); ?>">Gestion des emprunts</a></li>
-                                <li><a href="<?php echo url('admin/dashboard'); ?>">Tableau de bord</a></li>
-                            </ul>
-                        </li>
+            <li class="dropdown-container">
+            <a href="<?php echo url('admin/dashboard'); ?>">Administration <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown">
+            <li><a href="<?php echo url('admin/media'); ?>">Gestion des médias</a></li>
+            <li><a href="<?php echo url('admin/users'); ?>">Gestion des utilisateurs</a></li>
+            <li><a href="<?php echo url('admin/loans'); ?>">Gestion des emprunts</a></li>
+            <li><a href="<?php echo url('admin/dashboard'); ?>">Tableau de bord</a></li>
+            </ul>
+            </li>
                     <?php endif; ?>
                     <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
                 <?php else: ?>
