@@ -23,25 +23,21 @@ function load_view($view, $data = []) {
 }
 
 /**
- * Charge une vue avec un layout
+ * Charge une vue avec un layout (Routage intelligent pour l'Admin)
  */
 function load_view_with_layout($view, $data = [], $layout = 'layout') {
-    // Démarrer la capture de sortie
     ob_start();
-    
-    // Charger la vue
     load_view($view, $data);
-    
-    // Récupérer le contenu de la vue
     $content = ob_get_clean();
     
-    // Ajouter le contenu aux données
     $data['content'] = $content;
+    $is_admin = (strpos($view, 'admin/') === 0);
+    $data['is_admin'] = $is_admin;
 
-    // Détecter si la vue est une vue admin pour charger des ressources spécifiques
-    $data['is_admin'] = strpos($view, 'admin/') === 0;
+    if ($is_admin && $layout === 'layout') {
+        $layout = 'admin_layout';
+    }
 
-    // Charger le layout
     load_view('layouts/' . $layout, $data);
 }
 
