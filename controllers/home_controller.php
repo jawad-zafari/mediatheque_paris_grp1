@@ -13,3 +13,10 @@ function home_about() {
     load_view_with_layout('home/about', $data);
 }
 
+function home_contact() {
+    $data = [
+        'title' => 'Contact'
+    ];
+    load_view_with_layout('home/contact', $data);
+}
+
