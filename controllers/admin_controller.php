@@ -20,7 +20,7 @@ function admin_media_list()
     $per_page = 20;
     $offset = ($page - 1) * $per_page;
 
-    $raw = get_all_items();
+   $raw = get_all_media();
     // Normaliser les résultats pour la vue admin
     $medias = [];
     foreach ($raw as $row) {
@@ -247,8 +247,7 @@ function admin_media_save($id = null)
             // Si une nouvelle image est uploadée, supprimer l'ancienne
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                 if ($media && !empty($media['image_url'])) {
-                    $file_path = PUBLIC_PATH . '/assets/images/' . $media['image_url'];
-                    if (file_exists($file_path)) unlink($file_path);
+$file_path = PUBLIC_PATH . '/uploads/covers/' . $media['image_url'];                    if (file_exists($file_path)) unlink($file_path);
                 }
                 $image_name = upload_cover_image($_FILES['image']);
                 if ($image_name) {
@@ -299,7 +298,7 @@ function admin_media_delete($id, $type)
     // Suppression physique de l'image
     $media = get_media_by_id($id, $type_db);
     if ($media && !empty($media['image_url'])) {
-        $file_path = PUBLIC_PATH . '/assets/images/' . $media['image_url'];
+$file_path = PUBLIC_PATH . '/uploads/covers/' . $media['image_url'];
         if (file_exists($file_path)) unlink($file_path);
     }
 
@@ -405,18 +404,48 @@ function admin_user_update_role($id)
 // ----------------- GESTION DES EMPRUNTS -----------------
 function admin_loans_list()
 {
-    // Vérifie les droits د'administrateur
+    /* Vérifie les droits d'administrateur */
     require_admin();
-    // Récupère tous les emprunts
+    
+    /* Récupère tous les emprunts depuis le modèle */
     $loans = get_all_loans();
-    // Affiche la liste des emprunts
-    load_view_with_layout('admin/loans_list', ['loans' => $loans]);
+    
+    /* Étape 1 : Trier les emprunts pour mettre les demandes "pending_return" toujours en premier */
+    usort($loans, function($a, $b) {
+        $pA = (isset($a['status']) && $a['status'] === 'pending_return') ? 1 : ((isset($a['status']) && $a['status'] === 'active') ? 2 : 3);
+        $pB = (isset($b['status']) && $b['status'] === 'pending_return') ? 1 : ((isset($b['status']) && $b['status'] === 'active') ? 2 : 3);
+        
+        if ($pA !== $pB) {
+            return $pA - $pB; /* Priorité aux valeurs les plus petites (1 avant 2 et 3) */
+        }
+        
+        /* Si le statut est identique, trier par date d'emprunt décroissante */
+        return strtotime($b['loan_date'] ?? '') - strtotime($a['loan_date'] ?? '');
+    });
+    
+    /* Étape 2 : Logique de pagination stricte (20 emprunts par page) */
+    $page = max(1, intval($_GET['page'] ?? 1));
+    $per_page = 20;
+    $offset = ($page - 1) * $per_page;
+    
+    $total_loans = count($loans);
+    $paged_loans = array_slice($loans, $offset, $per_page);
+    $total_pages = ceil($total_loans / $per_page);
+    
+    /* Passer les variables de pagination à la vue */
+    load_view_with_layout('admin/loans_list', [
+        'loans' => $paged_loans,
+        'page' => $page,
+        'total_pages' => $total_pages,
+        'total_loans' => $total_loans
+    ]);
 }
 
 function admin_loan_return($loan_id)
 {
-    // Vérifie les droits د'administrateur
+    // Vérifie les droits d'administrateur
     require_admin();
+    
     // Only allow POST and verify CSRF
     if (!is_post()) {
         set_flash('error', 'Méthode non autorisée.');
@@ -428,12 +457,13 @@ function admin_loan_return($loan_id)
         redirect('admin/loans');
         return;
     }
-    // Marque l'emprunt comme rendu
-    if (return_loan($loan_id)) {
-        set_flash('success', 'Emprunt marqué comme rendu.');
+    
+    if (confirm_return($loan_id)) {
+        set_flash('success', 'Retour confirmé avec succès et stock mis à jour.');
     } else {
         set_flash('error', 'Impossible de marquer cet emprunt comme rendu.');
     }
+    
     // Redirection vers la liste des emprunts
     redirect('admin/loans');
 }
@@ -481,9 +511,13 @@ function admin_loan_edit($loan_id)
 /**
  * Traite la mise à jour d'un emprunt (date de retour)
  */
+/**
+ * Traite la mise à jour d'un emprunt (date de retour)
+ */
 function admin_loan_update($loan_id)
 {
     require_admin();
+    
     if (!is_post()) {
         redirect('admin/loan_edit/' . $loan_id);
         return;
@@ -493,13 +527,14 @@ function admin_loan_update($loan_id)
         redirect('admin/loan_edit/' . $loan_id);
         return;
     }
+    
     $return_date = trim($_POST['return_date'] ?? '');
     $mark_returned = isset($_POST['mark_returned']);
 
     if ($mark_returned) {
-        // Utilise la fonction existante pour marquer comme retourné
-        if (return_loan($loan_id)) {
-            set_flash('success', 'Emprunt marqué comme rendu.');
+        /* Utilisation de la nouvelle fonction confirm_return au lieu de return_loan */
+        if (confirm_return($loan_id)) {
+            set_flash('success', 'Emprunt marqué comme rendu avec succès.');
         } else {
             set_flash('error', 'Impossible de marquer cet emprunt comme rendu.');
         }
@@ -507,7 +542,7 @@ function admin_loan_update($loan_id)
         return;
     }
 
-    // Validation simple de la date
+    /* Validation simple de la date */
     if ($return_date !== '') {
         $d = date_parse($return_date);
         if (!checkdate($d['month'] ?? 0, $d['day'] ?? 0, $d['year'] ?? 0)) {
@@ -515,7 +550,7 @@ function admin_loan_update($loan_id)
             redirect('admin/loan_edit/' . $loan_id);
             return;
         }
-        // Normaliser en YYYY-MM-DD si fournie en JJ/MM/AAAA
+        /* Normaliser en YYYY-MM-DD si fournie en JJ/MM/AAAA */
         if (strpos($return_date, '/') !== false) {
             $parts = explode('/', $return_date);
             if (count($parts) === 3) {
@@ -525,10 +560,11 @@ function admin_loan_update($loan_id)
     }
 
     if (update_loan($loan_id, ['return_date' => $return_date])) {
-        set_flash('success', 'Date de retour mise à jour.');
+        set_flash('success', 'Date de retour mise à jour avec succès.');
     } else {
         set_flash('error', 'Impossible de mettre à jour cet emprunt.');
     }
+    
     redirect('admin/loans');
 }
 
