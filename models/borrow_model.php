@@ -115,3 +115,24 @@ function confirm_return($loan_id) {
     }
 }
 
+/* Récupérer les locations d'un utilisateur selon le statut */
+function get_user_rentals_by_status($user_id, $status = 'active') {
+    $condition = ($status == 'active') ? "r.status IN ('active', 'pending_return')" : "r.status = 'returned'";
+    $query = "SELECT r.id, r.media_id, r.loan_date AS rent_date, r.return_date, r.returned_at, r.status,
+                     CASE 
+                         WHEN r.media_type = 'book' THEN (SELECT title FROM books WHERE id = r.media_id)
+                         WHEN r.media_type = 'movie' THEN (SELECT title FROM movies WHERE id = r.media_id)
+                         WHEN r.media_type = 'video_game' THEN (SELECT title FROM video_games WHERE id = r.media_id)
+                     END AS title,
+                     r.media_type AS type, 
+                     CASE 
+                         WHEN r.media_type = 'book' THEN (SELECT image_url FROM books WHERE id = r.media_id)
+                         WHEN r.media_type = 'movie' THEN (SELECT image_url FROM movies WHERE id = r.media_id)
+                         WHEN r.media_type = 'video_game' THEN (SELECT image_url FROM video_games WHERE id = r.media_id)
+                     END AS image_url
+              FROM loans r 
+              WHERE r.user_id = ? AND $condition
+              ORDER BY r.loan_date DESC";
+    return db_select($query, [$user_id]);
+}
+
