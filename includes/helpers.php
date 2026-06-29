@@ -235,3 +235,30 @@ function base_url($path = '')
 {
     return '/mediatheque_paris_grp1_pierre/public' . $path;
 }
+
+// ______________________________________________
+function upload_cover_image($file) {
+    /* La façon d'enregistrer des images en fonction des codes de modèle (voir) */
+    $target_dir = PUBLIC_PATH . '/uploads/covers/';
+    
+    /* Créez le dossier s'il n'existe pas */
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
+
+    $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+    /* Vérification de l'extension autorisée de l'image */
+    if (in_array($file_extension, $allowed_extensions)) {
+        /* Générez un nom unique pour éviter les conflits de fichiers portant le même nom */
+        $new_file_name = uniqid('cover_') . '.' . $file_extension;
+        $target_file = $target_dir . $new_file_name;
+
+        /* Déplacez l'image du dossier temporaire du serveur vers le chemin principal */
+        if (move_uploaded_file($file['tmp_name'], $target_file)) {
+            return $new_file_name;
+        }
+    }
+    return false;
+}
