@@ -136,3 +136,22 @@ function get_user_rentals_by_status($user_id, $status = 'active') {
     return db_select($query, [$user_id]);
 }
 
+/* Récupérer tous les emprunts (Admin) */
+function get_all_loans($overdue_only = false) {
+    $where = $overdue_only ? "WHERE l.status IN ('active', 'pending_return') AND l.return_date < CURDATE()" : "";
+    $query = "SELECT l.id, l.user_id, u.name AS user_name, u.email AS user_email, l.media_id, l.media_type, l.status,
+                     CASE l.media_type
+                         WHEN 'book' THEN b.title
+                         WHEN 'movie' THEN m.title
+                         WHEN 'video_game' THEN v.title
+                     END AS media_title,
+                     l.loan_date, l.return_date, l.returned_at
+              FROM loans l
+              JOIN users u ON l.user_id = u.id
+              LEFT JOIN books b ON l.media_id = b.id AND l.media_type = 'book'
+              LEFT JOIN movies m ON l.media_id = m.id AND l.media_type = 'movie'
+              LEFT JOIN video_games v ON l.media_id = v.id AND l.media_type = 'video_game'
+              $where ORDER BY l.loan_date DESC";
+    return db_select($query);
+}
+
