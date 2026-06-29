@@ -49,3 +49,48 @@ function borrow_rent($item_id) {
     redirect('borrow/index');
 }
 
+/**
+ * Affiche la liste des emprunts de l'utilisateur
+ */
+/**
+ * Affiche la liste des emprunts de l'utilisateur
+ */
+function borrow_index() {
+    if (!is_logged_in()) {
+        redirect('auth/login');
+        return;
+    }
+    $user_id = current_user_id();
+    
+    $active_rentals = get_user_rentals_by_status($user_id, 'active');
+    $returned_rentals = get_user_rentals_by_status($user_id, 'returned');
+
+    /* Tri MVC propre : Actifs en premier, En attente en dernier, puis par date d'emprunt */
+    if (!empty($active_rentals)) {
+        usort($active_rentals, function($a, $b) {
+            $statusA = (isset($a['status']) && $a['status'] === 'pending_return') ? 2 : 1;
+            $statusB = (isset($b['status']) && $b['status'] === 'pending_return') ? 2 : 1;
+            
+            if ($statusA !== $statusB) {
+                return $statusA - $statusB;
+            }
+            return strtotime($b['rent_date'] ?? 0) - strtotime($a['rent_date'] ?? 0);
+        });
+    }
+
+    /* Tri MVC propre : Historique par date de retour la plus récente */
+    if (!empty($returned_rentals)) {
+        usort($returned_rentals, function($a, $b) {
+            return strtotime($b['returned_at']) - strtotime($a['returned_at']);
+        });
+    }
+
+    $data = [
+        'title' => 'Mes Emprunts',
+        'active_rentals' => $active_rentals,
+        'returned_rentals' => $returned_rentals,
+    ];
+    
+    load_view_with_layout('borrow/my_borrow', $data);
+}
+
