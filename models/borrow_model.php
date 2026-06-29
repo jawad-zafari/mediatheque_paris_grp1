@@ -96,3 +96,22 @@ function request_return($rental_id, $user_id) {
     return db_execute($query, [$rental_id, $user_id]);
 }
 
+/* Confirmer le retour d'un média (Admin) */
+function confirm_return($loan_id) {
+    $loan = db_select_one("SELECT media_id, media_type FROM loans WHERE id = ? AND status IN ('active', 'pending_return')", [$loan_id]);
+    if (!$loan) return false;
+
+    db_begin_transaction();
+    try {
+        $query = "UPDATE loans SET status = 'returned', returned_at = NOW() WHERE id = ?";
+        db_execute($query, [$loan_id]);
+        $table = ($loan['media_type'] == 'book') ? 'books' : (($loan['media_type'] == 'movie') ? 'movies' : 'video_games');
+        db_execute("UPDATE $table SET stock = stock + 1 WHERE id = ?", [$loan['media_id']]);
+        db_commit();
+        return true;
+    } catch (Exception $e) {
+        db_rollback();
+        return false;
+    }
+}
+
