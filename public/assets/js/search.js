@@ -4,5 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!searchInput || !resultsBox) return;
 
+    const apiUrl = searchInput.getAttribute('data-url');
+    const baseUrl = searchInput.getAttribute('data-base-url');
+    let timeout = null;
+
     
 });
