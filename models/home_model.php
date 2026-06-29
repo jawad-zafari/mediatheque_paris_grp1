@@ -94,19 +94,6 @@ function get_media_by_id($id, $type)
     return $result;
 }
 
-/**
- * Compte le nombre total de médias
- */
-function get_media_count()
-{
-    $db = db_connect();
-    return $db->query("
-        SELECT 
-            (SELECT COUNT(*) FROM books) +
-            (SELECT COUNT(*) FROM movies) +
-            (SELECT COUNT(*) FROM video_games) AS total
-    ")->fetchColumn();
-}
 
 /**
  * Crée un nouveau média
