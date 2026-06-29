@@ -90,3 +90,9 @@ function create_loan($user_id, $media_id, $media_type) {
     return false;
 }
 
+/* Demander le retour d'un média (Utilisateur) */
+function request_return($rental_id, $user_id) {
+    $query = "UPDATE loans SET status = 'pending_return' WHERE id = ? AND user_id = ? AND status = 'active'";
+    return db_execute($query, [$rental_id, $user_id]);
+}
+
