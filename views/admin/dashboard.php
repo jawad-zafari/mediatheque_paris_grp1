@@ -70,5 +70,16 @@
                 </div>
             </div>
 
-           
+            <div class="dist-item">
+                <div class="dist-header">
+                    <span class="dist-label"><i class="fas fa-gamepad text-game"></i> Jeux vidéo</span>
+                    <span class="dist-value text-game"><?= $games ?> <span>(<?= $pct_games ?>%)</span></span>
+                </div>
+                <div class="dist-bar-track">
+                    <div class="dist-bar game" data-width="<?= $pct_games ?>%"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
