@@ -73,3 +73,20 @@ function create_rental($user_id, $item_id) {
     }
 }
 
+/* Création d'une location (Côté Admin) */
+function create_loan($user_id, $media_id, $media_type) {
+    $stock_query = "SELECT stock FROM " . ($media_type == 'book' ? 'books' : ($media_type == 'movie' ? 'movies' : 'video_games')) . " WHERE id = ?";
+    $stock = db_select_one($stock_query, [$media_id])['stock'] ?? 0;
+    if ($stock < 1) return false;
+
+    $loan_date = date('Y-m-d');
+    $return_date = date('Y-m-d', strtotime('+14 days'));
+    $query = "INSERT INTO loans (user_id, media_id, media_type, loan_date, return_date, status) VALUES (?, ?, ?, ?, ?, 'active')";
+    if (db_execute($query, [$user_id, $media_id, $media_type, $loan_date, $return_date])) {
+        $table = ($media_type == 'book') ? 'books' : (($media_type == 'movie') ? 'movies' : 'video_games');
+        db_execute("UPDATE $table SET stock = stock - 1 WHERE id = ?", [$media_id]);
+        return true;
+    }
+    return false;
+}
+
