@@ -192,5 +192,10 @@ function update_loan($loan_id, $data) {
     $query = "UPDATE loans SET " . implode(', ', $fields) . " WHERE id = ?";
     return db_execute($query, $params);
 }
-
+/* Compter les retours en attente pour le badge de l'administration (Respect MVC) */
+function get_pending_returns_count() {
+    $query = "SELECT COUNT(*) as total FROM loans WHERE status = 'pending_return'";
+    $result = db_select_one($query);
+    return (int)($result['total'] ?? 0);
+}
 ?>
