@@ -690,3 +690,186 @@ html, body {
     transform: translateY(-2px);
 }
 
+/* =========================================================
+   11. SYSTÈME DE NOTIFICATION TOAST (ADMIN)
+========================================================= */
+.toast-notification {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    z-index: 999999;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: fit-content;
+}
+
+.toast-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast-notification i {
+    font-size: 1.3rem;
+}
+
+.toast-success {
+    background: #012447;
+    border-left: 5px solid #10b981;
+}
+
+.toast-success i {
+    color: #10b981;
+}
+
+.toast-error {
+    background: #012447;
+    border-left: 5px solid #ef4444;
+}
+
+.toast-error i {
+    color: #ef4444;
+}
+
+/* =========================================================
+   12. DASHBOARD MODERN (GLASSMORPHISM)
+========================================================= */
+.admin-header-modern {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    margin-bottom: 25px;
+}
+
+.admin-header-modern h1 {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.admin-header-modern h1 i {
+    color: var(--admin-primary);
+    margin-right: 10px;
+}
+
+.admin-header-modern p {
+    color: var(--admin-text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Couleurs spécifiques pour les icônes des statistiques */
+.icon-users { color: #a855f7; }
+.icon-media { color: #38bdf8; }
+.icon-loans { color: #f59e0b; }
+.icon-books { color: #10b981; }
+.icon-movies { color: #ef4444; }
+.icon-games { color: #8b5cf6; }
+
+/* Section de répartition */
+.dashboard-distribution {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.dashboard-distribution h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--admin-primary);
+    padding-left: 12px;
+    font-size: 1.3rem;
+    color: var(--admin-text-main);
+}
+
+.dist-card {
+    background: var(--admin-bg-glass);
+    backdrop-filter: var(--admin-blur-main);
+    border: 1px solid var(--admin-border-light);
+    border-radius: var(--admin-radius-lg);
+    padding: 30px;
+    box-shadow: var(--admin-shadow-main);
+}
+
+.dist-item {
+    margin-bottom: 25px;
+}
+
+.dist-item:last-child {
+    margin-bottom: 0;
+}
+
+.dist-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.dist-label {
+    font-weight: 600;
+    color: var(--admin-text-main);
+}
+
+.dist-label i {
+    width: 25px;
+    text-align: center;
+}
+
+.dist-value {
+    font-weight: bold;
+}
+
+.dist-value span {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-weight: normal;
+}
+
+/* Couleurs pour les textes et barres de répartition */
+.text-book { color: #38bdf8; }
+.text-movie { color: #10b981; }
+.text-game { color: #f59e0b; }
+
+.dist-bar-track {
+    height: 14px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+.dist-bar {
+    height: 100%;
+    border-radius: 10px;
+    width: 0%; 
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dist-bar.book {
+    background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.dist-bar.movie {
+    background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.dist-bar.game {
+    background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
