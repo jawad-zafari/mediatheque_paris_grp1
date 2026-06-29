@@ -34,3 +34,29 @@ function catalog_index() {
     load_view_with_layout('catalog/index', $data);
 }
 
+function catalog_detail($id = null) {
+    if (!$id) {
+        header('Location: ' . url('catalog/index'));
+        exit;
+    }
+
+    $item = get_item_by_id($id);
+
+    if (!$item) {
+        header('Location: ' . url('catalog/index'));
+        exit;
+    }
+
+    // Fetch a small list of similar items of the same type
+    // get_items_by_type($search_type, $search_term, $search_genre, $search_availability, $per_page, $offset)
+    $similar_items = get_items_by_type($item['type'], '', 'all', 'all', 5, 0);
+
+    $data = [
+        'title' => 'Détails - ' . $item['title'],
+        'item' => $item,
+        'similar_items' => $similar_items
+    ];
+    
+    load_view_with_layout('catalog/detail', $data);
+}
+
