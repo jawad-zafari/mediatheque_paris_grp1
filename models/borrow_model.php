@@ -155,3 +155,9 @@ function get_all_loans($overdue_only = false) {
     return db_select($query);
 }
 
+/* Récupérer les emprunts d'un utilisateur spécifique */
+function get_user_loans($user_id) {
+    $query = "SELECT l.* FROM loans l WHERE l.user_id = ? ORDER BY l.loan_date DESC";
+    return db_select($query, [$user_id]);
+}
+
