@@ -314,3 +314,60 @@ html, body {
     color: var(--admin-danger); 
 }
 
+/* =========================================================
+   3. DASHBOARD (Statistiques et Graphiques)
+========================================================= */
+.stats-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.stat-card {
+    flex: 1;
+    background: var(--admin-bg-glass);
+    -webkit-backdrop-filter: var(--admin-blur-main);
+    backdrop-filter: var(--admin-blur-main);
+    border: 1px solid var(--admin-border-light);
+    padding: 25px;
+    border-radius: var(--admin-radius-lg);
+    text-align: center;
+    color: var(--admin-text-main);
+    box-shadow: var(--admin-shadow-main);
+    transition: var(--admin-transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stat-card:hover { 
+    transform: translateY(-4px); 
+    border-color: var(--admin-primary); 
+    box-shadow: var(--admin-shadow-hover);
+}
+
+.stat-card .icon { 
+    font-size: var(--admin-font-size-lg); 
+    display: block; 
+    margin-bottom: 8px; 
+}
+
+.stat-card h3 { 
+    margin: 0 0 5px 0; 
+    font-size: var(--admin-font-size-base); 
+    color: var(--admin-text-muted); 
+    white-space: nowrap; 
+    font-weight: 500;
+}
+
+.stat-card p { 
+    font-size: var(--admin-font-size-base); 
+    font-weight: bold; 
+    margin: 0; 
+    color: var(--admin-primary); 
+}
+
