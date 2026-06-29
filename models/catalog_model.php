@@ -86,3 +86,59 @@ function get_items_by_type($type, $search_term = '', $search_genre = 'all', $sea
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function get_items_count_by_type($type, $search_term = '', $search_genre = 'all', $search_availability = 'all') {
+    $pdo = db_connect();
+    $conditions = [];
+    $params = [];
+
+    if (!empty($search_term)) {
+        $conditions[] = "LOWER(title) LIKE LOWER(?)";
+        $params[] = "%" . trim($search_term) . "%";
+    }
+
+    if ($search_genre != 'all') {
+        $conditions[] = "gender = ?";
+        $params[] = $search_genre;
+    }
+
+    if ($search_availability != 'all') {
+        if ($search_availability == 'true') {
+            $conditions[] = "stock > 0";
+        } else {
+            $conditions[] = "stock = 0";
+        }
+    }
+
+    $condition_str = !empty($conditions) ? " WHERE " . implode(" AND ", $conditions) : "";
+
+    $queries = [];
+    if ($type === 'book' || $type === 'all') {
+        $queries[] = "SELECT COUNT(*) as count FROM books" . $condition_str;
+    }
+    if ($type === 'film' || $type === 'all') {
+        $queries[] = "SELECT COUNT(*) as count FROM movies" . $condition_str;
+    }
+    if ($type === 'game' || $type === 'all') {
+        $queries[] = "SELECT COUNT(*) as count FROM video_games" . $condition_str;
+    }
+
+    $final_query = implode(" UNION ALL ", $queries);
+    
+    $final_params = [];
+    foreach ($queries as $q) {
+        foreach ($params as $p) {
+            $final_params[] = $p;
+        }
+    }
+
+    $stmt = $pdo->prepare($final_query);
+    $stmt->execute($final_params);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $total = 0;
+    foreach ($results as $row) {
+        $total += $row['count'];
+    }
+    return $total;
+}
+
