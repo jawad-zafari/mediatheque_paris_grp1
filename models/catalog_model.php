@@ -142,3 +142,24 @@ function get_items_count_by_type($type, $search_term = '', $search_genre = 'all'
     return $total;
 }
 
+function get_all_genres() {
+    $pdo = db_connect();
+    $query = "
+        SELECT DISTINCT gender AS genre FROM books WHERE gender IS NOT NULL AND gender != ''
+        UNION
+        SELECT DISTINCT gender AS genre FROM movies WHERE gender IS NOT NULL AND gender != ''
+        UNION
+        SELECT DISTINCT gender AS genre FROM video_games WHERE gender IS NOT NULL AND gender != ''
+        ORDER BY genre ASC
+    ";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $genres = [];
+    foreach ($results as $row) {
+        $genres[] = $row['genre'];
+    }
+    return $genres;
+}
+
