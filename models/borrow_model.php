@@ -179,3 +179,18 @@ function get_loan_by_id($loan_id) {
     return db_select_one($query, [$loan_id]);
 }
 
+/* Mettre à jour un emprunt */
+function update_loan($loan_id, $data) {
+    $fields = [];
+    $params = [];
+    if (isset($data['return_date'])) {
+        $fields[] = 'return_date = ?';
+        $params[] = $data['return_date'];
+    }
+    if (empty($fields)) return false;
+    $params[] = $loan_id;
+    $query = "UPDATE loans SET " . implode(', ', $fields) . " WHERE id = ?";
+    return db_execute($query, $params);
+}
+
+?>
