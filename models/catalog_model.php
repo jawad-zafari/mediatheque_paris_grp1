@@ -163,3 +163,27 @@ function get_all_genres() {
     return $genres;
 }
 
+function live_search_query($term) {
+    $db = db_connect();
+    $term = '%' . $term . '%';
+    
+    $query = "
+        (SELECT CONCAT('book_', id) as id, title, image_url, 'Livre' as type_label, 'book' as type FROM books WHERE title LIKE :term1 LIMIT 10)
+        UNION ALL
+        (SELECT CONCAT('film_', id) as id, title, image_url, 'Film' as type_label, 'film' as type FROM movies WHERE title LIKE :term2 LIMIT 10)
+        UNION ALL
+        (SELECT CONCAT('game_', id) as id, title, image_url, 'Jeu Vidéo' as type_label, 'game' as type FROM video_games WHERE title LIKE :term3 LIMIT 10)
+    ";
+    
+    $stmt = $db->prepare($query);
+    $stmt->execute([
+        ':term1' => $term,
+        ':term2' => $term,
+        ':term3' => $term
+    ]);
+    
+    return $stmt->fetchAll();
+}
+
+
+?>
