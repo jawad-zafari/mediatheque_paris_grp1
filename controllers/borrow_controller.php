@@ -94,3 +94,27 @@ function borrow_index() {
     load_view_with_layout('borrow/my_borrow', $data);
 }
 
+/**
+ * Gère la demande de retour d'un média (Envoie en attente de confirmation)
+ */
+function borrow_return($rental_id) {
+    if (!is_logged_in()) {
+        redirect('auth/login');
+        return;
+    }
+    $user_id = current_user_id();
+    
+    if (request_return($rental_id, $user_id)) {
+        set_flash('success', 'Demande de retour envoyée ! En attente de validation de l\'administrateur.');
+    } else {
+        set_flash('error', 'Erreur lors de la demande de retour.');
+    }
+    
+    /* Vérifier d'où vient la requête (MVC Dynamique) */
+    if (isset($_GET['from']) && $_GET['from'] === 'profile') {
+        redirect('home/profile?tab=mes-emprunts');
+    } else {
+        redirect('borrow/index');
+    }
+}
+?>
