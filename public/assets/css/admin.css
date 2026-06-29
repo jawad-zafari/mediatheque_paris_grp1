@@ -873,3 +873,184 @@ html, body {
     box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
 }
 
+/* =========================================================
+   13. CLASSES EXTRAITES DES VUES (PHP) VERS CSS
+========================================================= */
+.text-center { 
+    text-align: center; 
+}
+
+.text-pending { 
+    padding: 6px;
+    border-radius: 50px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    background: rgba(245, 158, 11, 0.15); 
+    color: #f59e0b; 
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.text-returned { 
+    color: #10b981; 
+    padding: 6px;
+    border-radius: 50px;
+    font-size: 0.6rem !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    background: rgba(11, 245, 77, 0.15); 
+    border: 1px solid rgba(11, 245, 85, 0.3);
+}
+
+.text-overdue { 
+    padding: 6px;
+    border-radius: 50px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    background: rgba(245, 11, 11, 0.15); 
+    color: #f50b0b; 
+    border: 1px solid rgba(245, 11, 11, 0.3);
+}
+
+.text-in-progress { 
+    color: #38bdf8; 
+}
+
+.text-muted-action { 
+    color: rgba(255, 255, 255, 0.3); 
+    font-size: var(--admin-font-size-sm); 
+}
+
+.status-badge-text {
+    font-size: var(--admin-font-size-sm);
+}
+
+.action-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 0;
+}
+
+.btn-validate {
+    background-color: var(--admin-success);
+    color: #ffffff;
+    border-color: var(--admin-success);
+    padding: 4px 15px;
+    margin-top: 4px;
+}
+
+.btn-validate:hover {
+    background-color: var(--admin-success-hover);
+    color: #ffffff;
+}
+
+.form-textarea-large { 
+    min-height: 100px; 
+}
+
+.form-dynamic-group {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: var(--admin-radius-md);
+    margin-bottom: 15px;
+}
+
+.cover-thumb-large {
+    max-width: 150px;
+    margin-top: 10px;
+    border-radius: var(--admin-radius-md);
+    display: block;
+}
+
+.form-submit-row {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-save {
+    background: var(--admin-primary);
+    color: #012447;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--admin-radius-sm);
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--admin-transition);
+}
+
+.btn-save:hover {
+    background: var(--admin-primary-hover);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-cancel {
+    color: #ffffff;
+    text-decoration: none;
+    transition: var(--admin-transition);
+}
+
+.btn-cancel:hover {
+    color: var(--admin-danger);
+    text-decoration: underline;
+}
+
+.readonly-select {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* =========================================================
+   14. TAILLE DE POLICE ET DIMENSIONS DU TABLEAU
+========================================================= */
+.admin-table {
+    font-size: 0.9rem; 
+    width: 100% !important;
+}
+
+.admin-table th {
+    font-size: 0.9rem; 
+    font-weight: 600;
+}
+
+.admin-table td {
+    font-size: 0.85rem; 
+}
+
+.admin-table td strong,
+.admin-table {
+    font-size: 0.8rem;
+}
+
+/* Ajustement precis et leger pour la colonne Statut (5eme colonne) */
+.admin-table th:nth-child(5), 
+.admin-table td:nth-child(5) {
+    width: 50px !important;
+    min-width: 50px !important;
+    white-space: nowrap !important;
+}
+
+/* Optimisation maximale des colonnes de dates pour eviter les debordements */
+.admin-table th:nth-child(3), .admin-table td:nth-child(3),
+.admin-table th:nth-child(4), .admin-table td:nth-child(4),
+.admin-table th:nth-child(6), .admin-table td:nth-child(6) {
+    width: 80px !important;
+    min-width: 80px !important;
+    white-space: nowrap !important;
+    text-align: center;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
