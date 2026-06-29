@@ -73,5 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     });
 
-   
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+            resultsBox.style.display = 'none';
+        }
+    });
 });
