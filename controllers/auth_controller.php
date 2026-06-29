@@ -1,13 +1,8 @@
 <?php
-// Contrôleur d'authentification corrigé selon cahier des charges
-
-/**
- * Page de connexion
- */
+/* Page de connexion */
 function auth_login() {
-    // Rediriger si déjà connecté
     if (is_logged_in()) {
-        redirect('home');
+        redirect('');
     }
 
     $data = ['title' => 'Connexion'];
@@ -26,11 +21,8 @@ function auth_login() {
         } else {
             $user = get_user_by_email($email);
           
-
-
             if ($user && password_verify($password, $user['password'])) {
-                // Connexion réussie
-                session_regenerate_id(true); // ⚡ sécuriser contre fixation
+                session_regenerate_id(true); 
 
                 $_SESSION['user'] = [
                     'id' => $user['id'],
@@ -38,12 +30,12 @@ function auth_login() {
                     'last_name' => $user['last_name'],
                     'email' => $user['email'],
                     'role' => $user['role'],
-                    'last_activity' => time() // ⚡ suivi expiration
+                    'last_activity' => time() 
                 ];
                 session_write_close();
 
                 set_flash('success', 'Connexion réussie !');
-                redirect('home');
+                redirect('');
             } else {
                 set_flash('error', 'Email ou mot de passe incorrect.');
             }
@@ -53,12 +45,10 @@ function auth_login() {
     load_view_with_layout('auth/login', $data);
 }
 
-/**
- * Page d'inscription
- */
+/* Page d'inscription */
 function auth_register() {
     if (is_logged_in()) {
-        redirect('home');
+        redirect('');
     }
 
     $data = ['title' => 'Inscription'];
@@ -75,7 +65,6 @@ function auth_register() {
         $password = post('password');
         $confirm_password = post('confirm_password');
 
-        // Validation stricte
         if (empty($name) || empty($last_name) || empty($email) || empty($password)) {
             set_flash('error', 'Tous les champs sont obligatoires.');
         } elseif (!preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\- ]{2,50}$/u', $name)) {
@@ -91,7 +80,6 @@ function auth_register() {
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
-            // Création utilisateur (le hashing est effectué dans create_user)
             $user_id = create_user($name, $last_name, $email, $password);
 
             if ($user_id) {
@@ -106,15 +94,13 @@ function auth_register() {
     load_view_with_layout('auth/register', $data);
 }
 
-/**
- * Déconnexion
- */
+/* Déconnexion */
 function auth_logout() {
     logout();
 }
 
 function check_session_timeout() {
-    $timeout = 7200; // 2 heures
+    $timeout = 7200; 
     if (isset($_SESSION['user']['last_activity']) && (time() - $_SESSION['user']['last_activity']) > $timeout) {
         logout();
     } else {
