@@ -115,10 +115,18 @@ function email_exists($email, $exclude_id = null)
     return $result['count'] > 0;
 }
 
+
 /**
- * Alias pour le nombre total d'utilisateurs
+ * Met à jour le profil de l'utilisateur (depuis le front-end)
  */
-function get_users_count()
-{
-    return count_users();
+function update_user_profile($id, $name, $last_name, $email, $hashed_password = null) {
+    if ($hashed_password) {
+        /* Si l'utilisateur a tapé un nouveau mot de passe */
+        $query = "UPDATE users SET name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
+        return db_execute($query, [$name, $last_name, $email, $hashed_password, $id]);
+    } else {
+        /* Si le mot de passe est resté vide, on ne le modifie pas */
+        $query = "UPDATE users SET name = ?, last_name = ?, email = ? WHERE id = ?";
+        return db_execute($query, [$name, $last_name, $email, $id]);
+    }
 }
