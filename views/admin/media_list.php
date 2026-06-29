@@ -2,6 +2,7 @@
     <div class="admin-header"><h1>Liste des médias</h1></div>
     <div class="admin-actions"><a class="btn-link" href="<?= url('admin/media_add'); ?>">Ajouter un média</a></div>
 
+    <?php $medias = $medias ?? []; ?>
     <table class="admin-table">
     <thead>
         <tr>
@@ -49,6 +50,7 @@
     </tbody>
 </table>
 
+<?php $per_page = $per_page ?? 20; ?>
 <?php if (!empty($total) && $total > $per_page): ?>
     <div class="admin-pagination">
         <?php $total_pages = ceil($total / $per_page); ?>
