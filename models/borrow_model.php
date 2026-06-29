@@ -173,3 +173,9 @@ function get_user_overdue_loans($user_id) {
     return db_select($query, [$user_id]);
 }
 
+/* Récupérer un emprunt par son ID */
+function get_loan_by_id($loan_id) {
+    $query = "SELECT * FROM loans WHERE id = ? LIMIT 1";
+    return db_select_one($query, [$loan_id]);
+}
+
