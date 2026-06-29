@@ -60,5 +60,15 @@
                 </div>
             </div>
 
-            
+            <div class="dist-item">
+                <div class="dist-header">
+                    <span class="dist-label"><i class="fas fa-film text-movie"></i> Films</span>
+                    <span class="dist-value text-movie"><?= $movies ?> <span>(<?= $pct_movies ?>%)</span></span>
+                </div>
+                <div class="dist-bar-track">
+                    <div class="dist-bar movie" data-width="<?= $pct_movies ?>%"></div>
+                </div>
+            </div>
+
+           
 </div>
