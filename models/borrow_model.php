@@ -161,3 +161,9 @@ function get_user_loans($user_id) {
     return db_select($query, [$user_id]);
 }
 
+/* Compter les emprunts actifs d'un utilisateur */
+function count_active_loans($user_id) {
+    $query = "SELECT COUNT(*) as total FROM loans WHERE user_id = ? AND status IN ('active', 'pending_return')";
+    return db_select_one($query, [$user_id])['total'] ?? 0;
+}
+
