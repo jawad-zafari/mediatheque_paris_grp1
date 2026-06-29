@@ -50,5 +50,15 @@
             $pct_games = intval(round(($games / $total_media) * 100));
             ?>
 
-           
+            <div class="dist-item">
+                <div class="dist-header">
+                    <span class="dist-label"><i class="fas fa-book text-book"></i> Livres</span>
+                    <span class="dist-value text-book"><?= $books ?> <span>(<?= $pct_books ?>%)</span></span>
+                </div>
+                <div class="dist-bar-track">
+                    <div class="dist-bar book" data-width="<?= $pct_books ?>%"></div>
+                </div>
+            </div>
+
+            
 </div>
