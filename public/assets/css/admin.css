@@ -494,3 +494,135 @@ html, body {
     background: rgba(16, 185, 129, 0.05); 
 }
 
+/* =========================================================
+   7. FORMULAIRES ADMIN (Édition)
+========================================================= */
+.form-card {
+    background: var(--admin-bg-glass);
+    backdrop-filter: var(--admin-blur-main);
+    padding: 25px;
+    border-radius: var(--admin-radius-lg);
+    border: 1px solid var(--admin-border-light);
+    color: var(--admin-text-main);
+    box-shadow: var(--admin-shadow-main);
+    max-width: 800px;
+    font-size: var(--admin-font-size-base);
+}
+
+.form-row, .form-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--admin-primary);
+    margin-top: 12px;
+    font-size: var(--admin-font-size-base);
+}
+
+.form-card input[type="text"], .form-card input[type="number"], 
+.form-card input[type="email"], .form-card select, .form-card textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--admin-radius-sm);
+    border: 1px solid var(--admin-border-light);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--admin-text-main);
+    box-sizing: border-box;
+    transition: var(--admin-transition);
+    font-size: var(--admin-font-size-base);
+}
+
+.form-card input:focus, .form-card select:focus, .form-card textarea:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--admin-primary);
+    outline: none;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+}
+
+.form-card select option { 
+    background: #012447; 
+    color: white; 
+}
+
+.cover-thumb { 
+    width: 40px; 
+    height: 55px; 
+    object-fit: cover; 
+    border-radius: 4px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+}
+
+/* =========================================================
+   8. UPLOAD ET BOUTONS DE FORMULAIRE
+========================================================= */
+.form-card input[type="file"] {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed var(--admin-border-light);
+    padding: 10px;
+    border-radius: var(--admin-radius-sm);
+    color: var(--admin-text-main);
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.form-card input[type="file"]::file-selector-button {
+    background: var(--admin-primary);
+    color: #012447;
+    border: none;
+    padding: 8px 15px;
+    border-radius: var(--admin-radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--admin-transition);
+    margin-right: 15px;
+}
+
+.form-card input[type="file"]::file-selector-button:hover {
+    background: var(--admin-primary-hover);
+    color: var(--admin-text-main);
+}
+
+.form-card button[type="submit"].btn-primary {
+    background-color: var(--admin-success);
+    color: var(--admin-text-main);
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--admin-radius-sm);
+    font-size: var(--admin-font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--admin-transition);
+    margin-top: 15px;
+}
+
+.form-card button[type="submit"].btn-primary:hover {
+    background-color: var(--admin-success-hover);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+}
+
+.form-card .btn-link {
+    color: var(--admin-text-muted);
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 500;
+    transition: var(--admin-transition);
+}
+
+.form-card .btn-link:hover {
+    color: var(--admin-danger);
+    text-decoration: underline;
+}
+
+.form-card .cover-thumb { 
+    width: 60px; 
+    height: 85px; 
+    object-fit: cover; 
+    border-radius: var(--admin-radius-sm); 
+    box-shadow: var(--admin-shadow-main);
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: block;
+    border: 1px solid var(--admin-border-light);
+}
+
