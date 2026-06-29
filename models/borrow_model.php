@@ -167,3 +167,9 @@ function count_active_loans($user_id) {
     return db_select_one($query, [$user_id])['total'] ?? 0;
 }
 
+/* Récupérer les emprunts en retard d'un utilisateur */
+function get_user_overdue_loans($user_id) {
+    $query = "SELECT * FROM loans WHERE user_id = ? AND status IN ('active', 'pending_return') AND return_date < CURDATE()";
+    return db_select($query, [$user_id]);
+}
+
