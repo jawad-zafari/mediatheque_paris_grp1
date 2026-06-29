@@ -1,13 +1,15 @@
 <div class="admin-container">
+    <?php if (isset($user) && $user): ?>
     <div class="admin-header"><h1>Détails utilisateur: <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></h1></div>
 
-    <?php if ($user): ?>
+    <?php endif; ?>
+    <?php if (isset($user) && $user): ?>
     <div class="form-card">
         <p><strong>ID:</strong> <?= $user['id']; ?></p>
         <p><strong>Nom:</strong> <?= htmlspecialchars($user['name'] . ' ' . $user['last_name']); ?></p>
         <p><strong>Email:</strong> <?= htmlspecialchars($user['email']); ?></p>
         <p><strong>Rôle:</strong> <?= htmlspecialchars($user['role']); ?></p>
-        <!-- Role change form (admin only) -->
+        
         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
             <form method="post" action="<?= url('admin/user_update_role/' . $user['id']); ?>" class="form-actions">
                 <input type="hidden" name="csrf_token" value="<?= csrf_token(); ?>">
@@ -31,12 +33,12 @@
         <ul>
             <li>Emprunts totaux: <?= $user['total_loans']; ?></li>
             <li>Emprunts actifs: <?= $user['active_loans']; ?></li>
-            <li>Emprunts en retard: <?= count($user['overdue_loans']); ?></li>
+            <li>Emprunts en retard: <?= count($user['overdue_loans'] ?? []); ?></li>
         </ul>
     </div>
 
     <h2>Emprunts actuels</h2>
-    <?php if (!empty($user['loans'])): ?>
+    <?php if (!empty($loans)): ?>
     <table class="admin-table">
             <thead>
                 <tr>
@@ -48,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach (array_filter($user['loans'], fn($l) => !$l['returned_at']) as $loan): ?>
+                <?php foreach (array_filter($loans ?? [], fn($l) => !$l['returned_at']) as $loan): ?>
                     <tr>
                         <td><?= htmlspecialchars($loan['media_title']); ?></td>
                         <td><?= $loan['loan_date']; ?></td>
@@ -56,7 +58,7 @@
                         <td><?= (strtotime($loan['return_date']) < time()) ? 'En retard' : 'OK'; ?></td>
                         <td>
                             <div class="action-group">
-                                <form method="post" action="<?= url('admin/loan_return/' . $loan['id']); ?>" onsubmit="return confirm('Forcer le retour ?')" class="inline-form">
+                                <form method="post" action="<?= url('admin/loan_return/' . $loan['id']); ?>" class="inline-form form-confirm-return">
                                     <input type="hidden" name="csrf_token" value="<?= csrf_token(); ?>">
                                     <button type="submit" class="icon-btn danger" title="Retour forcé">↺</button>
                                 </form>
