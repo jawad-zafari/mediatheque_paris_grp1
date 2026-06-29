@@ -44,5 +44,11 @@
             $movies = intval($stats['media_stats']['movies'] ?? 0);
             $games = intval($stats['media_stats']['video_games'] ?? 0);
             $total_media = max(1, $books + $movies + $games);
-     
+            
+            $pct_books = intval(round(($books / $total_media) * 100));
+            $pct_movies = intval(round(($movies / $total_media) * 100));
+            $pct_games = intval(round(($games / $total_media) * 100));
+            ?>
+
+           
 </div>
