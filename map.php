@@ -38,7 +38,10 @@ mediatheque_paris_grp1/
 |    |   |  └──style.css
 |    |   ├──images/    
 |    |   └──js/
+|    |     ├──admin.js
+|    |     ├──catalog.js
 |    |     ├──borrow.js
+|    |     ├──search.js
 |    |     └──app.js                                                           
 |    ├──.htaccess
 |    └──index.php
