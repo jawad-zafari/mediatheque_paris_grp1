@@ -60,3 +60,19 @@ function catalog_detail($id = null) {
     load_view_with_layout('catalog/detail', $data);
 }
 
+function catalog_live_search() {
+    $query = $_GET['q'] ?? '';
+    
+    if (strlen(trim($query)) < 2) {
+        header('Content-Type: application/json');
+        echo json_encode([]);
+        exit;
+    }
+
+    $results = live_search_query($query);
+    
+    header('Content-Type: application/json');
+    echo json_encode($results);
+    exit;
+}
+?>
