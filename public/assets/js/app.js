@@ -20,3 +20,24 @@ function showNotification(message, type = 'success') {
     }, 3500);
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    
+    /* =========================================================
+       2. LOGIQUE POUR LA SIDEBAR ADMIN
+    ========================================================= */
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('adminSidebar');
+    if (toggleBtn && sidebar) {
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            sidebar.classList.toggle('active');
+        });
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 900 && !sidebar.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
+
+    
+});
