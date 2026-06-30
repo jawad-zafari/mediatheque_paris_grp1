@@ -17,3 +17,25 @@ $current_page = isset($current_page) ? (int)$current_page : (int)($_GET['page'] 
 $total_pages = isset($total_pages) ? (int)$total_pages : 1;
 ?>
 
+<section class="container top-stats-wrapper">
+    <div class="media-stats-container">
+        <a href="<?php echo $build_url('book', 'all', 'all'); ?>" class="media-stats-box <?php echo $c_type === 'book' ? 'active-card' : ''; ?>">
+            <div class="media-stats-content">
+                <h3><i class="fas fa-book media-box-icon icon-book"></i> Livres</h3>
+            </div>
+        </a>
+
+        <a href="<?php echo $build_url('film', 'all', 'all'); ?>" class="media-stats-box <?php echo $c_type === 'film' ? 'active-card' : ''; ?>">
+            <div class="media-stats-content">
+                <h3><i class="fas fa-film media-box-icon icon-film"></i> Films</h3>
+            </div>
+        </a>
+
+        <a href="<?php echo $build_url('game', 'all', 'all'); ?>" class="media-stats-box <?php echo $c_type === 'game' ? 'active-card' : ''; ?>">
+            <div class="media-stats-content">
+                <h3><i class="fas fa-gamepad media-box-icon icon-game"></i> Jeux</h3>
+            </div>
+        </a>
+    </div>
+</section>
+
