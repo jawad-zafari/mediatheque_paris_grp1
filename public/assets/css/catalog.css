@@ -560,3 +560,54 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
     .next-btn { right: -5px; }
 }
 
+/* =========================================================
+   10. RESPONSIVE PAGE DÉTAIL (FONTS OPTIMISÉS MOBILE)
+========================================================= */
+@media screen and (max-width: 900px) {
+    .detail-card {
+        flex-direction: column !important;
+    }
+    .detail-image-wrapper {
+        flex: none !important;
+        width: 100% !important;
+        height: 320px !important;
+    }
+    .detail-content {
+        padding: 20px !important;
+    }
+    .detail-title {
+        font-size: 1.25rem !important;
+        margin-bottom: 15px !important;
+        padding-bottom: 10px !important;
+    }
+    .detail-info {
+        gap: 8px !important;
+        margin-bottom: 15px !important;
+    }
+    .detail-info p {
+        font-size: 0.85rem !important;
+    }
+    .detail-info strong {
+        min-width: 100px !important;
+    }
+    .badge-in-stock, .badge-out-stock {
+        font-size: 0.8rem !important;
+        padding: 6px 12px !important;
+    }
+    .detail-summary strong {
+        font-size: 0.95rem !important;
+        margin-bottom: 5px !important;
+    }
+    .detail-summary p {
+        font-size: 0.85rem !important;
+        line-height: 1.5 !important;
+    }
+    .similar-section {
+        margin-top: 35px !important;
+    }
+    .similar-title {
+        font-size: 1.05rem !important;
+        margin-bottom: 15px !important;
+    }
+}
+
