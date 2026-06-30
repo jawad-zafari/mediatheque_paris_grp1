@@ -95,5 +95,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    /* =========================================================
+       4. ANIMATION DES BARRES DE PROGRESSION (DASHBOARD)
+    ========================================================= */
+    setTimeout(function() {
+        const bars = document.querySelectorAll('.dist-bar');
+        bars.forEach(bar => {
+            const targetWidth = bar.getAttribute('data-width');
+            if (targetWidth) {
+                bar.style.width = targetWidth;
+            }
+        });
+    }, 150); 
 
+   
 });
