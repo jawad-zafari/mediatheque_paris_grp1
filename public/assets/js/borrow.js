@@ -61,5 +61,34 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetUrl = rentBtn.getAttribute('href');
             if (!targetUrl || targetUrl === '#') return;
 
-           
+            showConfirmModal("Confirmer l'emprunt de ce média ?", function() {
+                fetch(targetUrl, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentLoans++;
+                        updateBadge(currentLoans);
+                        if (typeof showNotification === 'function') { 
+                            showNotification(data.message, 'success'); 
+                        } else { 
+                            window.location.reload(); 
+                        }
+                    } else {
+                        if (typeof showNotification === 'function') { 
+                            showNotification(data.error, 'error'); 
+                        } else { 
+                            alert(data.error); 
+                        }
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+            });
+            return;
+        }
+
+       
+    });
 });
