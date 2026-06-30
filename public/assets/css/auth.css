@@ -276,3 +276,23 @@
     border-bottom: 2px solid var(--auth-primary);
 }
 
+@media (max-width: 768px) {
+    .auth-card {
+        flex-direction: column;
+        max-width: 450px;
+    }
+    
+    .dynamic-left-panel {
+        padding: 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--auth-border-faint);
+        min-height: 180px;
+    }
+    
+    .bienvenue-text-overlay h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .bienvenue-text-overlay p { margin-bottom: 1rem; font-size: 0.95rem; }
+    
+    .auth-right {
+        padding: 1.5rem;
+    }
+}
