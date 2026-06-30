@@ -155,4 +155,34 @@ $total_pages = isset($total_pages) ? (int)$total_pages : 1;
                                 <?php endif; ?>
                             </div>
                         </div>
-                        
+                        <div class="card-content-detailed">
+                            <div class="card-header-meta">
+                                <div class="card-status">
+                                    <?php echo isset($item['stock']) && $item['stock'] > 0 ? '<span class="available">Disponible</span>' : '<span class="unavailable">Indisponible</span>'; ?>
+                                </div>
+                                
+                                <?php if (($item['type'] ?? '') === 'book'): ?>
+                                    <div class="card-type-icon type-book">
+                                        <i class="fas fa-book" title="Livre"></i>
+                                    </div>
+                                <?php elseif (($item['type'] ?? '') === 'film'): ?>
+                                    <div class="card-type-icon type-film">
+                                        <i class="fas fa-film" title="Film"></i>
+                                    </div>
+                                <?php elseif (($item['type'] ?? '') === 'game'): ?>
+                                    <div class="card-type-icon type-game">
+                                        <i class="fas fa-gamepad" title="Jeu Vidéo"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <h3 class="card-title"><?php echo htmlspecialchars($item['title'] ?? 'Sans titre'); ?></h3>
+                            <p class="card-author"><i class="fas fa-user-edit"></i> <?php echo htmlspecialchars($item['author_director_publisher'] ?? 'Inconnu'); ?></p>
+                            <p class="card-year"><i class="fas fa-calendar-alt"></i> <?php echo htmlspecialchars($item['year'] ?? 'N/A'); ?></p>
+                            <p class="card-desc"><?php echo htmlspecialchars($item['description'] ?? 'Aucune description disponible pour ce média.'); ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        
