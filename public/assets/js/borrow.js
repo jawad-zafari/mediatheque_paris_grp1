@@ -89,6 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-       
+        const returnBtn = event.target.closest('.btn-return-modern');
+        if (returnBtn) {
+            event.preventDefault();
+            const targetUrl = returnBtn.getAttribute('href');
+
+            showConfirmModal("Souhaitez-vous vraiment envoyer une demande de retour pour ce média ?", function() {
+                window.location.href = targetUrl;
+            });
+        }
     });
 });
