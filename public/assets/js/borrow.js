@@ -43,5 +43,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-   
+    document.body.addEventListener('click', function(event) {
+        
+        const rentBtn = event.target.closest('.btn-borrow');
+        if (rentBtn) {
+            event.preventDefault();
+            
+            const isLoggedIn = document.body.getAttribute('data-logged-in') === 'true';
+            if (!isLoggedIn) {
+                const redirectUrl = rentBtn.getAttribute('data-login-url');
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                    return;
+                }
+            }
+
+            const targetUrl = rentBtn.getAttribute('href');
+            if (!targetUrl || targetUrl === '#') return;
+
+           
 });
