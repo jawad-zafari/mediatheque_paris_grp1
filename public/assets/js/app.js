@@ -169,5 +169,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    
+    /* =========================================================
+       6. SCROLL HEADER SEARCH (MOBILE)
+    ========================================================= */
+    const btnSearch = document.getElementById('mobileSearchBtn');
+    if(btnSearch) {
+        btnSearch.addEventListener('click', function() {
+            const searchContainer = document.getElementById('headerSearch');
+            if(searchContainer) {
+                searchContainer.style.maxHeight = '250px';
+                searchContainer.style.opacity = '1';
+                searchContainer.style.marginTop = '10px';
+                this.style.display = 'none';
+            }
+        });
+    }
+});
+
+
 });
