@@ -404,3 +404,143 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
 }
 
 
+/* =========================================================
+   11. CAROUSEL DES MÉDIAS SIMILAIRES (PAGE DÉTAIL)
+========================================================= */
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    width: 100%;
+    padding: 10px 0;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-item {
+    flex: 0 0 220px;
+    background: var(--c-card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid transparent;
+    border-radius: var(--c-card-radius);
+    box-shadow: var(--c-card-shadow);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+}
+
+.carousel-item:hover {
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), var(--c-card-hover-shadow);
+}
+
+.carousel-item .card-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.carousel-item .card-img-wrapper img {
+    width: 101%;
+    height: 101%;
+    object-fit: cover;
+    display: block;
+    margin: -1px;
+}
+
+/* OVERLAY ET BOUTONS DU CAROUSEL */
+.carousel-item .card-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--c-overlay-bg); display: flex; justify-content: center; align-items: center;
+    gap: 10px; opacity: 0; transition: var(--c-transition);
+}
+.carousel-item:hover .card-overlay { opacity: 1; }
+
+.carousel-item .card-icon-btn {
+    width: 32px; height: 32px; border-radius: 8px; background: transparent; color: #ffffff;
+    border: 1px solid #ffffff; display: flex; justify-content: center; align-items: center;
+    font-size: 0.9rem; text-decoration: none; transition: var(--c-transition);
+    transform: translateY(10px); opacity: 0;
+}
+.carousel-item:hover .card-icon-btn { transform: translateY(0); opacity: 1; }
+.carousel-item .card-icon-btn:hover { background: #38bdf8; color: #012447; border-color: #38bdf8; transform: scale(1.1); }
+
+.carousel-item .card-content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+.carousel-item .card-content h3 {
+    font-size: 0.85rem;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.carousel-item .card-content p {
+    font-size: 0.75rem;
+    color: #38bdf8;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.carousel-item .card-status { margin-top: auto; }
+.carousel-item .card-status .available { background-color: var(--c-status-ok); color: #ffffff; padding: 2px 8px; border-radius: 50px; font-size: 0.6rem; font-weight: 600; display: inline-block; }
+.carousel-item .card-status .unavailable { background-color: var(--c-status-ko); color: #ffffff; padding: 2px 8px; border-radius: 50px; font-size: 0.6rem; font-weight: 600; display: inline-block; }
+
+/* FLÈCHES DE NAVIGATION */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(1, 36, 71, 0.9);
+    color: #38bdf8;
+    border: 1px solid #38bdf8;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--c-transition);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.carousel-nav:hover {
+    background: #38bdf8;
+    color: #012447;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn { left: -15px; }
+.next-btn { right: -15px; }
+
