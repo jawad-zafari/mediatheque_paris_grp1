@@ -224,3 +224,183 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
     }
 }
 
+@media screen and (max-width: 500px) {
+    .grid-container { grid-template-columns: 1fr !important; } 
+    .grid-container .card-img-wrapper { height: 250px !important; }
+}
+
+/* =========================================================
+   9. STYLES POUR LA PAGE DÉTAIL (VERSION PROPRE)
+========================================================= */
+.detail-page-container {
+    margin-bottom: 40px;
+}
+
+.detail-back-wrapper {
+    margin-bottom: 20px;
+}
+
+.btn-back-detail {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid #38bdf8;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--c-transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-back-detail:hover {
+    background: #38bdf8;
+    color: #012447;
+    transform: translateX(-5px);
+}
+
+.detail-card {
+    display: flex;
+    flex-direction: row;
+    background: var(--c-card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--c-card-radius);
+    overflow: hidden;
+    box-shadow: var(--c-card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.detail-image-wrapper {
+    flex: 0 0 40%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+}
+
+.detail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+}
+
+.detail-image-borrow-btn {
+    position: absolute;
+    top: 20px !important;
+    left: 20px !important;
+    bottom: auto !important;
+    right: auto !important;
+    background: #38bdf8;
+    color: #012447;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    transition: var(--c-transition);
+}
+
+.detail-image-borrow-btn:hover {
+    transform: scale(1.1);
+    background: #ffffff;
+}
+
+.detail-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    color: var(--c-text-main);
+}
+
+.detail-title {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    font-weight: 800;
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.detail-info p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.detail-info strong {
+    color: #38bdf8;
+    min-width: 130px;
+    display: inline-block;
+}
+
+.detail-stock-margin {
+    margin-bottom: 25px;
+}
+
+.badge-in-stock {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid #10b981;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: inline-block;
+}
+
+.badge-out-stock {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: inline-block;
+}
+
+.detail-summary p {
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1rem;
+}
+
+.detail-summary strong {
+    color: #ffffff;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.similar-section {
+    margin-top: 50px;
+}
+
+.similar-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-left: 4px solid #38bdf8;
+    padding-left: 12px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+
