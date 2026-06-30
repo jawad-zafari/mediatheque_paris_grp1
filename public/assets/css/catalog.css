@@ -611,3 +611,75 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
     }
 }
 
+@media screen and (max-width: 500px) {
+    .detail-image-wrapper {
+        height: 240px !important;
+    }
+    .detail-content {
+        padding: 15px !important;
+    }
+    .detail-title {
+        font-size: 1.1rem !important;
+    }
+    .detail-info p, .detail-summary p {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    aside#catalogSidebar {
+        background: rgba(1, 36, 71, 0.5) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    aside#catalogSidebar.active {
+        background: rgba(1, 36, 71, 0.5) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5) !important;
+    }
+}
+
+/* =========================================================
+   12. NEW EXPANDED CATALOG CARD ELEMENTS & MULTI-COLORS
+========================================================= */
+.card-header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.card-type-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 12.1 COLORS FOR BOOKS (LIVRES - NEON GREEN) */
+.media-box-icon.icon-book {
+    color: #10b981 !important;
+}
+.card-type-icon.type-book {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+/* 12.2 COLORS FOR MOVIES (FILMS - NEON ORANGE) */
+.media-box-icon.icon-film {
+    color: #f97316 !important;
+}
+.card-type-icon.type-film {
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.1);
+    border: 1px solid rgba(249, 115, 22, 0.25);
+}
+
