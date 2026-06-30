@@ -37,3 +37,91 @@ body {
 }
 .footer-content p { margin-bottom: 0.5rem; }
 
+/* =========================================================
+   1. Structure Principale (Layout Admin depuis layout.php)
+========================================================= */
+.modern-admin-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background: transparent;
+}
+
+/* Barre latérale (Sidebar) */
+.modern-sidebar {
+    width: 260px;
+    background: rgba(1, 36, 71, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    padding: 25px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    gap: 15px;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav a:hover, .sidebar-nav a.active {
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    border-left-color: #38bdf8;
+}
+
+.sidebar-separator {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 15px 20px;
+}
+
+.back-to-site {
+    color: #10b981 !important;
+}
+
+/* Conteneur principal à droite */
+.modern-main-wrapper {
+    flex: 1;
+    padding: 30px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modern-content-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
