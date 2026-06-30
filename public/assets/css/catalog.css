@@ -683,3 +683,20 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
     border: 1px solid rgba(249, 115, 22, 0.25);
 }
 
+/* 12.3 COLORS FOR GAMES (JEUX - NEON MAGENTA) */
+.media-box-icon.icon-game {
+    color: #d946ef !important;
+}
+.card-type-icon.type-game {
+    color: #d946ef;
+    background: rgba(217, 70, 239, 0.1);
+    border: 1px solid rgba(217, 70, 239, 0.25);
+}
+
+@media screen and (max-width: 600px) {
+    .card-type-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+    }
+}
