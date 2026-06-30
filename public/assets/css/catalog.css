@@ -145,3 +145,14 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
 .card-status .available { background-color: var(--c-status-ok) !important; color: #ffffff !important; padding: 2px 8px !important; border-radius: 50px !important; font-size: 0.6rem !important; font-weight: 600 !important; display: inline-block !important; }
 .card-status .unavailable { background-color: var(--c-status-ko) !important; color: #ffffff !important; padding: 2px 8px !important; border-radius: 50px !important; font-size: 0.6rem !important; font-weight: 600 !important; display: inline-block !important; }
 
+/* =========================================================
+   7. PAGINATION
+========================================================= */
+.pagination-container-ajax { width: 100%; }
+.pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 30px 0; flex-wrap: wrap; width: 100%; }
+.btn-prev-page, .btn-next-page { font-size: 0.8rem; font-weight: 600; padding: 6px 12px; text-decoration: none; border-radius: 50px; color: #ffffff; background: rgba(1, 36, 71, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); transition: var(--c-transition); }
+.btn-prev-page:hover, .btn-next-page:hover { background: #012447; border-color: #38bdf8; }
+.page-numbers { display: flex; align-items: center; gap: 4px; }
+.page-number { font-size: 0.8rem; padding: 6px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #ffffff; text-decoration: none; font-weight: 600; transition: var(--c-transition); }
+.page-number:hover, .page-number.active { background: #38bdf8 !important; color: #012447 !important; border-color: #38bdf8 !important; }
+
