@@ -68,3 +68,156 @@
     gap: 15px;
 }
 
+/* Style des Cartes d'Emprunt ajusté pour remplir les bords */
+.rental-card {
+    display: flex;
+    background: rgba(1, 36, 71, 0.65);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 0; /* Suppression du padding pour le remplissage total */
+    align-items: stretch; /* Permet à l'image de s'étirer sur toute la hauteur */
+    gap: 20px;
+    overflow: hidden; /* Epouse parfaitement les coins arrondis de la carte */
+    transition: var(--c-transition, all 0.3s ease);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.rental-card:hover {
+    transform: translateY(-3px);
+    background: rgba(1, 36, 71, 0.85);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.rental-card-img {
+    width: 100px;
+    height: auto;
+    min-height: 100%;
+    object-fit: cover;
+    border-radius: 0; /* Supprimé car l'overflow du parent gère l'arrondi */
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.rental-card-info {
+    flex: 1;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px 0; /* Padding interne pour le texte */
+}
+
+.rental-card-info h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.rental-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.rental-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rental-meta i {
+    color: #38bdf8;
+}
+
+.rental-card-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 12px;
+    min-width: 150px;
+    padding: 15px 20px 15px 0; /* Padding à droite pour l'alignement */
+}
+
+/* Badges de Statut */
+.badge-status {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    background: rgba(245, 158, 11, 0.15); 
+    color: #f59e0b; 
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-active {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.badge-late {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-returned {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Bouton Retourner */
+.btn-return-modern {
+    background: #ef4444;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    width: fit-content;
+}
+
+.btn-return-modern:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.4);
+    color: #ffffff;
+}
+
+/* État Vide */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.3);
+    display: block;
+}
+
