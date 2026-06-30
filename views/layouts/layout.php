@@ -42,3 +42,39 @@ if (is_logged_in()) {
     <link rel="stylesheet" href="<?php echo url('assets/css/auth.css') . '?v=' . $ver; ?>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
+<body data-logged-in="<?php echo is_logged_in() ? 'true' : 'false'; ?>">
+
+    <?php if (!isset($hide_nav)): ?>
+        <?php require_once VIEW_PATH . '/layouts/header.php'; ?>
+        
+        <?php 
+        $afficher_banner = !$hide_banner_auto && !(strpos($url_actuelle, 'detail') !== false || strpos($url_actuelle, 'borrow') !== false || strpos($url_actuelle, 'auth') !== false || strpos($url_actuelle, 'profile') !== false);
+        ?>
+        
+        <?php if ($afficher_banner): ?>
+            <?php require_once VIEW_PATH . '/layouts/banner.php'; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <main class="main-content">
+        <?php if (has_flash_messages()): ?>
+            <div id="flash-data-public" data-flash="<?php echo htmlspecialchars(json_encode(get_flash_messages())); ?>"></div>
+        <?php endif; ?>
+
+        <?php echo $content ?? ''; ?>
+    </main>
+
+    <?php 
+        /* Chargement du composant Footer de maniere dynamique */
+        $footer_path = VIEW_PATH . '/layouts/footer.php';
+        if(file_exists($footer_path)) {
+            require_once $footer_path;
+        }
+    ?>
+
+    <script src="<?php echo url('assets/js/borrow.js'); ?>"></script>   
+    <script src="<?php echo url('assets/js/app.js'); ?>"></script>
+    <script src="<?php echo url('assets/js/search.js'); ?>"></script>
+    <script src="<?php echo url('assets/js/catalog.js'); ?>"></script>
+</body>
+</html>
