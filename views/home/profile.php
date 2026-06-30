@@ -97,4 +97,46 @@ $hide_banner = true;
             </div>
         </div>
 
-        
+        <div id="tab-mes-emprunts" class="profile-tab-content" style="display: none;">
+            <h2 class="profile-section-title">Mes Emprunts</h2>
+            <p style="margin-bottom: 25px; color: #ffffffb3;">Consultez vos médias en cours d'utilisation.</p>
+            
+            <div class="rentals-section">
+                <?php if (empty($active_rentals)): ?>
+                    <p class="empty-state"><i class="fas fa-box-open"></i> Vous n'avez aucun emprunt en cours.</p>
+                <?php else: ?>
+                    <div class="rentals-list-container">
+                        <?php foreach ($active_rentals as $rental): ?>
+                            <div class="rental-card">
+                                <?php if (!empty($rental['image_url'])): ?>
+                                    <img src="<?php echo url('uploads/covers/' . $rental['image_url']); ?>" class="rental-card-img" alt="Cover">
+                                <?php else: ?>
+                                    <div class="rental-card-img" style="background: #012447; display:flex; align-items:center; justify-content:center; color:white;"><i class="fas fa-image"></i></div>
+                                <?php endif; ?>
+                                
+                                <div class="rental-card-info">
+                                    <h3><?php echo htmlspecialchars($rental['title']); ?></h3>
+                                    <div class="rental-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> Emprunté le : <?php echo date('d/m/Y', strtotime($rental['rent_date'])); ?></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="rental-card-actions">
+                                    <?php if (isset($rental['status']) && $rental['status'] === 'pending_return'): ?>
+                                        <span class="badge-status badge-active" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">En attente Admin</span>
+                                    <?php else: ?>
+                                        <span class="badge-status badge-active">En cours</span>
+                                        <a href="<?php echo url('borrow/return/' . $rental['id'] . '?from=profile'); ?>" class="btn-return-modern">
+                                            <i class="fas fa-undo"></i> Retourner
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </main>
+</div>
