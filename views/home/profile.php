@@ -72,4 +72,29 @@ $hide_banner = true;
                         </div>
                     </div>
 
-                    
+                    <div class="form-grid-two">
+                        <div class="form-group-profile password-wrapper">
+                            <label>Nouveau mot de passe</label>
+                            <div class="input-with-icon">
+                                <input type="password" name="new_password" id="new_password" placeholder="Minimum 8 caractères">
+                                <i class="fas fa-eye toggle-password" data-target="new_password"></i>
+                            </div>
+                        </div>
+                        <div class="form-group-profile password-wrapper">
+                            <label>Confirmer le mot de passe</label>
+                            <div class="input-with-icon">
+                                <input type="password" name="confirm_new_password" id="confirm_new_password" placeholder="Répéter le nouveau mot de passe">
+                                <i class="fas fa-eye toggle-password" data-target="confirm_new_password"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-profile" style="margin-top: 25px;">
+                        <button type="button" id="btn-hide-edit" class="btn-profile-cancel">Annuler</button>
+                        <button type="submit" class="btn-profile-save">Enregistrer les modifications</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
