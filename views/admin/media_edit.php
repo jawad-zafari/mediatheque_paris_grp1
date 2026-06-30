@@ -6,4 +6,53 @@
     $is_edit = !empty($media);
     ?>
 
-    
+    <form action="<?php echo $media ? url('admin/media_save/' . $media['media_type'] . '_' . $media['id']) : url('admin/media_save'); ?>" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+        
+        <label>Type de média :</label>
+        <select name="type" id="media_type_select" required class="<?php echo $is_edit ? 'readonly-select' : ''; ?>">
+            <option value="">Sélectionner</option>
+            <option value="livre" <?php echo ($type === 'book' || $type === 'livre') ? 'selected' : ''; ?>>Livre</option>
+            <option value="film" <?php echo ($type === 'movie' || $type === 'film') ? 'selected' : ''; ?>>Film</option>
+            <option value="jeu" <?php echo ($type === 'video_game' || $type === 'jeu') ? 'selected' : ''; ?>>Jeu vidéo</option>
+        </select>
+        <?php if ($is_edit): ?>
+            <input type="hidden" name="type" value="<?php echo htmlspecialchars($type); ?>">
+        <?php endif; ?>
+        
+        <label>Titre :</label>
+        <input type="text" name="title" value="<?php echo htmlspecialchars($media['title'] ?? ''); ?>" required>
+        
+        <label>Genre :</label>
+        <input type="text" name="genre" value="<?php echo htmlspecialchars($media['genre'] ?? ''); ?>" required>
+        
+        <label>Stock :</label>
+        <input type="number" name="stock" value="<?php echo $media['stock'] ?? 1; ?>" min="1" required>
+
+        <label>Année :</label>
+        <input type="number" name="year" value="<?php echo $media['year'] ?? ''; ?>" min="1900" max="<?php echo date('Y'); ?>" required>
+        
+        <label>Synopsis / Description :</label>
+        <textarea name="synopsis" class="form-textarea-large" required><?php echo htmlspecialchars($media['synopsis'] ?? ($media['description'] ?? '')); ?></textarea>
+
+        <div id="fields_livre" class="form-dynamic-group">
+            <label>Écrivain :</label>
+            <input type="text" name="writer" value="<?php echo htmlspecialchars($media['writer'] ?? ''); ?>">
+            
+            <label>ISBN13 :</label>
+            <input type="text" name="ISBN13" value="<?php echo htmlspecialchars($media['ISBN13'] ?? ''); ?>">
+            
+            <label>Nombre de pages :</label>
+            <input type="number" name="page_number" value="<?php echo $media['page_number'] ?? ''; ?>" min="1">
+        </div>
+
+        <div id="fields_film" class="form-dynamic-group">
+            <label>Réalisateur :</label>
+            <input type="text" name="producer" value="<?php echo htmlspecialchars($media['producer'] ?? ''); ?>">
+            
+            <label>Durée (minutes) :</label>
+            <input type="number" name="duration_m" value="<?php echo $media['duration_m'] ?? ($media['duration'] ?? ''); ?>" min="1">
+            
+            <label>Classification :</label>
+            
+</div>
