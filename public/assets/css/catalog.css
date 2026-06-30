@@ -156,3 +156,71 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
 .page-number { font-size: 0.8rem; padding: 6px 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #ffffff; text-decoration: none; font-weight: 600; transition: var(--c-transition); }
 .page-number:hover, .page-number.active { background: #38bdf8 !important; color: #012447 !important; border-color: #38bdf8 !important; }
 
+/* =========================================================
+   8. RESPONSIVE MOBILE ET TABLETTE
+========================================================= */
+@media screen and (max-width: 900px) {
+    .media-stats-container { gap: 8px !important; padding: 0 10px; }
+    .media-stats-box { padding: 8px 5px !important; }
+    .media-stats-content h3 { font-size: 0.75rem !important; } 
+    
+    .grid-container { 
+        grid-template-columns: repeat(2, 1fr) !important; 
+        padding-left: 10px !important; 
+        padding-right: 15px !important; 
+    } 
+
+    /* Correction precise de l'espacement pour que la sidebar ne passe plus sous le header */
+    .sidebar-spacer { 
+        display: block !important;
+        position: sticky !important;
+        top: 125px !important; /* Ajusté pour éviter le header mobile qui est plus haut */
+        width: 50px !important;
+        min-width: 50px !important;
+        height: max-content !important;
+        z-index: 90 !important;
+    }
+    
+    aside#catalogSidebar {
+        position: absolute !important;
+        top: 0 !important; 
+        left: 0 !important; 
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        height: max-content !important;
+        max-height: calc(100vh - 135px) !important;
+        z-index: 1000 !important; 
+        border-radius: 12px !important;
+        background: rgba(1, 36, 71, 0.98) !important;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease !important;
+    }
+    
+    aside#catalogSidebar.active {
+        width: 240px !important;
+        min-width: 240px !important;
+        max-width: 240px !important;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.8) !important;
+    }
+
+    aside#catalogSidebar .sidebar-brand,
+    aside#catalogSidebar .sidebar-nav ul,
+    aside#catalogSidebar .sidebar-nav a,
+    aside#catalogSidebar .genre-dropdown-trigger {
+        width: 100% !important;
+    }
+
+    .hamburger-btn,
+    aside#catalogSidebar .sidebar-nav a i,
+    aside#catalogSidebar .genre-dropdown-trigger i:first-child {
+        width: 50px !important;
+        min-width: 50px !important;
+        font-size: 1rem !important;
+    }
+
+    aside#catalogSidebar .brand-text,
+    aside#catalogSidebar .nav-text {
+        font-size: 0.85rem !important;
+    }
+}
+
