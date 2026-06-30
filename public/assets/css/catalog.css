@@ -544,3 +544,19 @@ aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !impor
 .prev-btn { left: -15px; }
 .next-btn { right: -15px; }
 
+/* RESPONSIVE CAROUSEL MOBILE */
+@media screen and (max-width: 900px) {
+    .carousel-item { flex: 0 0 180px; }
+    .carousel-item .card-img-wrapper { height: 130px; }
+    .prev-btn { left: -10px; }
+    .next-btn { right: -10px; }
+}
+
+@media screen and (max-width: 500px) {
+    .carousel-item { flex: 0 0 150px; }
+    .carousel-item .card-img-wrapper { height: 110px; }
+    .carousel-nav { width: 30px; height: 30px; font-size: 0.8rem; }
+    .prev-btn { left: -5px; }
+    .next-btn { right: -5px; }
+}
+
