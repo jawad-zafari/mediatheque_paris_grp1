@@ -54,5 +54,39 @@
             <input type="number" name="duration_m" value="<?php echo $media['duration_m'] ?? ($media['duration'] ?? ''); ?>" min="1">
             
             <label>Classification :</label>
+            <select name="classification">
+                <option value="">Sélectionner</option>
+                <?php
+                $current_class = $media['classification'] ?? '';
+                $allowed_class = ['Tous publics', '-12', '-16', '-18'];
+                foreach ($allowed_class as $c) {
+                    echo '<option value="'.$c.'" '.($current_class === $c ? 'selected' : '').'>'.$c.'</option>';
+                }
+                if ($current_class && !in_array($current_class, $allowed_class)) {
+                    echo '<option value="'.htmlspecialchars($current_class).'" selected>'.htmlspecialchars($current_class).' (actuel)</option>';
+                }
+                ?>
+            </select>
+        </div>
+
+        <div id="fields_jeu" class="form-dynamic-group">
+            <label>Éditeur :</label>
+            <input type="text" name="editor" value="<?php echo htmlspecialchars($media['editor'] ?? ''); ?>">
+            
+            <label>Plateforme :</label>
+            <select name="platform">
+                <option value="">Sélectionner</option>
+                <?php
+                $current_platform = $media['platform'] ?? ($media['plateform'] ?? '');
+                $allowed_platforms = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile'];
+                foreach ($allowed_platforms as $p) {
+                    echo '<option value="'.$p.'" '.($current_platform === $p ? 'selected' : '').'>'.$p.'</option>';
+                }
+                if ($current_platform && !in_array($current_platform, $allowed_platforms)) {
+                    echo '<option value="'.htmlspecialchars($current_platform).'" selected>'.htmlspecialchars($current_platform).' (actuel)</option>';
+                }
+                ?>
+            </select>
+            
             
 </div>
