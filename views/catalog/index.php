@@ -185,4 +185,24 @@ $total_pages = isset($total_pages) ? (int)$total_pages : 1;
             <?php endif; ?>
         </div>
 
-        
+        <div class="pagination-container-ajax">
+            <?php if (isset($total_pages) && $total_pages > 1): ?>
+                <div class="pagination">
+                    <?php if ($current_page > 1): ?>
+                        <a href="<?php echo url('catalog/index?page=' . ($current_page - 1) . '&type=' . $c_type . '&genre=' . $c_genre . '&availability=' . $c_status); ?>" class="btn-prev-page"><i class="fas fa-chevron-left"></i> Précédent</a>
+                    <?php endif; ?>
+
+                    <div class="page-numbers">
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <a href="<?php echo url('catalog/index?page=' . $i . '&type=' . $c_type . '&genre=' . $c_genre . '&availability=' . $c_status); ?>" class="page-number <?php echo $i == $current_page ? 'active' : ''; ?>"><?php echo $i; ?></a>
+                        <?php endfor; ?>
+                    </div>
+
+                    <?php if ($current_page < $total_pages): ?>
+                        <a href="<?php echo url('catalog/index?page=' . ($current_page + 1) . '&type=' . $c_type . '&genre=' . $c_genre . '&availability=' . $c_status); ?>" class="btn-next-page">Suivant <i class="fas fa-chevron-right"></i></a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </main>
+</section>
