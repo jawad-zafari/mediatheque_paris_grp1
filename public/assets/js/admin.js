@@ -108,5 +108,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, 150); 
 
-   
+    /* =========================================================
+       5. GESTION DU SIDEBAR MINI (OVERLAY GLASSMORPHISM)
+    ========================================================= */
+    const sidebar = document.getElementById('adminSidebar');
+    const toggleBtnSidebar = document.getElementById('sidebarToggleBtn');
+    
+    if (sidebar && toggleBtnSidebar) {
+        toggleBtnSidebar.addEventListener('click', function(e) {
+            e.stopPropagation();
+            sidebar.classList.toggle('active');
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (sidebar.classList.contains('active') && !sidebar.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
 });
