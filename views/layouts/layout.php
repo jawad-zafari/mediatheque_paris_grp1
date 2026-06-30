@@ -20,3 +20,25 @@ if (is_logged_in()) {
     $active_loans_count = count_active_loans(current_user_id());
 }
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo isset($title) ? esc($title) . ' - ' . APP_NAME : APP_NAME; ?></title>
+    
+    <?php
+        $cssPath = PUBLIC_PATH . '/assets/css/style.css';
+        $ver = file_exists($cssPath) ? filemtime($cssPath) : (defined('APP_VERSION') ? APP_VERSION : time());
+    ?>
+    
+    <link rel="stylesheet" href="<?php echo url('assets/css/banner.css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/borrow.css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/catalog.css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/home.css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/header.css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/layout.css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/style(@media).css') . '?v=' . $ver; ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/auth.css') . '?v=' . $ver; ?>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
