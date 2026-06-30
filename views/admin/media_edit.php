@@ -104,5 +104,16 @@
             </select>
         </div>
 
+        <label>Image de couverture (optionnel) :</label>
+        <input type="file" name="image" accept="image/*">
+        <?php if (!empty($media['image_url'])): ?>
+            <img src="<?= url('uploads/covers/' . $media['image_url']); ?>" class="cover-thumb-large">
+        <?php endif; ?>
         
+        <div class="form-submit-row">
+            <button type="submit" class="btn-save">Enregistrer</button>
+            <a href="<?= url('admin/media'); ?>" class="btn-cancel">Annuler</a>
+        </div>
+    </form>
+    </div>
 </div>
