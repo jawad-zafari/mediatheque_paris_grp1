@@ -81,5 +81,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    
+    /* =========================================================
+       3. ÉCOUTEUR GLOBAL DE SOUMISSION (Validation Admin)
+    ========================================================= */
+    document.body.addEventListener('submit', function(event) {
+        if (event.target.classList.contains('form-confirm-return')) {
+            event.preventDefault();
+            const form = event.target;
+            
+            showAdminConfirmModal('Confirmer la réception de ce média ?', function() {
+                form.submit(); 
+            });
+        }
+    });
+
+
 });
