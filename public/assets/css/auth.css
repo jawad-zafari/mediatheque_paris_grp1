@@ -44,3 +44,53 @@
     --auth-size-footer: 0.9rem;
 }
 
+/* =========================================================
+   AUTHENTICATION (LOGIN & REGISTER)
+========================================================= */
+
+
+.auth-header h1 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+.auth-container {
+    min-height: calc(100vh - 100px); /* Ajustement pour éviter le scroll */
+    display: flex;
+    align-items:flex-start;
+    justify-content: center;
+    padding: var(--auth-pad-container);
+    font-family: var(--auth-font-family);
+}
+
+.auth-card {
+    display: flex;
+    flex-direction: row;
+    background: var(--auth-bg-glass);
+    backdrop-filter: var(--auth-blur);
+    -webkit-backdrop-filter: var(--auth-blur);
+    border-radius: var(--auth-radius-lg);
+    box-shadow: var(--auth-shadow-card);
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    border: 1px solid var(--auth-border-light);
+}
+
+.dynamic-left-panel {
+    flex: 1;
+    padding: var(--auth-pad-panel-y) var(--auth-pad-panel-x);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: var(--auth-text-main);
+    border-right: 1px solid var(--auth-border-faint);
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    overflow: hidden;
+}
+
