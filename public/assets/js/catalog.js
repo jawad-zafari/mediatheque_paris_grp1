@@ -79,5 +79,31 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    
+    window.addEventListener('popstate', function() {
+        window.location.reload(); 
+    });
+
+    /* Gestion des actions de la page Détail */
+    const btnBack = document.getElementById("btnBackHistory");
+    if (btnBack) {
+        btnBack.addEventListener("click", function() {
+            window.history.back();
+        });
+    }
+
+    const btnPrev = document.getElementById("btnCarouselPrev");
+    const btnNext = document.getElementById("btnCarouselNext");
+    const carousel = document.getElementById("similarCarousel");
+
+    if (btnPrev && carousel) {
+        btnPrev.addEventListener("click", function() {
+            carousel.scrollBy({left: -260, behavior: 'smooth'});
+        });
+    }
+
+    if (btnNext && carousel) {
+        btnNext.addEventListener("click", function() {
+            carousel.scrollBy({left: 260, behavior: 'smooth'});
+        });
+    }
 });
