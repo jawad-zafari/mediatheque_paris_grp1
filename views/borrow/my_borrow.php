@@ -45,7 +45,23 @@ $hide_banner = true;
                             </div>
                         </div>
                         
-                       
+                        <div class="rental-card-actions">
+                            <?php if (isset($rental['status']) && $rental['status'] === 'pending_return'): ?>
+                                <span class="badge-status" >
+                                    <i class="fas fa-hourglass-half"></i> En attente
+                                </span>
+                            <?php else: ?>
+                                <?php if ($days_late > 0): ?>
+                                    <span class="badge-status badge-late">En retard (<?php echo htmlspecialchars($days_late); ?> j)</span>
+                                <?php else: ?>
+                                    <span class="badge-status badge-active">Actif</span>
+                                <?php endif; ?>
+                                
+                                <a href="<?php echo url('borrow/return/' . $rental['id']); ?>" class="btn-return-modern">
+                                    <i class="fas fa-undo-alt"></i> Retourner
+                                </a>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
