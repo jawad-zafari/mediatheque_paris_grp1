@@ -95,3 +95,53 @@ aside#catalogSidebar .genre-dropdown-content { max-height: 0; overflow: hidden; 
 aside#catalogSidebar .genre-dropdown-content.open { max-height: 400px; overflow-y: auto; }
 aside#catalogSidebar .genre-dropdown-content ul li a { padding-left: 10px !important; }
 
+/* =========================================================
+   6. CARTES DE MÉDIAS
+========================================================= */
+.grid-container {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important; 
+    gap: 15px !important; 
+    margin: 0 !important;
+    padding-right: 25px !important; 
+    padding-left: 5px !important; 
+    transition: opacity 0.3s ease; 
+}
+
+.grid-container .item {
+    background: var(--c-card-bg) !important;
+    backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important;
+    border: 2px solid transparent !important; 
+    border-radius: var(--c-card-radius) !important;
+    box-shadow: var(--c-card-shadow) !important; 
+    transition: all 0.3s ease-in-out !important;
+    display: flex !important; flex-direction: column !important;
+    padding: 0 !important; overflow: hidden !important; height: 100% !important;
+}
+
+.grid-container .item:hover { 
+    transform: translateY(-5px); 
+    border-color: #38bdf8 !important; 
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), var(--c-card-hover-shadow) !important; 
+}
+
+.grid-container .card-img-wrapper { position: relative !important; width: 100% !important; height: 210px !important; flex-shrink: 0 !important; margin: 0 !important; padding: 0 !important; border-radius: 0 !important; overflow: hidden !important; border: none !important; }
+.grid-container .card-img-wrapper img { width: 101% !important; height: 101% !important; object-fit: cover !important; display: block !important; margin: -1px !important; border: none !important; }
+
+.grid-container .card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--c-overlay-bg); display: flex; justify-content: center; align-items: center; gap: 12px; opacity: 0; transition: var(--c-transition); }
+.grid-container .item:hover .card-overlay { opacity: 1; }
+
+.card-icon-btn { width: 35px; height: 35px; border-radius: 8px; background: transparent; color: #ffffff; border: 1px solid #ffffff; display: flex; justify-content: center; align-items: center; font-size: 1rem; text-decoration: none; transition: var(--c-transition); transform: translateY(10px); opacity: 0; }
+.grid-container .item:hover .card-icon-btn { transform: translateY(0); opacity: 1; }
+.card-icon-btn:hover { background: #38bdf8 !important; color: #012447 !important; border-color: #38bdf8 !important; transform: scale(1.1) !important; }
+
+.card-content-detailed { padding: 12px 12px 25px 12px !important; display: flex !important; flex-direction: column !important; gap: 4px !important; flex-grow: 1 !important; }
+.card-title, .card-author, .card-year, .card-desc { color: #ffffff !important; margin: 0 !important; }
+.card-title { font-size: 0.85rem !important; font-weight: 700 !important; line-height: 1.2 !important; margin-bottom: 4px !important; }
+.card-author { font-size: 0.75rem !important; font-weight: 500 !important; color: #38bdf8 !important; }
+.card-year { font-size: 0.7rem !important; opacity: 0.7 !important; }
+.card-desc { font-size: 0.7rem !important; line-height: 1.4 !important; opacity: 0.8 !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; text-overflow: ellipsis !important; margin-top: 4px !important; }
+.card-status { margin-bottom: 4px !important; }
+.card-status .available { background-color: var(--c-status-ok) !important; color: #ffffff !important; padding: 2px 8px !important; border-radius: 50px !important; font-size: 0.6rem !important; font-weight: 600 !important; display: inline-block !important; }
+.card-status .unavailable { background-color: var(--c-status-ko) !important; color: #ffffff !important; padding: 2px 8px !important; border-radius: 50px !important; font-size: 0.6rem !important; font-weight: 600 !important; display: inline-block !important; }
+
