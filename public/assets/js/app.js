@@ -186,5 +186,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
+/* Gestion du scroll pour le header (attache a document, pas besoin de DOMContentLoaded) */
+document.addEventListener('scroll', function() {
+    const searchContainer = document.getElementById('headerSearch');
+    const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+    if (window.innerWidth <= 900 && searchContainer && mobileSearchBtn) {
+        if (window.scrollY > 60) {
+            searchContainer.style.maxHeight = '0px';
+            searchContainer.style.opacity = '0';
+            searchContainer.style.marginTop = '0px';
+            mobileSearchBtn.style.display = 'block';
+        } else {
+            searchContainer.style.maxHeight = '250px';
+            searchContainer.style.opacity = '1';
+            searchContainer.style.marginTop = '10px';
+            mobileSearchBtn.style.display = 'none';
+        }
+    } else if (window.innerWidth > 900 && searchContainer) {
+        searchContainer.style.maxHeight = 'none';
+        searchContainer.style.opacity = '1';
+        if (mobileSearchBtn) mobileSearchBtn.style.display = 'none';
+    }
 });
