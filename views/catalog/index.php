@@ -134,4 +134,25 @@ $total_pages = isset($total_pages) ? (int)$total_pages : 1;
         </aside>
     </div>
 
-    
+    <main class="catalog-main-content">
+        <div class="grid-container">
+            <?php if (empty($items)): ?>
+                <p class="no-results">Aucun média trouvé.</p>
+            <?php else: ?>
+                <?php foreach ($items as $item): ?>
+                    <div class="item">
+                        <div class="card-img-wrapper">
+                            <img src="<?php echo htmlspecialchars($item['image_url'] ?? 'https://via.placeholder.com/300'); ?>" alt="">
+                            <div class="card-overlay">
+                                <a href="<?php echo url('catalog/detail/' . $item['id']); ?>" class="card-icon-btn" title="Voir détails"><i class="fas fa-eye"></i></a>
+                                <?php if (isset($item['stock']) && $item['stock'] > 0): ?>
+                                    <a href="<?php echo url('borrow/rent/' . $item['id']); ?>" 
+                                       class="card-icon-btn rent-btn btn-borrow" 
+                                       title="Emprunter"
+                                       data-login-url="<?php echo url('auth/login'); ?>">
+                                        <i class="fas fa-book-reader"></i>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        
