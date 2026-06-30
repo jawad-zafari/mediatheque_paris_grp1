@@ -85,5 +85,89 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    /* =========================================================
+       5. LOGIQUE DE LA PAGE PROFIL (Onglets, Formulaire, Mots de passe)
+    ========================================================= */
+    const profileTabs = document.querySelectorAll('.profile-menu .tab-link');
+    if (profileTabs.length > 0) {
+        
+        function switchTab(tabId) {
+            document.querySelectorAll('.profile-tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.style.display = 'block';
+            }
+            
+            document.querySelectorAll('.profile-menu .tab-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-tab') === tabId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            if (tabId !== 'tab-voir-profil') {
+                const formSection = document.getElementById('section-modification-form');
+                if (formSection) formSection.style.display = 'none';
+            }
+        }
+
+        profileTabs.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
+                switchTab(tabId);
+                
+                const url = new URL(window.location);
+                url.searchParams.set('tab', tabId);
+                window.history.pushState({}, '', url);
+            });
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestedTab = urlParams.get('tab');
+        if (requestedTab) {
+            switchTab(requestedTab);
+        }
+
+        const btnShowEdit = document.getElementById('btn-show-edit');
+        const btnHideEdit = document.getElementById('btn-hide-edit');
+        const formSection = document.getElementById('section-modification-form');
+
+        if (btnShowEdit && formSection) {
+            btnShowEdit.addEventListener('click', function() {
+                formSection.style.display = 'block';
+                formSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        if (btnHideEdit && formSection) {
+            btnHideEdit.addEventListener('click', function() {
+                formSection.style.display = 'none';
+            });
+        }
+    }
+
+    const togglePasswords = document.querySelectorAll('.toggle-password');
+    togglePasswords.forEach(icon => {
+        icon.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            if (input) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            }
+        });
+    });
+
     
 });
