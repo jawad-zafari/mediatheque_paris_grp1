@@ -379,6 +379,7 @@ html, body {
     border-collapse: separate;
     border-spacing: 0;
     background: var(--admin-bg-glass);
+    -webkit-backdrop-filter: var(--admin-blur-main);
     backdrop-filter: var(--admin-blur-main);
     border: 1px solid var(--admin-border-light);
     border-radius: var(--admin-radius-lg);
@@ -499,6 +500,7 @@ html, body {
 ========================================================= */
 .form-card {
     background: var(--admin-bg-glass);
+    -webkit-backdrop-filter: var(--admin-blur-main);
     backdrop-filter: var(--admin-blur-main);
     padding: 25px;
     border-radius: var(--admin-radius-lg);
@@ -654,6 +656,7 @@ html, body {
     font-weight: 600;
     font-size: var(--admin-font-size-base);
     transition: var(--admin-transition);
+    -webkit-backdrop-filter: var(--admin-blur-main);
     backdrop-filter: var(--admin-blur-main);
 }
 
@@ -795,6 +798,7 @@ html, body {
 
 .dist-card {
     background: var(--admin-bg-glass);
+    -webkit-backdrop-filter: var(--admin-blur-main);
     backdrop-filter: var(--admin-blur-main);
     border: 1px solid var(--admin-border-light);
     border-radius: var(--admin-radius-lg);
