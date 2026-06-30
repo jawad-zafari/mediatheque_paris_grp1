@@ -368,3 +368,39 @@
     background: rgba(255,255,255,0.1);
 }
 
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media screen and (max-width: 850px) {
+    .profile-container {
+        flex-direction: column;
+    }
+    .profile-sidebar {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .profile-content {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .profile-details-list {
+        max-width: 100%;
+    }
+    .profile-info-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .info-value {
+        text-align: left;
+    }
+    .form-grid-two {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
