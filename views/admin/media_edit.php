@@ -88,5 +88,21 @@
                 ?>
             </select>
             
-            
+            <label>Âge minimum :</label>
+            <select name="min_age">
+                <option value="">Sélectionner</option>
+                <?php
+                $current_age = isset($media['min_age']) ? intval($media['min_age']) : null;
+                $allowed_ages = [3,7,12,16,18];
+                foreach ($allowed_ages as $a) {
+                    echo '<option value="'.$a.'" '.($current_age === $a ? 'selected' : '').'>'.$a.'</option>';
+                }
+                if ($current_age !== null && !in_array($current_age, $allowed_ages)) {
+                    echo '<option value="'.$current_age.'" selected>'.$current_age.' (actuel)</option>';
+                }
+                ?>
+            </select>
+        </div>
+
+        
 </div>
