@@ -39,5 +39,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    /* =========================================================
+       3. LOGIQUE POUR LE PANNEAU DYNAMIQUE (LOGIN/REGISTER)
+    ========================================================= */
+    const bgClasses = ['dynamic-bg-1', 'dynamic-bg-2', 'dynamic-bg-3', 'dynamic-bg-4'];
+    const leftPanel = document.querySelector('.dynamic-left-panel');
+    if (leftPanel) {
+        const randomClass = bgClasses[Math.floor(Math.random() * bgClasses.length)];
+        leftPanel.classList.add(randomClass);
+    }
+
+    /* =========================================================
+       4. TRAITEMENT AUTOMATIQUE DES MESSAGES FLASH (MÉTHODE FIABLE)
+    ========================================================= */
+    if (window.ServerFlashMessages) {
+        Object.keys(window.ServerFlashMessages).forEach(type => {
+            const toastType = (type === 'error' || type === 'danger') ? 'error' : 'success';
+            window.ServerFlashMessages[type].forEach(message => {
+                if (typeof showNotification === 'function') {
+                    showNotification(message, toastType);
+                }
+            });
+        });
+        window.ServerFlashMessages = null; 
+    } else {
+        const flashPublic = document.getElementById('flash-data-public');
+        if (flashPublic) {
+            try {
+                const rawData = flashPublic.getAttribute('data-flash');
+                if (rawData) {
+                    const flashMessages = JSON.parse(rawData);
+                    Object.keys(flashMessages).forEach(type => {
+                        const toastType = (type === 'error' || type === 'danger') ? 'error' : 'success';
+                        flashMessages[type].forEach(message => {
+                            if (typeof showNotification === 'function') {
+                                showNotification(message, toastType);
+                            }
+                        });
+                    });
+                    flashPublic.removeAttribute('data-flash');
+                }
+            } catch (e) {
+                console.error('Erreur Toast:', e);
+            }
+        }
+    }
+
     
 });
