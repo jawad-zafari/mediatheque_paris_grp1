@@ -39,3 +39,17 @@ $total_pages = isset($total_pages) ? (int)$total_pages : 1;
     </div>
 </section>
 
+<section class="container catalog-header-section">
+    <div class="catalog-section-header">
+        <h2>
+            <?php 
+            if (!empty($_GET['search_term'])) {
+                echo "Résultats de recherche";
+            } elseif ($c_genre !== 'all') {
+                echo "Genre : " . htmlspecialchars($c_genre);
+            }
+            ?>
+        </h2>
+    </div>
+</section>
+
